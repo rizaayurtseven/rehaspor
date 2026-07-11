@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>REHA SPOR | Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#dae2fd",
+                    "on-surface": "#1b1b1d",
+                    "on-tertiary-container": "#75859d",
+                    "secondary-fixed-dim": "#ffb4ab",
+                    "on-primary-fixed": "#131b2e",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#303032",
+                    "primary-container": "#131b2e",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "surface-container-low": "#f6f3f5",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-background": "#1b1b1d",
+                    "background": "#fcf8fa",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e4e2e4",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#0b1c30",
+                    "surface-dim": "#dcd9db",
+                    "outline-variant": "#c6c6cd",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#d3e4fe",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#e02928",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "outline": "#76777d",
+                    "on-secondary-fixed-variant": "#93000b",
+                    "inverse-primary": "#bec6e0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#fffbff",
+                    "primary": "#000000",
+                    "surface": "#fcf8fa",
+                    "on-primary-container": "#7c839b",
+                    "inverse-on-surface": "#f3f0f2",
+                    "tertiary": "#000000",
+                    "surface-container": "#f0edef",
+                    "surface-container-highest": "#e4e2e4",
+                    "on-secondary-fixed": "#410002",
+                    "secondary": "#bb0112",
+                    "surface-tint": "#565e74",
+                    "surface-bright": "#fcf8fa",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-high": "#eae7e9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "gutter": "32px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-sm": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-xl": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-md": ["30px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-indicator {
+            position: relative;
+        }
+        .active-nav-indicator::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #bb0112;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- SIDEBAR -->
+<aside class="w-64 bg-on-surface text-surface flex flex-col shrink-0">
+<div class="h-20 flex items-center px-8 border-b border-white/10">
+<span class="font-headline-sm text-headline-sm font-black tracking-tighter text-white">REHA SPOR</span>
+</div>
+<nav class="flex-1 py-6 overflow-y-auto space-y-1">
+<div class="px-8 pb-4">
+<span class="font-label-caps text-label-caps text-surface-variant opacity-50">MANAGEMENT</span>
+</div>
+<a class="flex items-center px-8 py-3 bg-secondary/10 active-nav-indicator text-white" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center px-8 py-3 text-surface-variant hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">category</span>
+<span class="font-body-md text-body-md">Categories</span>
+</a>
+<a class="flex items-center px-8 py-3 text-surface-variant hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-body-md text-body-md">Products</span>
+</a>
+<a class="flex items-center px-8 py-3 text-surface-variant hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">foundation</span>
+<span class="font-body-md text-body-md">References</span>
+</a>
+<a class="flex items-center px-8 py-3 text-surface-variant hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">picture_as_pdf</span>
+<span class="font-body-md text-body-md">Catalog PDF</span>
+</a>
+<a class="flex items-center px-8 py-3 text-surface-variant hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">mail</span>
+<span class="font-body-md text-body-md">Contact Messages</span>
+<span class="ml-auto bg-secondary text-white text-[10px] px-1.5 py-0.5 rounded-full">4</span>
+</a>
+<div class="px-8 pt-8 pb-4">
+<span class="font-label-caps text-label-caps text-surface-variant opacity-50">SYSTEM</span>
+</div>
+<a class="flex items-center px-8 py-3 text-surface-variant hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-body-md text-body-md">Site Settings</span>
+</a>
+</nav>
+<div class="p-8 border-t border-white/10">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center font-bold text-white">
+                        A
+                    </div>
+<div>
+<p class="font-body-md text-body-md text-white leading-none">Admin User</p>
+<p class="text-[12px] text-surface-variant opacity-60">rehaspor.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT -->
+<main class="flex-1 flex flex-col bg-surface-container-low min-w-0">
+<!-- TOP BAR -->
+<header class="h-20 bg-surface border-b border-outline-variant flex items-center justify-between px-margin-desktop shrink-0">
+<div class="flex items-center">
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Dashboard Overview</h1>
+</div>
+<div class="flex items-center space-x-gutter">
+<div class="relative flex items-center space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary">notifications</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-secondary rounded-full"></div>
+</div>
+<button class="bg-primary text-white font-label-caps text-label-caps px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+                        VIEW LIVE SITE
+                    </button>
+</div>
+</header>
+<!-- CONTENT CANVAS -->
+<div class="flex-1 overflow-y-auto p-margin-desktop space-y-gutter">
+<!-- STATS BENTO -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface p-8 border border-outline-variant rounded-lg shadow-[0px_10px_30px_rgba(15,23,42,0.05)] transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL PRODUCTS</span>
+<span class="material-symbols-outlined text-secondary">inventory</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary">1,284</div>
+<p class="text-[12px] font-label-caps mt-2 text-green-600">+12% vs last month</p>
+</div>
+<div class="bg-surface p-8 border border-outline-variant rounded-lg shadow-[0px_10px_30px_rgba(15,23,42,0.05)] transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">NEW MESSAGES</span>
+<span class="material-symbols-outlined text-secondary">mark_as_unread</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary">42</div>
+<p class="text-[12px] font-label-caps mt-2 text-secondary">8 pending response</p>
+</div>
+<div class="bg-surface p-8 border border-outline-variant rounded-lg shadow-[0px_10px_30px_rgba(15,23,42,0.05)] transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ACTIVE PROJECTS</span>
+<span class="material-symbols-outlined text-secondary">architecture</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary">18</div>
+<p class="text-[12px] font-label-caps mt-2 text-primary">In 4 different regions</p>
+</div>
+</div>
+<!-- MAIN DATA SECTION -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<div class="p-8 flex justify-between items-center border-b border-outline-variant">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Recent Inquiries</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage incoming B2B lead generation messages.</p>
+</div>
+<div class="flex space-x-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 border border-outline-variant rounded-lg font-label-caps text-label-caps focus:outline-none focus:border-primary w-64" placeholder="Search..." type="text"/>
+</div>
+<button class="flex items-center space-x-2 border-2 border-primary text-primary px-4 py-2 font-label-caps text-label-caps hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>FILTERS</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant">
+<th class="px-8 py-4 font-label-caps text-label-caps">SENDER</th>
+<th class="px-8 py-4 font-label-caps text-label-caps">INTERESTED PRODUCT</th>
+<th class="px-8 py-4 font-label-caps text-label-caps">DATE</th>
+<th class="px-8 py-4 font-label-caps text-label-caps">STATUS</th>
+<th class="px-8 py-4 font-label-caps text-label-caps text-right">ACTION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-6">
+<p class="font-body-md text-body-md font-bold text-primary">Stadion construction GmbH</p>
+<p class="text-[12px] text-on-surface-variant">info@stadion-bau.de</p>
+</td>
+<td class="px-8 py-6">
+<span class="font-label-caps text-[11px] bg-primary-fixed text-primary px-2 py-1 rounded">HYBRID TURF SYSTEM</span>
+</td>
+<td class="px-8 py-6 font-label-caps text-label-caps text-on-surface-variant">
+                                        OCT 12, 2024
+                                    </td>
+<td class="px-8 py-6">
+<div class="flex items-center text-secondary">
+<span class="w-2 h-2 bg-secondary rounded-full mr-2"></span>
+<span class="font-label-caps text-[11px]">URGENT</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity bg-on-surface text-surface px-3 py-1 text-[11px] font-label-caps rounded">VIEW DETAILS</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-6">
+<p class="font-body-md text-body-md font-bold text-primary">Dubai Sports City</p>
+<p class="text-[12px] text-on-surface-variant">procurement@dsc.ae</p>
+</td>
+<td class="px-8 py-6">
+<span class="font-label-caps text-[11px] bg-primary-fixed text-primary px-2 py-1 rounded">SYNTHETIC RUNNING TRACK</span>
+</td>
+<td class="px-8 py-6 font-label-caps text-label-caps text-on-surface-variant">
+                                        OCT 11, 2024
+                                    </td>
+<td class="px-8 py-6">
+<div class="flex items-center text-green-600">
+<span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+<span class="font-label-caps text-[11px]">RESPONDED</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity bg-on-surface text-surface px-3 py-1 text-[11px] font-label-caps rounded">VIEW DETAILS</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-6">
+<p class="font-body-md text-body-md font-bold text-primary">Elite Academy Poland</p>
+<p class="text-[12px] text-on-surface-variant">m.nowak@elite-academy.pl</p>
+</td>
+<td class="px-8 py-6">
+<span class="font-label-caps text-[11px] bg-primary-fixed text-primary px-2 py-1 rounded">INDOOR SPORTS FLOORING</span>
+</td>
+<td class="px-8 py-6 font-label-caps text-label-caps text-on-surface-variant">
+                                        OCT 10, 2024
+                                    </td>
+<td class="px-8 py-6">
+<div class="flex items-center text-on-surface-variant">
+<span class="w-2 h-2 bg-outline rounded-full mr-2"></span>
+<span class="font-label-caps text-[11px]">PENDING</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity bg-on-surface text-surface px-3 py-1 text-[11px] font-label-caps rounded">VIEW DETAILS</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- SECONDARY ROW: Recent Products & Quick Actions -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- RECENT PRODUCTS -->
+<div class="lg:col-span-2 bg-surface border border-outline-variant rounded-lg">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Recently Added Products</h3>
+<a class="font-label-caps text-label-caps text-secondary underline" href="#">VIEW CATALOG</a>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex items-center p-4 border border-outline-variant rounded hover:shadow-lg transition-all cursor-pointer">
+<div class="w-16 h-16 bg-surface-container-high rounded shrink-0 mr-4 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up photograph of high-quality industrial hybrid turf fibers with a mix of synthetic and natural green textures. The lighting is crisp and bright, emphasizing the technical construction of the sports surface. Professional industrial product photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFMvSjREc-Up3NzVdxdGHQQ1FCZaFespjPJexboXS274TlrihSwsldjsiBdV8ZF9NFnDXYrS3fPaOW9QII_68yPh6dy8D_ZU-fgOGYyjOd8BlY0Gu-9PHeIZwiwq1y8t_BxiQxJx3S1oZC-x6fuPTubp3HZ2pGS_qDgpmDjGPZPjsEca3QgqFx_rVrMAep4HLBs2Yvar646_ttCL-hSq8QbZlNxJB_Ryo68rlrL25d_EOp8Mnw-KnFzZpPZZaMEj-a-GY-0gXX3moi"/>
+</div>
+<div class="min-w-0">
+<p class="font-body-md text-body-md font-bold truncate">RS-Hybrid Elite G3</p>
+<p class="text-[12px] font-label-caps text-secondary">TURF SYSTEMS</p>
+</div>
+</div>
+<div class="flex items-center p-4 border border-outline-variant rounded hover:shadow-lg transition-all cursor-pointer">
+<div class="w-16 h-16 bg-surface-container-high rounded shrink-0 mr-4 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Cross-section detail of a professional red athletic running track showing multiple layers of EPDM granules and polyurethane binder. The aesthetic is highly technical, clean, and industrial with architectural lighting that highlights surface texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK9VzEeZgWAnVg3HUS5Sy7Fy2DXycEwwKLUUqNXyTrJq3jC6MF7AVDqsGjkexL2YFrG9D-jwTNLNs9HkFeK7j6vuvI1hRg3qI-WvAcOtx2dwFwTby1Aks6STqMs4AfLxCDpIc7m7OC2C_bGntqa5pGAd1LaA0oJs3o2V82XB7OCFqkqW3X-mzIkoo636nqFnSuGDKQyxC2-GBx3YFb9gi4gy2DyE44-NOVQVaLyYvj9ndUJaDcRCv-WjbioC6q-ExfElA8REK7GCTs"/>
+</div>
+<div class="min-w-0">
+<p class="font-body-md text-body-md font-bold truncate">T-Pro Olympic Track</p>
+<p class="text-[12px] font-label-caps text-secondary">ATHLETIC TRACKS</p>
+</div>
+</div>
+</div>
+</div>
+<!-- QUICK ACTIONS -->
+<div class="bg-primary text-white p-8 rounded-lg flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Technical Management</h3>
+<p class="opacity-70 font-body-md text-body-md">Update technical specification sheets or export current product logs.</p>
+</div>
+<div class="space-y-4 mt-8">
+<button class="w-full py-3 bg-white text-primary font-label-caps text-label-caps rounded flex items-center justify-center hover:bg-secondary hover:text-white transition-all">
+<span class="material-symbols-outlined mr-2">upload_file</span>
+                                UPDATE E-CATALOG
+                            </button>
+<button class="w-full py-3 border-2 border-white/20 text-white font-label-caps text-label-caps rounded flex items-center justify-center hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined mr-2">download</span>
+                                EXPORT DATA (CSV)
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- FOOTER STUB -->
+<footer class="bg-surface-container-highest px-margin-desktop py-4 flex justify-between border-t border-outline-variant">
+<span class="font-label-caps text-[10px] text-on-surface-variant">© 2024 REHA SPOR. INDUSTRIAL EXCELLENCE IN SPORTS INFRASTRUCTURE.</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">VER 2.4.0-STABLE</span>
+</footer>
+</main>
+</div>
+<!-- NOTIFICATION DOT ANIMATION -->
+<script>
+        // Micro-interaction for sidebar links
+        document.querySelectorAll('aside nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('aside nav a').forEach(l => {
+                    l.classList.remove('bg-secondary/10', 'active-nav-indicator', 'text-white');
+                    l.classList.add('text-surface-variant');
+                });
+                this.classList.add('bg-secondary/10', 'active-nav-indicator', 'text-white');
+                this.classList.remove('text-surface-variant');
+            });
+        });
+
+        // Simple Fade in for page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const main = document.querySelector('main');
+            main.style.opacity = '0';
+            main.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(() => {
+                main.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body></html>

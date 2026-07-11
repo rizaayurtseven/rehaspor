@@ -1,0 +1,106 @@
+import { ArrowRight, BookOpen, Boxes, FolderKanban, Mail, Plus, Settings, Tags } from "lucide-react";
+import Link from "next/link";
+import { AdminHeader } from "@/components/admin/AdminHeader";
+import { AdminStatCard } from "@/components/admin/AdminStatCard";
+import { AdminTable } from "@/components/admin/AdminTable";
+import { adminMessages } from "@/components/admin/adminMockData";
+import { categories } from "@/data/categories";
+import { products } from "@/data/products";
+import { references } from "@/data/references";
+
+const quickActions = [
+  { href: "/admin/products", label: "Yeni ürün ekle", description: "Kataloğa yeni bir ürün kaydı oluştur.", icon: Plus },
+  { href: "/admin/categories", label: "Kategorileri düzenle", description: "Kategori sırasını ve içeriklerini yönet.", icon: Tags },
+  { href: "/admin/catalog", label: "Katalog güncelle", description: "Türkçe veya İngilizce PDF yükle.", icon: BookOpen },
+  { href: "/admin/settings", label: "Site ayarları", description: "İletişim ve sosyal bağlantıları düzenle.", icon: Settings },
+];
+
+export default function AdminDashboardPage() {
+  const unreadMessageCount = adminMessages.filter((message) => !message.isRead).length;
+
+  return (
+    <>
+      <AdminHeader
+        title="Genel Bakış"
+        description="Reha Spor dijital kataloğunun güncel durumunu ve son müşteri taleplerini takip edin."
+        eyebrow="10 Temmuz 2026 · Cuma"
+      />
+      <main className="p-4 sm:p-6 xl:p-8">
+        <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+          <AdminStatCard label="Toplam kategori" value={categories.length} description="Aktif ürün grupları" icon={Tags} tone="blue" />
+          <AdminStatCard label="Toplam ürün" value={products.length} description={`${products.filter((product) => product.isFeatured).length} ürün öne çıkarılıyor`} icon={Boxes} tone="red" />
+          <AdminStatCard label="Referans proje" value={references.length} description="Portfolyoda yayınlanan projeler" icon={FolderKanban} tone="green" />
+          <AdminStatCard label="Okunmamış mesaj" value={unreadMessageCount} description={`${adminMessages.length} toplam müşteri talebi`} icon={Mail} tone="navy" />
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 items-start gap-6 2xl:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.55fr)]">
+          <AdminTable
+            title="Son mesajlar"
+            description="İletişim formundan gelen en güncel müşteri talepleri."
+            headers={["Gönderen", "Konu", "Tarih", "Durum", ""]}
+            minWidth="760px"
+            action={
+              <Link href="/admin/messages" className="inline-flex items-center gap-1.5 text-xs font-black text-brand-red hover:text-red-700">
+                Tümünü görüntüle <ArrowRight size={14} />
+              </Link>
+            }
+          >
+            {adminMessages.slice(0, 4).map((message) => (
+              <tr key={message.id} className="transition hover:bg-slate-50/70">
+                <td className="px-5 py-4">
+                  <p className="font-bold text-brand-navy">{message.name}</p>
+                  <p className="mt-0.5 text-xs text-slate-500">{message.email}</p>
+                </td>
+                <td className="max-w-xs px-5 py-4 font-medium text-slate-700">{message.subject}</td>
+                <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{message.receivedAt}</td>
+                <td className="px-5 py-4">
+                  <span className={message.isRead ? "rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-black text-slate-600" : "rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-black text-brand-red"}>
+                    {message.isRead ? "Okundu" : "Yeni"}
+                  </span>
+                </td>
+                <td className="px-5 py-4 text-right">
+                  <Link href={`/admin/messages?message=${message.id}`} className="font-bold text-brand-navy hover:text-brand-red">İncele</Link>
+                </td>
+              </tr>
+            ))}
+          </AdminTable>
+
+          <section className="rounded-2xl border border-brand-line bg-white p-5 shadow-sm">
+            <div>
+              <p className="text-[11px] font-black uppercase tracking-[0.16em] text-brand-red">Kısayollar</p>
+              <h2 className="mt-1 text-lg font-black text-brand-navy">Hızlı işlemler</h2>
+            </div>
+            <div className="mt-4 grid gap-2.5">
+              {quickActions.map((action) => {
+                const Icon = action.icon;
+                return (
+                  <Link key={action.href} href={action.href} className="group flex items-center gap-3 rounded-xl border border-brand-line p-3.5 transition hover:border-red-200 hover:bg-red-50/30">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand-navy transition group-hover:bg-brand-red group-hover:text-white">
+                      <Icon size={18} />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-black text-brand-navy">{action.label}</span>
+                      <span className="mt-0.5 block truncate text-xs text-slate-500">{action.description}</span>
+                    </span>
+                    <ArrowRight size={16} className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-brand-red" />
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+
+        <section className="mt-6 overflow-hidden rounded-2xl bg-brand-navy p-6 text-white shadow-card sm:flex sm:items-center sm:justify-between sm:gap-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-red-400">Katalog durumu</p>
+            <h2 className="mt-2 text-xl font-black">Ürün kataloğunuz yayına hazır görünüyor.</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-400">PDF kataloğu güncelleyebilir veya yeni ürünleri yayınlamadan önce içeriklerini kontrol edebilirsiniz.</p>
+          </div>
+          <Link href="/admin/catalog" className="mt-5 inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-brand-navy transition hover:bg-red-50 sm:mt-0">
+            Kataloğu yönet <ArrowRight size={16} />
+          </Link>
+        </section>
+      </main>
+    </>
+  );
+}

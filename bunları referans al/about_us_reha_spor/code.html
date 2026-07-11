@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us | REHA SPOR - Industrial Sports Infrastructure</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#565e74",
+                        "on-secondary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f6f3f5",
+                        "outline": "#76777d",
+                        "inverse-surface": "#303032",
+                        "surface-container": "#f0edef",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container-highest": "#e4e2e4",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "on-surface-variant": "#45464d",
+                        "tertiary-container": "#0b1c30",
+                        "outline-variant": "#c6c6cd",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "secondary": "#bb0112",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e4e2e4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#410002",
+                        "on-secondary-fixed-variant": "#93000b",
+                        "inverse-on-surface": "#f3f0f2",
+                        "surface-dim": "#dcd9db",
+                        "secondary-fixed": "#ffdad6",
+                        "primary": "#000000",
+                        "on-tertiary-container": "#75859d",
+                        "on-primary-container": "#7c839b",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "tertiary": "#000000",
+                        "surface-bright": "#fcf8fa",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "primary-fixed": "#dae2fd",
+                        "on-background": "#1b1b1d",
+                        "surface-container-high": "#eae7e9",
+                        "tertiary-fixed": "#d3e4fe",
+                        "primary-fixed-dim": "#bec6e0",
+                        "background": "#fcf8fa",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1b1b1d",
+                        "surface": "#fcf8fa",
+                        "inverse-primary": "#bec6e0",
+                        "primary-container": "#131b2e",
+                        "secondary-container": "#e02928"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "container-max": "1280px",
+                        "margin-desktop": "64px",
+                        "gutter": "32px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-md": ["30px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["60px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .structural-grid {
+            background-image: linear-gradient(to right, #E2E8F0 1px, transparent 1px), linear-gradient(to bottom, #E2E8F0 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .bento-card {
+            border: 1px solid #E2E8F0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            box-shadow: 0px 10px 30px rgba(15, 23, 42, 0.05);
+            border-color: #0F172A;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-secondary-container selection:text-white">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto">
+<a class="font-headline-sm text-headline-sm font-black tracking-tighter text-primary" href="#">REHA SPOR</a>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-secondary font-bold border-b-2 border-secondary pb-1" href="#">About</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Products</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">References</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">E-Catalog</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-none font-label-caps text-label-caps active:opacity-80 active:scale-95 transition-all">
+                Get Offer
+            </button>
+</div>
+</header>
+<main>
+<!-- Section 1: Hero Section -->
+<section class="relative h-[819px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-primary/40 z-10"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="A wide-angle, high-contrast photograph of a state-of-the-art sports flooring manufacturing plant. The scene features massive industrial rollers, clean concrete floors, and a sophisticated navy and white architectural palette. The lighting is cold and professional, emphasizing the technical precision of the machinery and the vast scale of the facility. The atmosphere is quiet, powerful, and impeccably organized." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8aQAkMkPMXP4epN0Mj1kCL8l_mfvSQ_HrC7UwukHMtsipYiTEuu7xGz3BYDvkXOxf6f2epA0Pohuc8rd9MSV85Wu2h6RN637an_mqhPrWpXfcDtrwYfcGEGHVt_cao3al0Z9i2kSXbhon3xEi5zcVtNDiHm1mkFAkG376b4FmwpESHzEQjIKYpAFGI7J6yYzZTGqttLE4NmK96qOOTGvhaoj6poFAjOrKaXeaYMHgiPEyz0VTh1cDJoichXuzC7STeJVY6u0zZRNv')"></div>
+</div>
+<div class="relative z-20 px-margin-desktop max-w-container-max mx-auto w-full">
+<div class="max-w-3xl">
+<span class="font-label-caps text-label-caps text-on-primary bg-secondary px-4 py-2 inline-block mb-6">ESTABLISHED 2000</span>
+<h1 class="font-headline-xl text-headline-xl text-white mb-8">Precision in Every Layer</h1>
+<p class="font-body-lg text-body-lg text-white/90 max-w-xl">
+                        Engineered for elite performance. Reha Spor delivers industrial-grade sports infrastructure through a seamless integration of technical manufacturing and expert application.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Section 2: Our Story -->
+<section class="py-24 md:py-40 px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<div class="lg:col-span-5">
+<span class="font-label-caps text-label-caps text-secondary mb-4 block">EVOLUTION</span>
+<h2 class="font-headline-lg text-headline-lg mb-8">Our Story</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+                        Founded in the early 2000s, Reha Spor began as a specialized installation firm focused on local athletic facilities. Recognizing the need for higher quality standards in raw materials, we transitioned into a vertically integrated manufacturing powerhouse.
+                    </p>
+<div class="flex flex-col gap-8">
+<div class="flex gap-6 items-start">
+<span class="font-headline-sm text-headline-sm text-primary border-b-2 border-secondary">2000</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm mb-2">The Foundation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Inception as an installation specialist for polyurethane sports floors.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="font-headline-sm text-headline-sm text-primary border-b-2 border-secondary">2012</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm mb-2">Industrial Pivot</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Opening our first chemical production facility for SBR and EPDM binders.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="font-headline-sm text-headline-sm text-primary border-b-2 border-secondary">2024</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm mb-2">Global Authority</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Leading the sector with a 15,000m² plant and international distribution.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 relative">
+<div class="w-full h-full min-h-[500px] bg-cover bg-center border border-outline-variant" data-alt="A split-view photographic composition showing two eras of sports construction. On the left, a vintage black and white photo of a manual floor installation from the year 2000. On the right, a vibrant, modern high-tech laboratory where a technician in a white coat is testing synthetic sports turf samples under blue-toned surgical lighting. The transition signifies growth, technical evolution, and industrial maturity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAj9ZidZ_azYMKpQ47n790nUDCTWytQzcnHgNm4H_DHcL2nQCuJUsOQ4gA8XD9vTflD3MUEwMC3cAGk3ZVmonOCn7iToQZzbGK8dS7ppspYES95DN1ptg1jaKsCgzbn9jkS97PqVLZe8vyPV4rp_gd7-Dc7QR3hDr-GjpjlIjLhPajOlTnci3jf-RukBNywmNTUnsxi0SlHxVYbGQ8orWz1iyHB8K6dCBeFLgJR-NwfKzxoC1iDlgryICSX9uoCAclYvr8qT4Viih3v')"></div>
+<div class="absolute -bottom-8 -left-8 bg-primary p-12 hidden xl:block">
+<p class="text-white font-headline-lg text-headline-lg">24+</p>
+<p class="text-white/60 font-label-caps text-label-caps uppercase">Years of Excellence</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Manufacturing Excellence -->
+<section class="bg-primary-container text-on-primary-container py-24 md:py-40">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div>
+<span class="font-label-caps text-label-caps text-secondary mb-4 block">THE HUB</span>
+<h2 class="font-headline-lg text-headline-lg text-white mb-8">Kocaeli Manufacturing Excellence</h2>
+<p class="font-body-lg text-body-lg text-on-primary-container/80 mb-12">
+                            Located in the industrial heart of Kocaeli, our 15,000m² facility serves as the nerve center for global sports infrastructure. Here, raw chemical innovation meets heavy-duty manufacturing.
+                        </p>
+<div class="grid grid-cols-2 gap-8">
+<div class="border-l-4 border-secondary pl-6">
+<h3 class="font-headline-sm text-headline-sm text-white">15,000m²</h3>
+<p class="font-label-caps text-label-caps text-on-primary-container/60">TOTAL AREA</p>
+</div>
+<div class="border-l-4 border-secondary pl-6">
+<h3 class="font-headline-sm text-headline-sm text-white">R&D Lab</h3>
+<p class="font-label-caps text-label-caps text-on-primary-container/60">CERTIFIED TESTING</p>
+</div>
+<div class="border-l-4 border-secondary pl-6">
+<h3 class="font-headline-sm text-headline-sm text-white">ISO 9001</h3>
+<p class="font-label-caps text-label-caps text-on-primary-container/60">QUALITY ASSURED</p>
+</div>
+<div class="border-l-4 border-secondary pl-6">
+<h3 class="font-headline-sm text-headline-sm text-white">24/7</h3>
+<p class="font-label-caps text-label-caps text-on-primary-container/60">PRODUCTION CYCLE</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-4">
+<div class="h-64 bg-cover bg-center" data-alt="An aerial drone shot of a massive, modern industrial complex in Kocaeli. The building is sleek, made of glass and steel, surrounded by organized logistics docks and loading bays. The surrounding landscape is an industrial zone under a bright, midday sun, emphasizing the vast 15,000 square meter scale of the Reha Spor manufacturing facility." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBveqAcJoZb9UejLdIOY4dULovADJELR7wmsaFsRZlIIE89nlu9z3UvHvXk1wzRPHuOkFE_lQJVUYvi-yJOte2n8FRNUDTAToUrx1z_QYIABGqpdSZ-mEr5WvUbuzSsGywmKkscnMf7B9MI6YQYbaAQgMsNB2LvapVGca3uAa59PxhFOzSq4tzY70p-HGqUMOHgHplgPWs5R90YQ5oemS60BR4ML7JLPQSVnQ82CAHqh9JzadtGc2zwu5-C_XTFbc2tt8cgPYvNSZBq')"></div>
+<div class="h-80 bg-cover bg-center" data-alt="A close-up shot of automated chemical mixers within a factory setting. Large stainless steel vats are shown under bright fluorescent lights, with technicians monitoring digital screens displaying pressure and temperature data. The style is technical, sterile, and professional." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWM4-zSGJhbAk4a6sSARzuGplkzWZt_EPsmXZeFPdGiXW-PRme-FgWooMIkFtgzDGeVRBieyKVy6wGbkZA8CS_ezeQQFKyiJT5hZJt4HKx0VYDtNiCMJpOGA4hEiixk8Ju-rtmf97vIzP3-WwzidjCVAyapW0HfWuy2zerD73QQhrMhRSLpjsMaF34nV0b_L4hnjUjs23J2t0oQn72VfzIVSyRA7bJmxqYAvVTXYdxPcbMACm7ladteFIO0Wmh1ci_NRiV5IlQNfKP')"></div>
+</div>
+<div class="space-y-4 pt-12">
+<div class="h-80 bg-cover bg-center" data-alt="A high-precision quality control station where a robotic arm is testing the elasticity and shock absorption of a red polyurethane running track sample. The lighting is crisp, using a cool color temperature to highlight the technical nature of the R&D process." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYTx09j64a5Ml_yljWSvLLViUvqrIH4KUjTYcgyH1P2FSN8Xva84hRiKXBKwA-wOwDgngD1hOfRzPN2JVLI5Zjy1bkdNPawxj0ZjaaXFMPIonZSfY_LKRZYJkxWeihVQHllnVvlj8E_19sgJOjBlP6MLciM22ID1fnhiery3a2HXz7VUipjrx29zXYE3Ljsh917iubh12sbxlbh47Da0xHZ9CN2VoLNA_3qqLnh9TVeKhPQSm68qB4LyUnEiqPXLR5AUGIhQ-SWu0u')"></div>
+<div class="h-64 bg-cover bg-center" data-alt="A finished products warehouse where huge rolls of synthetic turf and pallets of flooring chemicals are perfectly aligned in tall industrial racking. The scene is lit with warm sodium lights and cool daylight from skylights, creating a powerful sense of inventory and scale." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmNmxTUmkR0c49VV_cWNPmm0_J6X_2EEFcstWsbAFjNxLSjiq9wp7mFtVu_Sg5kkrnrR5dojvh72lt9iKq7Oc9ffIOQxyHyy63ZMCel35AVaPpaAWffZe_ju4eCOdrRydlrFpOW-y4ALy96SOfoR0X4MMg7Rap5nuVFIaOfLP-ievVGM5AP8jNSylDLlqKuDbdBqTPLKwVolVOLhF4kBmlECrobQ0hrdiXS2ew6vvb6ZCGYhYWoyjUds7r8haSGXtIUvyt-hJlvfNQ')"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Core Values -->
+<section class="py-24 md:py-40 bg-surface structural-grid">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-20">
+<span class="font-label-caps text-label-caps text-secondary mb-4 block">GUIDING PRINCIPLES</span>
+<h2 class="font-headline-lg text-headline-lg">Industrial Integrity</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Value 1 -->
+<div class="bento-card bg-surface p-10 flex flex-col items-start">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="rocket_launch" data-weight="fill">rocket_launch</span>
+<h3 class="font-headline-sm text-headline-sm mb-4">Innovation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Developing next-generation polymers and recycling technologies for superior athletic performance.</p>
+</div>
+<!-- Value 2 -->
+<div class="bento-card bg-surface p-10 flex flex-col items-start">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="verified" data-weight="fill">verified</span>
+<h3 class="font-headline-sm text-headline-sm mb-4">Reliability</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Every square meter is backed by rigorous testing and a commitment to longevity in harsh climates.</p>
+</div>
+<!-- Value 3 -->
+<div class="bento-card bg-surface p-10 flex flex-col items-start">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="leaderboard" data-weight="fill">leaderboard</span>
+<h3 class="font-headline-sm text-headline-sm mb-4">Performance</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Engineered to meet the exact specifications of FIFA, FIBA, and IAAF international standards.</p>
+</div>
+<!-- Value 4 -->
+<div class="bento-card bg-surface p-10 flex flex-col items-start">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="eco" data-weight="fill">eco</span>
+<h3 class="font-headline-sm text-headline-sm mb-4">Sustainability</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Minimizing environmental footprint through 100% recyclable materials and low-emission production.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Global Reach -->
+<section class="py-24 md:py-40 bg-surface">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+<div class="order-2 lg:order-1">
+<div class="bg-surface-container p-12 border border-outline-variant">
+<span class="font-label-caps text-label-caps text-secondary mb-4 block">NETWORK</span>
+<h2 class="font-headline-lg text-headline-lg mb-8">Global Footprint</h2>
+<div class="space-y-12">
+<div class="flex items-center gap-8">
+<span class="font-headline-xl text-headline-xl text-primary">15+</span>
+<div>
+<p class="font-headline-sm text-headline-sm">Global Distributors</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Strategic partners across Europe, Asia, and the Middle East.</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<span class="font-headline-xl text-headline-xl text-primary">250+</span>
+<div>
+<p class="font-headline-sm text-headline-sm">Completed Projects</p>
+<p class="font-body-md text-body-md text-on-surface-variant">From Olympic stadiums to high-end private sports complexes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="order-1 lg:order-2">
+<div class="aspect-video bg-surface-container-high relative overflow-hidden group">
+<!-- Map Placeholder -->
+<div class="w-full h-full opacity-30 grayscale contrast-125" data-location="Kocaeli, Turkey" style=""></div>
+<div class="absolute inset-0 flex items-center justify-center p-8 text-center">
+<div class="max-w-md">
+<span class="material-symbols-outlined text-secondary text-6xl mb-4" data-icon="public">public</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Expanding Frontiers</h3>
+<p class="font-body-md text-body-md">Exporting technical excellence from Kocaeli to the world's most demanding sports markets.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: CTA -->
+<section class="bg-secondary py-24 md:py-32">
+<div class="px-margin-desktop max-w-container-max mx-auto text-center">
+<h2 class="font-headline-xl text-headline-xl text-white mb-8">Partner with Global Excellence</h2>
+<p class="font-body-lg text-body-lg text-white/80 max-w-2xl mx-auto mb-12">
+                    Start your next infrastructure project with a manufacturer that understands the science of performance. Let's build the future of sports together.
+                </p>
+<div class="flex flex-col sm:flex-row justify-center gap-6">
+<a class="bg-white text-primary px-10 py-5 font-label-caps text-label-caps hover:bg-surface-container-low transition-all" href="#">Get Technical Support</a>
+<a class="border-2 border-white text-white px-10 py-5 font-label-caps text-label-caps hover:bg-white hover:text-secondary transition-all" href="#">Contact Sales</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 bg-primary-container border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+<div class="md:col-span-1">
+<h3 class="font-headline-sm text-headline-sm font-black text-on-primary-container mb-6">REHA SPOR</h3>
+<p class="font-body-md text-body-md text-on-primary-container/70 mb-8">
+                    The technical authority in industrial sports infrastructure and chemical flooring solutions.
+                </p>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-white mb-6">SOLUTIONS</h4>
+<nav class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">Product Lines</a>
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">Technical Support</a>
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">References</a>
+</nav>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-white mb-6">COMPANY</h4>
+<nav class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-secondary-container font-bold" href="#">About Us</a>
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">Sustainability</a>
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">Newsletter Signup</a>
+</nav>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-white mb-6">LEGAL</h4>
+<nav class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-primary-container/80 hover:text-on-primary-container hover:underline" href="#">Terms of Service</a>
+</nav>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop mt-20 pt-10 border-t border-white/10">
+<p class="font-body-md text-body-md text-on-primary-container/50">© 2024 REHA SPOR Industrial Sports Infrastructure. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Simple Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-700');
+            observer.observe(card);
+        });
+    </script>
+</body></html>

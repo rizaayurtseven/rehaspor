@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Us | REHA SPOR - Industrial Sports Infrastructure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#dae2fd",
+                        "on-surface": "#1b1b1d",
+                        "on-tertiary-container": "#75859d",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "on-primary-fixed": "#131b2e",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#303032",
+                        "primary-container": "#131b2e",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-low": "#f6f3f5",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-background": "#1b1b1d",
+                        "background": "#fcf8fa",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e4e2e4",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#0b1c30",
+                        "surface-dim": "#dcd9db",
+                        "outline-variant": "#c6c6cd",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#d3e4fe",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#e02928",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "outline": "#76777d",
+                        "on-secondary-fixed-variant": "#93000b",
+                        "inverse-primary": "#bec6e0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#fffbff",
+                        "primary": "#000000",
+                        "surface": "#fcf8fa",
+                        "on-primary-container": "#7c839b",
+                        "inverse-on-surface": "#f3f0f2",
+                        "tertiary": "#000000",
+                        "surface-container": "#f0edef",
+                        "surface-container-highest": "#e4e2e4",
+                        "on-secondary-fixed": "#410002",
+                        "secondary": "#bb0112",
+                        "secondary-fixed": "#ffdad6",
+                        "surface-tint": "#565e74",
+                        "surface-bright": "#fcf8fa",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "on-surface-variant": "#45464d",
+                        "surface-container-high": "#eae7e9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "margin-desktop": "64px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "headline-xl": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-md": ["30px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .form-input-focus:focus {
+            border-color: #000000 !important;
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-highest dark:bg-surface-container-highest border-b border-outline-variant dark:border-outline">
+<nav class="flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto">
+<div class="font-headline-sm text-headline-sm font-black tracking-tighter text-primary dark:text-on-surface">
+                REHA SPOR
+            </div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="font-label-caps text-label-caps text-on-surface dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-on-surface dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200" href="#">About</a>
+<a class="font-label-caps text-label-caps text-on-surface dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200" href="#">Products</a>
+<a class="font-label-caps text-label-caps text-on-surface dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200" href="#">References</a>
+<a class="font-label-caps text-label-caps text-on-surface dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200" href="#">E-Catalog</a>
+<a class="font-label-caps text-label-caps text-secondary dark:text-secondary-fixed-dim border-b-2 border-secondary pb-1" href="#">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-on-primary-fixed transition-colors">
+                Get Offer
+            </button>
+</nav>
+</header>
+<main class="pt-32 pb-20">
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-desktop mb-20">
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12 md:col-span-8">
+<span class="font-label-caps text-label-caps text-secondary mb-4 block uppercase">Global Sports Infrastructure</span>
+<h1 class="font-headline-xl text-headline-xl mb-6">Connect with our <br/>Technical Excellence team.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        Providing industrial-grade sports solutions across the globe. Whether you're planning a stadium-scale project or specialized training facilities, our engineers are ready to assist.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Contact Grid -->
+<section class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Contact Form -->
+<div class="col-span-12 lg:col-span-7">
+<div class="bg-surface-container-lowest border border-outline-variant p-10 md:p-16 shadow-sm">
+<h2 class="font-headline-md text-headline-md mb-8">Technical Inquiry</h2>
+<form action="#" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Full Name</label>
+<input class="font-label-caps bg-transparent border border-outline-variant py-4 px-4 form-input-focus" placeholder="John Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Email Address</label>
+<input class="font-label-caps bg-transparent border border-outline-variant py-4 px-4 form-input-focus" placeholder="email@company.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Phone Number</label>
+<input class="font-label-caps bg-transparent border border-outline-variant py-4 px-4 form-input-focus" placeholder="+90 --- --- -- --" type="tel"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Subject</label>
+<select class="font-label-caps bg-transparent border border-outline-variant py-4 px-4 form-input-focus appearance-none">
+<option>Technical Specifications</option>
+<option>Quote Request</option>
+<option>Partnership Inquiry</option>
+<option>After-Sales Support</option>
+</select>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Project Details / Message</label>
+<textarea class="font-label-caps bg-transparent border border-outline-variant py-4 px-4 form-input-focus" placeholder="Describe your sports infrastructure requirements..." rows="6"></textarea>
+</div>
+<div class="md:col-span-2 pt-4">
+<button class="w-full md:w-auto bg-primary text-on-primary px-12 py-5 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary transition-all flex items-center justify-center gap-3" type="submit">
+                                    Submit Inquiry
+                                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Info Column -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-gutter">
+<!-- Company Card -->
+<div class="bg-primary text-on-primary p-12 border border-primary">
+<h3 class="font-headline-sm text-headline-sm mb-10 flex items-center gap-3">
+<span class="material-symbols-outlined">corporate_fare</span>
+                            Headquarters
+                        </h3>
+<div class="space-y-8">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary-fixed">location_on</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-primary-container mb-1">ADDRESS</span>
+<p class="font-body-md text-body-md">Industrial Zone, Block 42, St. 18<br/>Kocaeli, Turkey, 41400</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary-fixed">phone_in_talk</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-primary-container mb-1">PHONE</span>
+<p class="font-body-md text-body-md">+90 262 555 0199</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary-fixed">mail</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-primary-container mb-1">EMAIL</span>
+<p class="font-body-md text-body-md">info@rehaspor.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- WhatsApp CTA -->
+<a class="group relative overflow-hidden bg-on-tertiary-container text-white p-8 flex items-center justify-between border border-outline-variant hover:bg-primary transition-all duration-300" href="#">
+<div class="flex items-center gap-6 relative z-10">
+<div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center">
+<svg class="w-8 h-8 fill-white" viewbox="0 0 24 24">
+<path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.224-3.82c1.516.903 3.125 1.387 4.771 1.388 4.876 0 8.846-3.97 8.849-8.848.002-2.36-.913-4.581-2.582-6.251-1.67-1.67-3.89-2.585-6.25-2.585-4.877 0-8.847 3.97-8.849 8.848-.001 1.748.512 3.452 1.481 4.935l-.973 3.551 3.639-.955zm11.233-5.378c-.143-.238-.523-.38-.999-.618s-2.812-1.388-3.24-1.543c-.428-.155-.741-.233-1.053.238-.312.47-.999 1.258-1.222 1.516-.224.258-.448.291-.923.053-.476-.238-2.008-.74-3.824-2.359-1.412-1.259-2.365-2.812-2.643-3.287-.278-.475-.03-.732.208-.97.214-.214.476-.554.714-.832.238-.278.317-.476.476-.793.159-.317.079-.594-.04-.832-.119-.238-1.053-2.537-1.443-3.479-.38-.912-.767-.788-1.053-.802-.271-.013-.58-.015-.889-.015s-.812.115-1.238.577c-.426.462-1.626 1.591-1.626 3.882s1.666 4.5 1.896 4.811c.231.312 3.279 5.007 7.943 7.02 1.109.48 1.975.766 2.651.981 1.115.354 2.13.304 2.932.184.895-.133 2.748-1.123 3.134-2.207.387-1.084.387-2.012.272-2.207z"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps opacity-70 uppercase tracking-tighter">Live Support</span>
+<span class="font-headline-sm text-headline-sm">Connect on WhatsApp</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform duration-300">open_in_new</span>
+<div class="absolute inset-0 bg-secondary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</a>
+<!-- Technical Specs Download -->
+<div class="border border-outline p-10 flex flex-col gap-4">
+<span class="material-symbols-outlined text-primary text-4xl">architecture</span>
+<h4 class="font-headline-sm text-headline-sm">Technical Catalog</h4>
+<p class="font-body-md text-on-surface-variant">Download our complete guide for stadium and arena surface specifications (PDF, 45MB).</p>
+<a class="font-label-caps text-label-caps text-primary underline flex items-center gap-2 mt-2" href="#">
+                            GET TECHNICAL E-CATALOG
+                            <span class="material-symbols-outlined">download</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Map Section -->
+<section class="max-w-container-max mx-auto px-margin-desktop mt-32">
+<div class="mb-10 flex items-end justify-between border-b border-outline-variant pb-8">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-2 block">Global Logistics Center</span>
+<h2 class="font-headline-md text-headline-md">Operational Reach</h2>
+</div>
+<div class="hidden md:flex gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-secondary"></span>
+<span class="font-label-caps text-label-caps">Headquarters</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary"></span>
+<span class="font-label-caps text-label-caps">Distribution Hubs</span>
+</div>
+</div>
+</div>
+<div class="h-[500px] w-full border border-outline-variant relative group grayscale hover:grayscale-0 transition-all duration-700 overflow-hidden">
+<div class="absolute inset-0 bg-surface-container-highest flex items-center justify-center" data-alt="An ultra-high-definition, professional satellite-style map of an industrial zone in Turkey, specifically focusing on Kocaeli. The visual style is sleek and technical, using a monochrome dark navy and grey palette with bright red neon highlights marking logistic routes. The lighting is low-key and dramatic, emphasizing structural grid lines and industrial geometry to match a corporate premium sports brand aesthetic." data-location="Kocaeli, Turkey" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4qJu_U506RwwwzzI08jDTS2qGVRbW-DUmQI5HdNYDgASV174g06j4la6pfbND63dYNewGbL8cQLoqYNC87wyxbLCip16I3DIvH4lpIAj8RCgKcoedn3VcBTr5thJnd-CX4RiyRouA6-lq0HguU4YdbPaoXQs2KdnAdNM01pGEBiqc18BuoxdwILiLWgvxol7RHMF4GP2j5ed057_FN0RVs1XuQFgQ8TyOhyJcjCjlUm-BCjpFA_xxlPOIvlShESHmSMVtlHjViKXu')">
+</div>
+<!-- Interactive Overlay Elements -->
+<div class="absolute top-10 left-10 bg-on-surface text-surface p-6 shadow-xl max-w-xs border border-outline-variant pointer-events-none">
+<p class="font-label-caps text-label-caps mb-2 text-secondary-fixed">KOCAELI HQ</p>
+<p class="font-body-md text-body-md">Our main manufacturing facility and logistics hub spanning 15,000m².</p>
+</div>
+<div class="absolute bottom-10 right-10 flex gap-4">
+<button class="bg-surface p-4 border border-outline-variant hover:bg-primary hover:text-surface transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="bg-surface p-4 border border-outline-variant hover:bg-primary hover:text-surface transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Technical Standards Ticker -->
+<section class="bg-on-surface py-12 mt-32 overflow-hidden whitespace-nowrap">
+<div class="flex items-center gap-20 animate-[marquee_30s_linear_infinite]">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-[0.2em]">FIFA Quality Pro Standards</span>
+<div class="w-2 h-2 bg-secondary"></div>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-[0.2em]">IAAF Certified Infrastructure</span>
+<div class="w-2 h-2 bg-secondary"></div>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-[0.2em]">ITF Accredited Surfaces</span>
+<div class="w-2 h-2 bg-secondary"></div>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-[0.2em]">FIBA Level 1 Equipment</span>
+<div class="w-2 h-2 bg-secondary"></div>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-[0.2em]">ISO 9001:2015 Manufacturing</span>
+<div class="w-2 h-2 bg-secondary"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-20 pb-10 bg-on-surface dark:bg-surface-container-lowest">
+<div class="grid grid-cols-12 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+<div class="col-span-12 lg:col-span-4 mb-10">
+<div class="font-headline-md text-headline-md font-bold text-surface dark:text-primary mb-6">REHA SPOR</div>
+<p class="text-surface-variant dark:text-on-surface-variant max-w-xs mb-8">
+                    Global leader in industrial sports infrastructure and stadium engineering solutions.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 border border-outline flex items-center justify-center text-surface hover:border-secondary hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="w-10 h-10 border border-outline flex items-center justify-center text-surface hover:border-secondary hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+</a>
+</div>
+</div>
+<div class="col-span-6 lg:col-span-2">
+<h5 class="font-label-caps text-label-caps text-secondary-fixed mb-6 uppercase">Company</h5>
+<ul class="space-y-4">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">References</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div class="col-span-6 lg:col-span-2">
+<h5 class="font-label-caps text-label-caps text-secondary-fixed mb-6 uppercase">Technical</h5>
+<ul class="space-y-4">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">Technical Specifications</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">E-Catalog</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">Certifications</a></li>
+</ul>
+</div>
+<div class="col-span-12 lg:col-span-4 mt-10 lg:mt-0">
+<h5 class="font-label-caps text-label-caps text-secondary-fixed mb-6 uppercase">Newsletter</h5>
+<p class="text-surface-variant dark:text-on-surface-variant mb-6">Stay updated on our latest international projects and innovations.</p>
+<div class="flex border-b border-outline py-2">
+<input class="bg-transparent border-none focus:ring-0 text-white w-full font-label-caps" placeholder="Your work email" type="email"/>
+<button class="text-secondary-fixed hover:text-white transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<div class="col-span-12 mt-20 pt-10 border-t border-outline flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="font-body-md text-body-md text-surface-variant dark:text-on-surface-variant">© 2024 REHA SPOR. Industrial Excellence in Sports Infrastructure.</p>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-surface-variant dark:text-on-surface-variant hover:text-white dark:hover:text-primary transition-colors" href="#">Global Distribution</a>
+</div>
+</div>
+</div>
+</footer>
+<style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+<script>
+        // Micro-interactions and Form Handling
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Sending...';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Inquiry Sent';
+                btn.classList.replace('bg-primary', 'bg-green-600');
+                e.target.reset();
+                
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                    btn.classList.replace('bg-green-600', 'bg-primary');
+                }, 3000);
+            }, 1500);
+        });
+
+        // Hover Effect on Map
+        const mapContainer = document.querySelector('[data-location]');
+        mapContainer.addEventListener('mousemove', (e) => {
+            const rect = mapContainer.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            mapContainer.style.backgroundPosition = `${x}% ${y}%`;
+        });
+    </script>
+</body></html>
