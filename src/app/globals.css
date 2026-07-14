@@ -208,7 +208,7 @@ a {
 }
 
 .section-padding {
-  padding-block: clamp(5rem, 9vw, 8rem);
+  padding-block: clamp(4.5rem, 7vw, 7rem);
 }
 
 .admin-shell {
@@ -264,10 +264,9 @@ a {
   border-color: rgb(var(--brand-line)) !important;
 }
 
-:root,
 :root * {
   transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 160ms;
+  transition-duration: 140ms;
   transition-timing-function: ease;
 }
 
