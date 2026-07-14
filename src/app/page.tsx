@@ -6,7 +6,7 @@ import { ContactCTASection } from "@/components/sections/ContactCTASection";
 import { FeaturedProductsSection } from "@/components/sections/FeaturedProductsSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ReferencesSection } from "@/components/sections/ReferencesSection";
-import { getCategories, getFeaturedProducts, getReferences } from "@/lib/api";
+import { getReferences } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Reha Spor | Spor Zeminleri ve Ekipman Çözümleri",
@@ -14,17 +14,13 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [categories, featuredProducts, references] = await Promise.all([
-    getCategories(),
-    getFeaturedProducts(),
-    getReferences()
-  ]);
+  const references = await getReferences();
 
   return (
     <>
       <HeroSection />
-      <CategorySection categories={categories} />
-      <FeaturedProductsSection products={featuredProducts} />
+      <CategorySection />
+      <FeaturedProductsSection />
       <AboutPreviewSection />
       <ReferencesSection references={references} />
       <CatalogCTASection />
