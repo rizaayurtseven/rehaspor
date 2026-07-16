@@ -18,8 +18,12 @@ const config: Config = {
         }
       },
       boxShadow: {
-        card: "0 10px 30px rgba(15, 23, 42, 0.05)",
-        lift: "0 24px 70px rgba(15, 23, 42, 0.12)"
+        card: "0 8px 24px rgba(15, 23, 42, 0.05)",
+        lift: "0 18px 50px rgba(15, 23, 42, 0.10)"
+      },
+      fontFamily: {
+        sans: ["var(--font-hanken)", "sans-serif"],
+        mono: ["var(--font-jetbrains)", "monospace"]
       },
       borderRadius: {
         "2xl": "0.75rem"

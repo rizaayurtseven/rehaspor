@@ -16,7 +16,7 @@ export const productMenuGroups = [
     title: "Spor zeminleri",
     links: [
       { label: "Zemin kaplamaları", href: "/products/zemin-kaplamalari" },
-      { label: "Tel örgü ve aydınlatma", href: "/products/saha-cizgileri" }
+      { label: "Tel örgü ve aydınlatma", href: "/products/saha-cizgileri-ve-uygulamalar" }
     ]
   },
   {

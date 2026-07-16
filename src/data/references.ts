@@ -8,7 +8,7 @@ export const references: ProjectReference[] = [
     year: 2024,
     description:
       "Kapalı spor salonunun poliüretan zemini, branş çizgileri ve son kontrolleri tamamlandı.",
-    image: "/images/references/ankara-spor-salonu/main.jpg",
+    image: "/images/site/polyurethane-sports-hall.png",
     category: "Zemin Kaplamaları"
   },
   {
@@ -18,7 +18,7 @@ export const references: ProjectReference[] = [
     year: 2023,
     description:
       "Açık basketbol sahası için pota, koruma ekipmanları ve saha aksesuarları kuruldu.",
-    image: "/images/references/istanbul-basketbol-sahasi/main.jpg",
+    image: "/images/site/basketball-equipment-gemini.webp",
     category: "Spor Ekipmanları"
   },
   {
@@ -28,7 +28,7 @@ export const references: ProjectReference[] = [
     year: 2024,
     description:
       "Panoramik padel kortun çelik, cam, sentetik çim ve LED aydınlatma uygulamaları tamamlandı.",
-    image: "/images/references/izmir-padel-kort/main.jpg",
+    image: "/images/site/panoramic-padel-court.png",
     category: "Padel Court"
   },
   {

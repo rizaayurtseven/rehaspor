@@ -17,9 +17,8 @@ type PublicPageHeroProps = {
 
 export function PublicPageHero({ eyebrow, title, description, breadcrumbs, children }: PublicPageHeroProps) {
   return (
-    <section className="surface-grid relative overflow-hidden bg-brand-navy py-16 text-white sm:py-24">
-      <div className="absolute right-0 top-0 h-full w-1/3 translate-x-1/3 skew-x-12 bg-brand-red/15" aria-hidden="true" />
-      <div className="container-page relative">
+    <section className="border-b border-white/10 bg-[#101214] py-14 text-white sm:py-20">
+      <div className="container-page">
         {breadcrumbs?.length ? (
           <nav aria-label="Sayfa yolu" className="mb-7">
             <ol className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-400">
@@ -40,9 +39,11 @@ export function PublicPageHero({ eyebrow, title, description, breadcrumbs, child
           </nav>
         ) : null}
 
-        <p className="label-caps text-red-300">{eyebrow}</p>
-        <h1 className="mt-4 max-w-4xl text-balance text-4xl font-black uppercase leading-tight sm:text-5xl">{title}</h1>
-        <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">{description}</p>
+        <div className="border-l-4 border-brand-red pl-6 sm:pl-8">
+          <p className="text-sm font-semibold text-red-300">{eyebrow}</p>
+          <h1 className="mt-3 max-w-4xl text-balance text-4xl font-bold leading-tight sm:text-5xl">{title}</h1>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">{description}</p>
+        </div>
         {children ? <div className="mt-8">{children}</div> : null}
       </div>
     </section>

@@ -1,598 +1,304 @@
 import type { Product } from "@/types/product";
 
-const catalogPdfUrl = "/catalog/Katalog.pdf";
-
-type ProductInput = Omit<Product, "features">;
-
-function createProduct(product: ProductInput): Product {
-  return {
-    ...product,
-    // Eski kartlarla geçici uyumluluk; yeni arayüzler technicalDetails kullanır.
-    features: product.technicalDetails
-  };
-}
-
 export const products: Product[] = [
-  createProduct({
-    id: "prd-1",
+  {
+    id: "rh-z-001",
     code: "RH-Z-001",
     title: "Standart Sistem Akrilik Zemin Kaplaması",
     slug: "standart-sistem-akrilik-zemin-kaplamasi",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Çok amaçlı açık spor sahalarında kullanılan standart akrilik zemin kaplama sistemidir.",
-    description:
-      "Kaymaz yüzeyi, UV dayanımlı renkleri ve kolay bakım avantajıyla açık spor sahalarında dengeli oyun performansı sunan çok katmanlı akrilik sistemdir.",
+    shortDescription: "Açık spor sahaları için uygun, estetik ve dayanıklı standart akrilik zemin kaplama sistemi.",
+    description: "Uluslararası normlara uygun oyun çizgileriyle tamamlanan, asfalt veya beton zeminler üzerine uygulanabilen, yüksek dayanımlı renk katmanlarından oluşan profesyonel standart akrilik zemin sistemidir.",
     technicalDetails: [
-      "Zemin yüksek basınçlı yıkama makineleri ile temizlenir.",
-      "Beton zeminlerde epoksi veya poliüretan astar uygulanır.",
-      "Akrilik resurfacer kat uygulaması yapılır.",
-      "Akrilik renk katları uygulanır.",
-      "Oyun çizgileri uluslararası normlara uygun çizilir."
+      "Asfalt veya beton zeminler üzerine uygulanabilir.",
+      "Beton zeminler için epoksi veya poliüretan astar uygulaması gerektirir.",
+      "Silis akrilik kumu karışımlı resurfacer katmanı tek kat (ortalama 450 gr/m²) uygulanır.",
+      "Akrilik renk katmanı üç kat (ortalama 1050 gr/m²) olarak uygulanır.",
+      "Uygulamalar özel üretim karıştırıcılar ve lastik gelberi vasıtasıyla yapılır.",
+      "Renk katmanlarında iki farklı renk kombinasyonu kullanılabilir."
     ],
     usageAreas: [
-      "Basketbol sahaları",
-      "Voleybol sahaları",
-      "Tenis kortları",
-      "Çok amaçlı spor alanları",
-      "Okul spor sahaları"
+      "Tenis Sahaları",
+      "Basketbol Sahaları",
+      "Çok Amaçlı Dış Mekan Spor Sahaları"
     ],
     applicationSteps: [
-      "Yüzey temizliği ve gerekli tamiratların yapılması",
-      "Astar ve akrilik resurfacer katlarının uygulanması",
-      "Akrilik renk katlarının tamamlanması",
-      "Branş çizgilerinin ölçülerek çizilmesi"
+      "Zeminin yüksek basınçlı yıkama makinesi ile temizlenmesi ve kurumaya bırakılması",
+      "Beton zeminler için astar uygulaması",
+      "Akrilik resurfacer katı uygulaması",
+      "Su toplayan bölgelere özel akrilik tamir harcı ile yama yapılması (gerekirse)",
+      "Zımpara işleminin yapılması",
+      "Üç kat akrilik renk uygulaması (katlar arası kuruma beklenerek)",
+      "Uluslararası normlara uygun oyun çizgilerinin çizilmesi"
     ],
     image: "/images/products/rh-z-001/main.jpg",
     gallery: [
-      "/images/products/rh-z-001/main.jpg",
-      "/images/products/rh-z-001/detail-01.jpg"
+      "/images/products/rh-z-001/gallery-1.jpg",
+      "/images/products/rh-z-001/gallery-2.jpg"
     ],
-    catalogPageImage: "/images/catalog-pages/page-04.jpg",
-    catalogPdfUrl,
+    catalogPageImage: "/images/catalog-pages/page-05.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: true
-  }),
-  createProduct({
-    id: "prd-2",
+  },
+  {
+    id: "rh-z-002",
     code: "RH-Z-002",
     title: "Cushion Sistem Akrilik Zemin Kaplaması",
     slug: "cushion-sistem-akrilik-zemin-kaplamasi",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Darbe emici cushion katlarıyla oyuncu konforunu artıran profesyonel akrilik zemin sistemidir.",
-    description:
-      "Standart akrilik sisteme eklenen esnek cushion katmanları sayesinde eklem yükünü azaltmaya ve daha konforlu oyun karakteri oluşturmaya yardımcı olur.",
+    shortDescription: "Sporcu sağlığını koruyan, darbe emici granül yastıklama katmanına sahip esnek akrilik zemin.",
+    description: "Standart akrilik sisteme ek olarak içerdiği toz granül ve silis kumu karışımlı 'cushion' (yastıklama) katmanları sayesinde ekstra esneklik sağlayan, sporcu konforunu en üst seviyeye çıkaran zemin kaplama sistemidir.",
     technicalDetails: [
-      "Uygulama zemini temizlenir, çatlak ve kot kusurları onarılır.",
-      "Uygun astar ve akrilik resurfacer katı uygulanır.",
-      "İstenen performansa göre birden fazla cushion katı serilir.",
-      "Akrilik renk katları UV dayanımlı olarak tamamlanır.",
-      "Oyun çizgileri ilgili branş ölçülerine göre uygulanır."
+      "Asfalt veya beton zeminler üzerine uygulanabilir.",
+      "Resurfacer katmanı tek kat (ortalama 450 gr/m²) uygulanır.",
+      "Silis kumu ve toz granül karışımlı cushion katmanı üç kat (ortalama 1350 gr/m²) uygulanır.",
+      "Akrilik renk katmanı üç kat (ortalama 1050 gr/m²) olarak uygulanır.",
+      "Her katmandan önce bir önceki katın tamamen kuruması beklenir.",
+      "Renk katmanlarında iki renkli uygulama yapılabilmektedir."
     ],
     usageAreas: [
-      "Tenis kortları",
-      "Basketbol sahaları",
-      "Voleybol sahaları",
-      "Profesyonel antrenman alanları"
+      "Tenis Sahaları",
+      "Basketbol Sahaları",
+      "Voleybol Sahaları",
+      "Çok Amaçlı Açık Spor Tesisleri"
     ],
     applicationSteps: [
-      "Zemin hazırlığı ve astarlama",
-      "Resurfacer ile yüzey tesviyesi",
-      "Cushion ve renk katlarının uygulanması",
-      "Oyun çizgilerinin çizilmesi"
+      "Zeminin yüksek basınçlı makine ile temizlenmesi",
+      "Gerekli ise beton zeminler için epoksi veya poliüretan astar sürülmesi",
+      "Akrilik resurfacer katı uygulaması",
+      "Üç kat akrilik cushion (yastıklama) katı uygulaması",
+      "Üç kat akrilik renk uygulaması",
+      "Oyun çizgilerinin uluslararası normlara uygun çizilmesi"
     ],
     image: "/images/products/rh-z-002/main.jpg",
-    gallery: ["/images/products/rh-z-002/main.jpg"],
-    catalogPageImage: "/images/catalog-pages/page-05.jpg",
-    catalogPdfUrl,
+    gallery: [
+      "/images/products/rh-z-002/gallery-1.jpg",
+      "/images/products/rh-z-002/gallery-2.jpg"
+    ],
+    catalogPageImage: "/images/catalog-pages/page-07.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: true
-  }),
-  createProduct({
-    id: "prd-3",
+  },
+  {
+    id: "rh-z-003",
     code: "RH-Z-003",
     title: "Rulo Üzeri Sistem Akrilik Zemin Kaplaması",
     slug: "rulo-uzeri-sistem-akrilik-zemin-kaplamasi",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Esnek rulo altyapı üzerine uygulanan, konforlu ve homojen akrilik spor zemini çözümüdür.",
-    description:
-      "Hazırlanan alt zemine yapıştırılan darbe emici rulo katman ile akrilik son katları bir araya getirerek salonlarda konforlu, derzsiz bir oyun yüzeyi oluşturur.",
+    shortDescription: "SBR rulo alt yapısı sayesinde maksimum şok emilimi sağlayan profesyonel akrilik zemin.",
+    description: "Saha ebatlarına uygun üretilmiş kauçuk (SBR) rulo malzemenin zemine yapıştırılmasıyla oluşturulan, üzerine yastıklama ve akrilik renk katmanlarının uygulandığı, üst düzey esneklik sunan zemin sistemidir.",
     technicalDetails: [
-      "Alt zemin nem, kot ve yüzey dayanımı açısından kontrol edilir.",
-      "Esnek rulo malzeme poliüretan yapıştırıcı ile zemine sabitlenir.",
-      "Rulo birleşimleri uygun dolgu sistemiyle kapatılır.",
-      "Akrilik dolgu ve renk katları homojen biçimde uygulanır.",
-      "Branş çizgileri projedeki ölçülere göre tamamlanır."
+      "4, 5, 6, 7 veya 8 mm kalınlığında SBR rulo malzeme kullanılmaktadır.",
+      "SBR rulo, çift kompenantlı poliüretan yapıştırıcı ile zemine sabitlenir.",
+      "Resurfacer katmanı ortalama 450 gr/m² sarfiyatla uygulanır.",
+      "Granüllü cushion katmanı üç kat (ortalama 1350 gr/m²) uygulanır.",
+      "Akrilik renk katmanı üç kat (ortalama 1050 gr/m²) olarak uygulanır.",
+      "Ek yerlerine özel derz işlemi yapılmaktadır."
     ],
     usageAreas: [
-      "Kapalı spor salonları",
-      "Okul spor alanları",
-      "Çok amaçlı salonlar",
-      "Antrenman tesisleri"
+      "Profesyonel Tenis Kortları",
+      "Çok Amaçlı Spor Sahaları",
+      "Atletizm Pisti Alanları"
     ],
     applicationSteps: [
-      "Alt zemin kontrolü ve temizliği",
-      "Rulo katmanın yapıştırılması",
-      "Birleşim ve yüzey düzeltmelerinin yapılması",
-      "Akrilik katlar ile çizgilerin uygulanması"
+      "Zeminin yüksek basınçlı yıkanması ve kuruması",
+      "Poliüretan yapıştırıcı ile SBR rulo malzemenin serilip yapıştırılması",
+      "Rulo ek yerlerine derz yapılması",
+      "Akrilik resurfacer malzeme uygulaması",
+      "Akrilik cushion (yastıklama) katmanlarının uygulanması",
+      "Akrilik renk katmanlarının uygulanması",
+      "Oyun çizgilerinin çizilmesi"
     ],
     image: "/images/products/rh-z-003/main.jpg",
-    gallery: ["/images/products/rh-z-003/main.jpg"],
-    catalogPageImage: "/images/catalog-pages/page-06.jpg",
-    catalogPdfUrl,
+    gallery: [
+      "/images/products/rh-z-003/gallery-1.jpg",
+      "/images/products/rh-z-003/gallery-2.jpg"
+    ],
+    catalogPageImage: "/images/catalog-pages/page-09.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: false
-  }),
-  createProduct({
-    id: "prd-4",
+  },
+  {
+    id: "rh-z-004",
     code: "RH-Z-004",
     title: "Poliüretan Zemin Kaplaması",
     slug: "poliuretan-zemin-kaplamasi",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Kapalı spor alanlarında tercih edilen, esnek ve dayanıklı poliüretan zemin kaplama sistemidir.",
-    description:
-      "Darbe emici altyapısı ve derzsiz son katıyla profesyonel kapalı salonlarda konfor, dayanıklılık ve kolay bakım sağlayan spor zemini sistemidir.",
+    shortDescription: "Kapalı spor salonları için tasarlanmış, dikişsiz, esnek ve estetik kaplama sistemi.",
+    description: "Genellikle kapalı alanlarda tercih edilen; kauçuk rulo altyapısı üzerine uygulanan macun dolgu, self-leveling poliüretan ve son kat boya aşamalarından oluşan yüksek esneklikli zemin kaplamasıdır.",
     technicalDetails: [
-      "Zemin temizlendikten sonra SBR rulo malzeme uygulanır.",
-      "Poliüretan yapıştırıcı kullanılır.",
-      "Sealer/macunun ardından self leveling poliüretan uygulanır.",
-      "Son kat poliüretan boya yapılır.",
-      "Branş çizgileri çizilir."
+      "120 cm eninde, istenilen kalınlıkta SBR rulo altyapı kullanılır.",
+      "Rulo malzeme, çift kompenantlı poliüretan (P.U.) yapıştırıcı ile yapıştırılır.",
+      "Zeminin durumuna göre 1 veya 2 kat sealer (macun) dolgu yapılır.",
+      "Özel taraklı mala ile uygulanan self-leveling poliüretan kalınlığı 2 mm'dir.",
+      "Üst katman olarak poliüretan son kat boya uygulaması gerçekleştirilir.",
+      "Esnek yapısıyla kapalı alan sporlarında üst düzey avantaj sağlar."
     ],
     usageAreas: [
-      "Kapalı spor salonları",
-      "Basketbol sahaları",
-      "Voleybol sahaları",
-      "Çok amaçlı kapalı tesisler"
+      "Kapalı Spor Salonları",
+      "Basketbol ve Voleybol Sahaları",
+      "Jimnastik ve Çok Amaçlı Kapalı Salonlar"
     ],
     applicationSteps: [
-      "Alt zeminin hazırlanması ve astarlanması",
-      "SBR rulo katmanın yapıştırılması",
-      "Sealer ve self leveling katlarının uygulanması",
-      "Son kat boya ile branş çizgilerinin tamamlanması"
+      "Zeminin tamamen temizlenmesi",
+      "P.U. yapıştırıcı ile SBR rulo malzemenin zemine yapıştırılması",
+      "Kuruma sonrası macun (sealer) dolgu katmanının atılması",
+      "Taraklı mala ile 2 mm self-leveling poliüretan uygulanması",
+      "Poliüretan malzemenin kurumasının ardından poliüretan son kat boya işlemi",
+      "İstenilen branşlara ait oyun çizgilerinin çizilmesi"
     ],
     image: "/images/products/rh-z-004/main.jpg",
     gallery: [
-      "/images/products/rh-z-004/main.jpg",
-      "/images/products/rh-z-004/detail-01.jpg"
+      "/images/products/rh-z-004/gallery-1.jpg",
+      "/images/products/rh-z-004/gallery-2.jpg"
     ],
-    catalogPageImage: "/images/catalog-pages/page-07.jpg",
-    catalogPdfUrl,
+    catalogPageImage: "/images/catalog-pages/page-11.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: true
-  }),
-  createProduct({
-    id: "prd-5",
+  },
+  {
+    id: "rh-z-005",
     code: "RH-Z-005",
     title: "EPDM Zemin Kaplaması",
     slug: "epdm-zemin-kaplamasi",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Dış mekân spor ve oyun alanları için esnek, renkli ve darbe azaltıcı kauçuk zemin sistemidir.",
-    description:
-      "SBR alt kat ve renkli EPDM granül üst katın birlikte uygulandığı sistem; güvenli, su geçirgen ve projeye özel desenlenebilen bir yüzey sunar.",
+    shortDescription: "Atletizm pistleri ve açık spor sahaları için şok emici, uzun ömürlü, dökme kauçuk sistem.",
+    description: "SBR granül ve EPDM granüllerin, özel bağlayıcı (binder) malzemelerle karıştırılarak finisher makineleriyle dökülmesi prensibine dayanan, yüksek performanslı ve dayanıklı zemin sistemidir.",
     technicalDetails: [
-      "Beton veya asfalt alt zemin dayanım ve eğim açısından kontrol edilir.",
-      "Poliüretan bağlayıcı ile SBR kauçuk alt kat serilir.",
-      "Renkli EPDM granüller projedeki kalınlıkta uygulanır.",
-      "Derzsiz yüzey su tahliyesini destekleyecek şekilde tamamlanır.",
-      "Renk ve desenler proje ihtiyacına göre uyarlanabilir."
+      "Altyapıda bağlayıcı ile karıştırılmış SBR granül katmanı bulunur.",
+      "Üst yüzeyde renkli ve UV dayanımlı EPDM granül katmanı kullanılır.",
+      "Uygulamalar özel karıştırıcı kazanlarda heterojen karışım sağlanarak yapılır.",
+      "Serme işlemi, homojen kalınlık için 'finisher' makinesi yardımıyla gerçekleştirilir.",
+      "Hem atletizm pistleri hem de açık hava top sporları için idealdir."
     ],
     usageAreas: [
-      "Çocuk oyun alanları",
-      "Koşu ve yürüyüş parkurları",
-      "Açık hava fitness alanları",
-      "Okul bahçeleri"
+      "Atletizm Pistleri",
+      "Basketbol Sahaları",
+      "Voleybol Sahaları",
+      "Tenis Kortları"
     ],
     applicationSteps: [
-      "Alt zemin hazırlığı ve astar",
-      "SBR kauçuk alt kat uygulaması",
-      "EPDM granül son kat uygulaması",
-      "Kürlenme ve yüzey kontrolü"
+      "Zeminin basınçlı makine ile yıkanması ve kurumaya bırakılması",
+      "Zemin astarının (primer) rulo ile sürülmesi",
+      "SBR granül ve bağlayıcı karışımının finisher ile serilmesi",
+      "Alt katman kuruduktan sonra EPDM granül ve bağlayıcı karışımının finisher ile serilmesi",
+      "Standartlara uygun çizgilerin çizilmesi"
     ],
     image: "/images/products/rh-z-005/main.jpg",
-    gallery: ["/images/products/rh-z-005/main.jpg"],
-    catalogPageImage: "/images/catalog-pages/page-08.jpg",
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-6",
+    gallery: [
+      "/images/products/rh-z-005/gallery-1.jpg",
+      "/images/products/rh-z-005/gallery-2.jpg"
+    ],
+    catalogPageImage: "/images/catalog-pages/page-13.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
+    isFeatured: true
+  },
+  {
+    id: "rh-z-006",
     code: "RH-Z-006",
-    title: "Sentetik Çim Zemin Kaplaması Kumlu Sistem",
+    title: "Sentetik Çim Zemin Kaplaması (Kumlu Sistem)",
     slug: "sentetik-cim-zemin-kaplamasi-kumlu-sistem",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Silis kum dolgulu yapısıyla tenis ve çok amaçlı alanlarda dengeli kullanım sunan sentetik çim sistemidir.",
-    description:
-      "Dayanıklı sentetik çim halı ile kontrollü silis kum dolgusunu birleştirir; düzenli top davranışı ve düşük bakım ihtiyacıyla farklı tesislere uyarlanabilir.",
+    shortDescription: "Çok amaçlı spor sahaları için top zıplamasına imkan veren kum dolgulu suni çim sistem.",
+    description: "Genellikle çok amaçlı alanlarda tercih edilen, sadece silisyum kuvars kum dolgusu kullanılarak spor müsabakalarındaki topların zeminde sekmesine imkan tanıyan sentetik çim sistemidir.",
     technicalDetails: [
-      "Alt zemin eğimi ve drenajı uygulama öncesinde kontrol edilir.",
-      "Sentetik çim rulolar projeye göre açılır ve ek yerleri birleştirilir.",
-      "Silis kum dolgu yüzeye homojen olarak dağıtılır.",
-      "Çim lifleri mekanik fırçalama ile dik konuma getirilir.",
-      "Saha çizgileri farklı renk çimle sisteme entegre edilir."
+      "20-26 mm hav yüksekliğine sahip sentetik çim malzeme kullanılır.",
+      "Sadece kum dolgusu yapılır, bu sayede top sekmesi engellenmez.",
+      "Silisyum kuvars kum dolgusu metrekareye 25-28 kg olacak şekilde uygulanır.",
+      "Ek yerleri çift kompenantlı poliüretan yapıştırıcı ile birleştirilir.",
+      "Oyun çizgileri sentetik çim kesimi yapılarak saha içine entegre edilir."
     ],
     usageAreas: [
-      "Tenis kortları",
-      "Çok amaçlı spor alanları",
-      "Okul bahçeleri",
-      "Peyzaj uygulamaları"
+      "Çok Amaçlı Spor Sahaları",
+      "Mini Futbol Sahaları",
+      "Açık Hava Kortları"
     ],
     applicationSteps: [
-      "Alt zemin ve drenaj kontrolü",
-      "Çim ruloların serilmesi ve eklenmesi",
-      "Silis kum dolgunun uygulanması",
-      "Fırçalama ve son saha kontrolü"
+      "Zeminin temizlenmesi",
+      "Saha ölçülerine uygun sentetik çim malzemenin serilmesi",
+      "Oyun çizgileri, ceza alanları ve noktaların kesimi",
+      "Ek yerlerinin P.U. yapıştırıcı ile yapıştırılması",
+      "Silisyum kuvars kum dolgusunun sahaya homojen şekilde uygulanması"
     ],
     image: "/images/products/rh-z-006/main.jpg",
-    gallery: ["/images/products/rh-z-006/main.jpg"],
-    catalogPageImage: "/images/catalog-pages/page-09.jpg",
-    catalogPdfUrl,
+    gallery: [
+      "/images/products/rh-z-006/gallery-1.jpg",
+      "/images/products/rh-z-006/gallery-2.jpg"
+    ],
+    catalogPageImage: "/images/catalog-pages/page-14.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: false
-  }),
-  createProduct({
-    id: "prd-7",
+  },
+  {
+    id: "rh-z-007",
     code: "RH-Z-007",
-    title: "Sentetik Çim Zemin Kaplaması Granüllü Sistem",
+    title: "Sentetik Çim Zemin Kaplaması (Granüllü Sistem)",
     slug: "sentetik-cim-zemin-kaplamasi-granullu-sistem",
     categorySlug: "zemin-kaplamalari",
-    shortDescription:
-      "Futbol sahalarında yoğun kullanıma uygun, kum ve performans granülü dolgulu sentetik çim sistemidir.",
-    description:
-      "Yoğun antrenman ve maç trafiğine uygun sentetik çim, silis kum ve elastik granül katmanlarıyla doğal çime yakın oyun hissi ve güçlü drenaj sağlar.",
+    shortDescription: "Halı sahalar için özel olarak tasarlanmış, kauçuk granül dolgusuyla esnekliği artırılmış çim.",
+    description: "Özellikle futbol (halı saha) zeminleri için tasarlanan, yüksek hav uzunluğuna sahip çimlerin kum ve granül dolgu ile desteklenerek sporcu yaralanmalarını minimuma indirdiği esnek sistemdir.",
     technicalDetails: [
-      "Alt temel, kot ve drenaj değerleri proje şartlarına göre hazırlanır.",
-      "Sentetik çim rulolar serilir ve profesyonel ek bandı ile birleştirilir.",
-      "Silis kum dolgu kontrollü miktarda yüzeye yayılır.",
-      "SBR veya proje tanımındaki performans granülü uygulanır.",
-      "Dolgu seviyesi fırçalama ve saha testleriyle dengelenir."
+      "40, 50 veya 55 mm hav yüksekliğine sahip sentetik çim kullanılır.",
+      "Metrekare başına 25-28 kg silisyum kuvars kum dolgu işlemi yapılır.",
+      "Kum üzerine 1-3 mm çapında kauçuk granül dolgusu (ortalama 8 kg/m²) uygulanır.",
+      "Granül dolgu zemine yüksek esneklik katarak sporcu sağlığını korur.",
+      "Ek yerleri çift kompenantlı poliüretan yapıştırıcı ile sabitlenir."
     ],
     usageAreas: [
-      "Futbol sahaları",
-      "Halı sahalar",
-      "Antrenman tesisleri",
-      "Okul spor alanları"
+      "Halı Sahalar",
+      "Futbol Antrenman Sahaları",
+      "Profesyonel ve Amatör Futbol Tesisleri"
     ],
     applicationSteps: [
-      "Alt temel ve drenaj hazırlığı",
-      "Çim ruloların serilmesi ve birleştirilmesi",
-      "Kum ve granül dolgu uygulaması",
-      "Fırçalama ile saha kontrolü"
+      "Zeminin temizlik işlemlerinin yapılması",
+      "Ölçülere uygun sentetik çimin serilmesi",
+      "Oyun alanı ve ceza sahası çizgilerinin kesilip yerleştirilmesi",
+      "Birleşim yerlerinin yapıştırılması",
+      "Silisyum kum dolgusunun yapılması",
+      "Özel ekipmanlar yardımıyla granül dolgunun zemine yayılması"
     ],
     image: "/images/products/rh-z-007/main.jpg",
     gallery: [
-      "/images/products/rh-z-007/main.jpg",
-      "/images/products/rh-z-007/detail-01.jpg"
+      "/images/products/rh-z-007/gallery-1.jpg",
+      "/images/products/rh-z-007/gallery-2.jpg"
     ],
-    catalogPageImage: "/images/catalog-pages/page-10.jpg",
-    catalogPdfUrl,
+    catalogPageImage: "/images/catalog-pages/page-15.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: true
-  }),
-  createProduct({
-    id: "prd-8",
+  },
+  {
+    id: "rh-z-008",
     code: "RH-Z-008",
     title: "Otopark ve Fabrika Çizgileri",
     slug: "otopark-ve-fabrika-cizgileri",
-    categorySlug: "saha-cizgileri",
-    shortDescription:
-      "Yoğun trafik alanları için ölçülü, görünür ve dayanıklı profesyonel çizgi uygulamasıdır.",
-    description:
-      "Otopark, fabrika ve saha dolaşımını düzenlemek için yüzeye uygun boya sistemi, hassas aplikasyon ve temiz bitişle uygulanan işaretleme çözümüdür.",
+    categorySlug: "saha-cizgileri-ve-uygulamalar",
+    shortDescription: "Açık/kapalı otoparklar ve endüstriyel tesisler için profesyonel yol ve yönlendirme çizgileri.",
+    description: "Araç park yerleri, yaya yolları, engelli park alanları ve endüstriyel tesis yönlendirmelerini içeren, özel üretim makinelerle projeye tam uyumlu şekilde uygulanan çizgi sistemleridir.",
     technicalDetails: [
-      "Uygulama yüzeyi toz, yağ ve gevşek parçalardan arındırılır.",
-      "Akslar, park cepleri ve güvenlik alanları projeye göre işaretlenir.",
-      "Yüzeye uygun epoksi, akrilik veya poliüretan boya seçilir.",
-      "Maskeleme ile net kenarlı çizgiler uygulanır.",
-      "Kürlenme sonrasında kalınlık ve görünürlük kontrolü yapılır."
+      "Kapalı ve açık otopark alanlarına uygulanabilir.",
+      "Çizim işlemi özel üretim yol/çizgi makineleri ile gerçekleştirilir.",
+      "İşlem öncesinde projeye uygun mimari yerleşim ve işaretlemeler yapılır.",
+      "Aynı teknik ve makineler fabrika içi zemin yönlendirmelerinde de kullanılır.",
+      "Araç, yaya ve özel işaretçiler (dur, engelli vb.) yüksek görünürlükle uygulanır."
     ],
     usageAreas: [
-      "Kapalı ve açık otoparklar",
-      "Fabrika üretim alanları",
-      "Depo ve lojistik tesisleri",
-      "Spor sahaları"
+      "Açık ve Kapalı Otoparklar",
+      "Fabrika ve Üretim Tesisleri",
+      "Lojistik ve Depo Alanları"
     ],
     applicationSteps: [
-      "Yüzey temizliği",
-      "Ölçüm, aplikasyon ve maskeleme",
-      "Boya uygulaması",
-      "Kürlenme ve kalite kontrol"
+      "Projeye uygun olarak yerleşim planının analiz edilmesi",
+      "Zemin üzerinde gerekli taslak işaretlemelerin (şablon) yapılması",
+      "Özel makine yardımı ile sınır çizgilerinin çekilmesi",
+      "Özel ikon ve işaretçilerin (engelli, elektrikli araç vb.) şablonlanıp boyanması"
     ],
     image: "/images/products/rh-z-008/main.jpg",
-    gallery: ["/images/products/rh-z-008/main.jpg"],
-    catalogPageImage: "/images/catalog-pages/page-11.jpg",
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-9",
-    code: "RH-SE-001",
-    title: "Basketbol Potası",
-    slug: "basketbol-potasi",
-    categorySlug: "spor-ekipmanlari",
-    shortDescription:
-      "Açık ve kapalı sahalar için sabit ya da hareketli profesyonel basketbol potası çözümleri.",
-    description:
-      "Proje ölçülerine göre seçilebilen gövde, pano, çember ve koruma ekipmanlarıyla güvenli, dayanıklı ve standartlara uygun kurulum sunar.",
-    technicalDetails: [
-      "Sabit, tavana katlanır veya hareketli model seçenekleri bulunur.",
-      "Çelik gövde elektrostatik boya veya galvaniz kaplama ile korunur.",
-      "Pano ve çember ölçüleri kullanım seviyesine göre belirlenir.",
-      "Koruyucu minder ve ankraj detayları projeye dahil edilebilir."
-    ],
-    usageAreas: [
-      "Açık basketbol sahaları",
-      "Kapalı spor salonları",
-      "Okul spor alanları",
-      "Antrenman tesisleri"
-    ],
-    image: "/images/products/basketbol-potasi/main.jpg",
-    gallery: ["/images/products/basketbol-potasi/main.jpg"],
-    catalogPageImage: "/images/catalog-pages/page-12.jpg",
-    catalogPdfUrl,
-    isFeatured: true
-  }),
-  createProduct({
-    id: "prd-10",
-    code: "RH-SE-002",
-    title: "Voleybol Direği",
-    slug: "voleybol-diregi",
-    categorySlug: "spor-ekipmanlari",
-    shortDescription:
-      "Salon ve açık saha kullanımına uygun, ayarlanabilir file gergili voleybol direği sistemidir.",
-    description:
-      "Sağlam zemin yuvası, hassas file gerdirme mekanizması ve farklı oyun seviyelerine uyarlanabilen yüksekliğiyle uzun ömürlü kullanım sağlar.",
-    technicalDetails: [
-      "Direk gövdesi alüminyum veya korumalı çelik üretilebilir.",
-      "File yüksekliği farklı kullanıcı grupları için ayarlanabilir.",
-      "Gerdirme mekanizması kontrollü ve güvenli kullanım sağlar.",
-      "Direk koruma minderleri projeye eklenebilir."
-    ],
-    usageAreas: [
-      "Voleybol sahaları",
-      "Kapalı spor salonları",
-      "Okul spor alanları",
-      "Çok amaçlı sahalar"
-    ],
-    image: "/images/products/voleybol-diregi/main.jpg",
-    gallery: ["/images/products/voleybol-diregi/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-11",
-    code: "RH-SE-003",
-    title: "Futbol Kale Direği",
-    slug: "futbol-kale-diregi",
-    categorySlug: "spor-ekipmanlari",
-    shortDescription:
-      "Farklı saha ölçülerine uygun, güvenli bağlantılı ve hava koşullarına dayanıklı futbol kalesidir.",
-    description:
-      "Mini saha, okul ve profesyonel tesisler için sabit veya taşınabilir gövde seçenekleri; düzenli file bağlantısı ve güvenli montaj detaylarıyla sunulur.",
-    technicalDetails: [
-      "Gövde ölçüleri saha standardına göre projelendirilir.",
-      "Alüminyum veya korozyona dayanıklı çelik profil kullanılabilir.",
-      "File kancaları oyuncu güvenliğini destekleyecek biçimde yerleştirilir.",
-      "Sabit modellerde ankraj, mobil modellerde devrilme önlemi uygulanır."
-    ],
-    usageAreas: [
-      "Profesyonel futbol sahaları",
-      "Halı sahalar",
-      "Okul sahaları",
-      "Antrenman alanları"
-    ],
-    image: "/images/products/futbol-kale-diregi/main.jpg",
-    gallery: ["/images/products/futbol-kale-diregi/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-12",
-    code: "RH-SE-004",
-    title: "Tenis Direği",
-    slug: "tenis-diregi",
-    categorySlug: "spor-ekipmanlari",
-    shortDescription:
-      "Profesyonel ve çok amaçlı kortlar için kontrollü file gerdirmeli tenis direği sistemidir.",
-    description:
-      "Kort standardına uygun ölçüsü, dayanıklı metal gövdesi ve mekanik gerdirme sistemiyle file yüksekliğinin düzenli korunmasına yardımcı olur.",
-    technicalDetails: [
-      "Direk kesiti ve yüksekliği kort standardına uygun hazırlanır.",
-      "Mekanik gerdirme kolu file tansiyonunu hassas biçimde ayarlar.",
-      "Gömme yuva ve kapak detayı çok amaçlı alanlarda kolay kullanım sağlar.",
-      "Dış mekân modellerinde korozyon koruması uygulanır."
-    ],
-    usageAreas: [
-      "Tenis kortları",
-      "Spor kulüpleri",
-      "Site spor alanları",
-      "Okul tesisleri"
-    ],
-    image: "/images/products/tenis-diregi/main.jpg",
-    gallery: ["/images/products/tenis-diregi/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-13",
-    code: "RH-G-001",
-    title: "Tribün Koltuğu",
-    slug: "tribun-koltugu",
-    categorySlug: "gym-ekipmanlari",
-    shortDescription:
-      "Salon ve saha tribünleri için ergonomik, dayanıklı ve farklı renklerde koltuk çözümleri.",
-    description:
-      "Projeye uygun yerleşim, sağlam sabitleme ve kolay temizlenebilir yüzey özellikleriyle seyirci alanlarında düzenli ve kurumsal bir görünüm oluşturur.",
-    technicalDetails: [
-      "Darbe ve UV dayanımlı polimer gövde seçenekleri bulunur.",
-      "Basamak veya metal konstrüksiyon üzerine güvenli biçimde sabitlenir.",
-      "Numaralandırma ve kurumsal renk uygulaması yapılabilir.",
-      "Ergonomik form uzun süreli oturum konforunu destekler."
-    ],
-    usageAreas: [
-      "Kapalı spor salonları",
-      "Stadyumlar",
-      "Okul tribünleri",
-      "Çok amaçlı etkinlik alanları"
-    ],
-    image: "/images/products/tribun-koltugu/main.jpg",
-    gallery: ["/images/products/tribun-koltugu/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: true
-  }),
-  createProduct({
-    id: "prd-14",
-    code: "RH-G-002",
-    title: "Skorboard",
-    slug: "skorboard",
-    categorySlug: "gym-ekipmanlari",
-    shortDescription:
-      "Farklı spor branşları için uzaktan kontrollü, yüksek görünürlüklü dijital skorboard sistemidir.",
-    description:
-      "Salon ölçüsü ve branş ihtiyaçlarına göre yapılandırılan gösterge alanları; oyuncu, hakem ve seyirciler için net maç bilgisi sağlar.",
-    technicalDetails: [
-      "Yüksek parlaklıklı LED göstergeler uzak mesafeden okunabilir.",
-      "Skor, süre, periyot ve takım faul bilgileri yapılandırılabilir.",
-      "Kablolu veya kablosuz kontrol seçenekleri sunulur.",
-      "Panel kasası tesis koşullarına uygun koruma ile üretilir."
-    ],
-    usageAreas: [
-      "Basketbol salonları",
-      "Voleybol salonları",
-      "Çok amaçlı spor tesisleri",
-      "Okul spor salonları"
-    ],
-    image: "/images/products/skorboard/main.jpg",
-    gallery: ["/images/products/skorboard/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-15",
-    code: "RH-G-003",
-    title: "Koruyucu Duvar Paneli",
-    slug: "koruyucu-duvar-paneli",
-    categorySlug: "gym-ekipmanlari",
-    shortDescription:
-      "Kapalı spor salonlarında oyuncu güvenliğini artıran darbe emici duvar koruma panelidir.",
-    description:
-      "Salon duvarlarını korurken çarpma etkisini azaltmaya yardımcı olan panel sistemi, proje ölçüsünde ve kurumsal renk seçenekleriyle uygulanır.",
-    technicalDetails: [
-      "Darbe emici iç katman dayanıklı dış kaplama ile korunur.",
-      "Panel kalınlığı ve yüksekliği risk analizine göre seçilebilir.",
-      "Yüzey kolay temizlenebilir ve yoğun kullanıma uygundur.",
-      "Gizli veya kontrollü sabitleme detayları güvenli bitiş sağlar."
-    ],
-    usageAreas: [
-      "Kapalı spor salonları",
-      "Okul salonları",
-      "Jimnastik alanları",
-      "Antrenman tesisleri"
-    ],
-    image: "/images/products/koruyucu-duvar-paneli/main.jpg",
-    gallery: ["/images/products/koruyucu-duvar-paneli/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: false
-  }),
-  createProduct({
-    id: "prd-16",
-    code: "RH-P-001",
-    title: "Panoramik Padel Kort",
-    slug: "panoramik-padel-kort",
-    categorySlug: "padel-court",
-    shortDescription:
-      "Geniş görüş alanı, temperli camları ve güçlü çelik yapısıyla premium padel kort çözümüdür.",
-    description:
-      "Profesyonel oyun geometrisini panoramik cam tasarım, sentetik çim zemin ve entegre aydınlatma altyapısıyla birleştiren anahtar teslim kort sistemidir.",
-    technicalDetails: [
-      "Taşıyıcı çelik konstrüksiyon proje yüklerine göre hazırlanır.",
-      "Panoramik temperli cam paneller güvenli bağlantılarla monte edilir.",
-      "Tel örgü, kapı ve oyuncu temas yüzeyleri kontrollü biçimde tamamlanır.",
-      "Sentetik çim, file ve LED aydınlatma sisteme entegre edilir."
-    ],
-    usageAreas: [
-      "Padel kulüpleri",
-      "Otel ve resort tesisleri",
-      "Özel spor kompleksleri",
-      "Belediye spor tesisleri"
-    ],
-    applicationSteps: [
-      "Saha altyapısı ve ankraj planının hazırlanması",
-      "Çelik konstrüksiyon ile camların montajı",
-      "Çim zemin, file ve çevre ekipmanlarının kurulması",
-      "Aydınlatma, güvenlik ve oyun kontrollerinin yapılması"
-    ],
-    image: "/images/products/panoramik-padel-kort/main.jpg",
     gallery: [
-      "/images/products/panoramik-padel-kort/main.jpg",
-      "/images/products/panoramik-padel-kort/detail-01.jpg"
+      "/images/products/rh-z-008/gallery-1.jpg",
+      "/images/products/rh-z-008/gallery-2.jpg"
     ],
-    catalogPdfUrl,
-    isFeatured: true
-  }),
-  createProduct({
-    id: "prd-17",
-    code: "RH-P-002",
-    title: "Standart Padel Kort",
-    slug: "standart-padel-kort",
-    categorySlug: "padel-court",
-    shortDescription:
-      "Standartlara uygun ölçülerde, dayanıklı çelik ve cam bileşenlerden oluşan padel kort sistemidir.",
-    description:
-      "Kulüp, site ve belediye projeleri için bakım kolaylığı, kontrollü maliyet ve güvenli oyun alanını bir araya getiren eksiksiz kort çözümüdür.",
-    technicalDetails: [
-      "Kort ölçüleri ve oyun alanı yerleşimi standartlara uygun hazırlanır.",
-      "Çelik taşıyıcılar korozyona karşı korumalı olarak üretilir.",
-      "Temperli cam ve tel örgü paneller güvenli bağlantılarla sabitlenir.",
-      "Sentetik çim, file ve kapı ekipmanları projeye dahil edilir."
-    ],
-    usageAreas: [
-      "Padel kulüpleri",
-      "Site spor alanları",
-      "Belediye tesisleri",
-      "Okul ve üniversite kampüsleri"
-    ],
-    applicationSteps: [
-      "Altyapı ve ankraj hazırlığı",
-      "Konstrüksiyon, cam ve tel örgü montajı",
-      "Sentetik çim ile oyun ekipmanlarının kurulması",
-      "Son ölçüm ve güvenlik kontrolü"
-    ],
-    image: "/images/products/standart-padel-kort/main.jpg",
-    gallery: ["/images/products/standart-padel-kort/main.jpg"],
-    catalogPdfUrl,
+    catalogPageImage: "/images/catalog-pages/page-16.jpg",
+    catalogPdfUrl: "/catalog/Katalog.pdf",
     isFeatured: false
-  }),
-  createProduct({
-    id: "prd-18",
-    code: "RH-P-003",
-    title: "Padel Kort Aydınlatma Sistemi",
-    slug: "padel-kort-aydinlatma-sistemi",
-    categorySlug: "padel-court",
-    shortDescription:
-      "Gece kullanımında homojen görüş sağlayan, enerji verimli LED padel kort aydınlatma sistemidir.",
-    description:
-      "Kort geometrisine göre yapılan aydınlatma yerleşimi, kamaşmayı azaltmaya ve oyun alanının dengeli biçimde aydınlatılmasına yardımcı olur.",
-    technicalDetails: [
-      "LED armatür gücü hedeflenen aydınlık seviyesine göre seçilir.",
-      "Direk ve armatür açıları homojen ışık dağılımı için ayarlanır.",
-      "Dış ortam bileşenleri uygun koruma sınıfında kullanılır.",
-      "Elektrik panosu ve kontrol seçenekleri projeye göre yapılandırılır."
-    ],
-    usageAreas: [
-      "Açık padel kortları",
-      "Kapalı padel tesisleri",
-      "Spor kulüpleri",
-      "Otel spor alanları"
-    ],
-    applicationSteps: [
-      "Aydınlatma hesabı ve yerleşim planı",
-      "Direk, kablolama ve pano altyapısının kurulması",
-      "LED armatürlerin montajı ve yönlendirilmesi",
-      "Ölçüm, test ve devreye alma"
-    ],
-    image: "/images/products/padel-kort-aydinlatma-sistemi/main.jpg",
-    gallery: ["/images/products/padel-kort-aydinlatma-sistemi/main.jpg"],
-    catalogPdfUrl,
-    isFeatured: false
-  })
+  }
 ];

@@ -8,12 +8,10 @@ export type Product = {
   description: string;
   technicalDetails: string[];
   usageAreas: string[];
-  applicationSteps?: string[];
+  applicationSteps: string[];
   image: string;
-  gallery?: string[];
-  catalogPageImage?: string;
-  catalogPdfUrl?: string;
+  gallery: string[];
+  catalogPageImage: string;
+  catalogPdfUrl: string;
   isFeatured: boolean;
-  /** @deprecated Yeni ekranlarda technicalDetails alanını kullanın. */
-  features: string[];
 };

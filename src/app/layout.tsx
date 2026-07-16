@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "@/app/globals.css";
 import { PublicShell } from "@/components/layout/PublicShell";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
 const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
 const title = "Reha Spor | Profesyonel Zemin ve Ekipman Çözümleri";
@@ -33,7 +32,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     applicationName: "Reha Spor",
-    keywords: ["spor zeminleri", "spor ekipmanları", "padel court", "saha uygulamaları", "Reha Spor"],
     alternates: { canonical: baseUrl },
     openGraph: {
       type: "website",
@@ -57,8 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr">
-      <body className={`${inter.variable} ${jetBrainsMono.variable} bg-brand-cream text-brand-ink antialiased`}>
-        <ThemeProvider />
+      <body className={`${hanken.variable} ${jetBrainsMono.variable} bg-brand-cream text-brand-ink antialiased`}>
         <PublicShell>{children}</PublicShell>
       </body>
     </html>

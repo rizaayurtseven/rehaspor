@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight, ShoppingBag, X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { productMenuGroups, publicNavItems, siteName } from "@/lib/constants";
-import { ThemeSwitcher } from "@/components/layout/ThemeSwitcher";
 
 type MobileMenuProps = { open: boolean; onClose: () => void };
 
@@ -56,7 +55,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             ))}
           </div>
 
-          <div className="mt-7 border-t border-brand-line pt-5"><ThemeSwitcher /></div>
+          <Link href="/cart" onClick={onClose} className="mt-7 flex min-h-12 items-center gap-3 border-t border-brand-line pt-5 font-semibold text-brand-navy"><ShoppingBag size={18} className="text-brand-red" /> Teklif sepeti</Link>
         </div>
 
         <div className="border-t border-brand-line p-5">

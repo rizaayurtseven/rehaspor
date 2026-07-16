@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ImageFallback } from "@/components/ui/ImageFallback";
 import { categories } from "@/data/categories";
 import type { Product } from "@/types/product";
@@ -8,39 +8,39 @@ export function ProductCard({ product }: { product: Product }) {
   const categoryTitle = categories.find((category) => category.slug === product.categorySlug)?.title ?? "Ürün";
 
   return (
-    <Link
-      href={`/products/${product.categorySlug}/${product.slug}`}
-      className="group flex h-full flex-col overflow-hidden border border-brand-line bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand-navy focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2"
-    >
-      <ImageFallback
-        src={product.image}
-        alt={`${product.title} ürün görseli`}
-        eyebrow={product.code}
-        label={categoryTitle}
-        className="h-56"
-        imageClassName="transition duration-700 group-hover:scale-105"
-        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-      />
+    <article className="kinetic-card group flex h-full flex-col border border-brand-line bg-white hover:border-brand-red">
+      <Link href={`/products/${product.categorySlug}/${product.slug}`} className="block focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/20">
+        <ImageFallback
+          src={product.image}
+          alt={`${product.title} ürün görseli`}
+          eyebrow={product.code}
+          label={categoryTitle}
+          className="aspect-[4/3] w-full border-b border-brand-line"
+          imageClassName="transition-[transform,filter] duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.035] group-hover:-rotate-[0.35deg]"
+          sizes="(min-width: 1200px) 25vw, (min-width: 768px) 50vw, 100vw"
+        />
+      </Link>
 
-      <div className="flex flex-1 flex-col p-7">
-        <span className="label-caps text-brand-red">{product.code}</span>
-        <h3 className="mt-3 text-xl font-black uppercase leading-tight text-brand-navy">{product.title}</h3>
-        <p className="mt-4 text-sm leading-6 text-slate-600">{product.shortDescription}</p>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <span className="technical-label text-brand-red">{product.code}</span>
+          <span className="text-xs font-semibold text-emerald-700">Proje siparişine uygun</span>
+        </div>
+        <h3 className="mt-3 text-2xl font-bold leading-[1.02] tracking-[-0.04em] text-brand-navy">
+          <Link href={`/products/${product.categorySlug}/${product.slug}`} className="hover:text-brand-red">{product.title}</Link>
+        </h3>
+        <p className="mt-3 line-clamp-2 text-[0.75rem] leading-[1.7] tracking-[0.015em] text-brand-muted">{product.shortDescription}</p>
 
-        <ul className="mt-6 grid gap-3 border-t border-brand-line pt-5" aria-label="Öne çıkan özellikler">
-          {product.technicalDetails.slice(0, 2).map((detail) => (
-            <li key={detail} className="flex gap-2 text-xs leading-5 text-slate-600">
-              <Check size={14} className="mt-0.5 shrink-0 text-brand-red" aria-hidden="true" />
-              <span className="line-clamp-2">{detail}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-6 border-t border-brand-line pt-5">
+          <span className="technical-label block text-brand-steel">Fiyatlandırma</span>
+          <strong className="mt-1 block text-lg font-bold text-brand-navy">Proje bazlı teklif</strong>
+          <span className="mt-1 block text-xs text-brand-muted">Termin ve montaj kapsamı ayrıca planlanır.</span>
+        </div>
 
-        <span className="label-caps mt-auto inline-flex items-center gap-2 pt-6 text-brand-navy transition group-hover:text-brand-red">
-          Ürün detayı
-          <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden="true" />
-        </span>
+        <Link href={`/products/${product.categorySlug}/${product.slug}`} className="mt-5 inline-flex min-h-11 items-center justify-between border-t border-brand-line pt-4 text-sm font-bold text-brand-navy transition duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:text-brand-red">
+          Teknik detayı incele <ArrowRight size={17} className="transition duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:-rotate-12" aria-hidden="true" />
+        </Link>
       </div>
-    </Link>
+    </article>
   );
 }
