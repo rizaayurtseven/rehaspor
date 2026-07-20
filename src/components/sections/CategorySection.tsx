@@ -1,37 +1,68 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
+import { ImageFallback } from "@/components/ui/ImageFallback";
+import type { Category } from "@/types/category";
 
-const groups = [
-  { no: "01", title: "Spor zeminleri", text: "Akrilik, poliüretan, EPDM ve sentetik çim sistemleri", href: "/products/zemin-kaplamalari", image: "/images/site/polyurethane-sports-hall.png", className: "lg:col-span-7 lg:row-span-2 lg:min-h-[650px]" },
-  { no: "02", title: "Branş ekipmanları", text: "Basketbol, voleybol, futbol ve tenis ekipmanları", href: "/products/spor-ekipmanlari", image: "/images/site/basketball-equipment-gemini.webp", className: "lg:col-span-5 lg:mt-14 lg:min-h-[310px]" },
-  { no: "03", title: "Padel kort", text: "Konstrüksiyon, cam, çim ve aydınlatma dahil anahtar teslim", href: "/products/padel-court", image: "/images/site/panoramic-padel-court.png", className: "lg:col-span-5 lg:-mt-7 lg:translate-x-7 lg:min-h-[285px]" }
+const categoryLayouts = [
+  "lg:col-span-7 lg:row-span-2 lg:min-h-[38rem]",
+  "lg:col-span-5 lg:min-h-[19rem]",
+  "lg:col-span-5 lg:min-h-[19rem]",
+  "lg:col-span-5 lg:min-h-[22rem]",
+  "lg:col-span-7 lg:min-h-[22rem]"
 ];
 
-export function CategorySection() {
+export function CategorySection({ categories }: { categories: Category[] }) {
   return (
-    <section className="bg-brand-cream py-24 sm:py-32">
+    <section className="bg-brand-cream py-20 sm:py-28 lg:py-32" aria-labelledby="solutions-title">
       <div className="container-page">
-        <div className="grid gap-10 border-b border-brand-line pb-9 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-9">
-            <p className="technical-label text-brand-red">Çözüm alanları</p>
-            <h2 className="mt-5 max-w-4xl text-[3.5rem] font-bold leading-[0.88] tracking-[-0.06em] text-brand-navy sm:text-[5.7rem]">Tek saha,<br /><span className="ml-[14%] text-brand-red">bütün disiplinler.</span></h2>
+        <Reveal>
+          <div className="grid gap-6 border-b border-brand-line pb-8 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <p className="technical-label text-brand-red">Ana çözüm alanları</p>
+              <h2
+                id="solutions-title"
+                className="mt-4 max-w-4xl text-[clamp(2.7rem,6vw,5.8rem)] font-bold leading-[0.92] tracking-[-0.058em] text-brand-navy"
+              >
+                Spor tesisinin bütün katmanları.
+              </h2>
+            </div>
+            <p className="max-w-md text-base leading-7 text-brand-muted sm:text-lg sm:leading-8 lg:col-span-4 lg:justify-self-end">
+              Doğru yüzey, doğru ekipman ve kontrollü uygulama aynı proje planında buluşur.
+            </p>
           </div>
-          <p className="max-w-xs text-[0.78rem] leading-[1.75] tracking-[0.02em] text-brand-muted lg:col-span-3 lg:pb-2">Doğru yüzey, doğru ekipman ve kontrollü uygulama aynı proje planında buluşur.</p>
-        </div>
+        </Reveal>
 
-        <div className="stagger-in mt-12 grid gap-5 lg:grid-cols-12 lg:items-start">
-          {groups.map((group) => (
-            <Link key={group.no} href={group.href} className={`kinetic-card group relative min-h-[340px] overflow-hidden bg-brand-navy ${group.className}`}>
-              <Image src={group.image} alt="" fill className="object-cover opacity-70 transition-[transform,opacity] duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.035] group-hover:-rotate-[0.25deg] group-hover:opacity-85" sizes="(min-width: 1024px) 58vw, 100vw" />
-              <div className="absolute inset-0 bg-black/25" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between border-t border-white/25 bg-brand-navy/95 p-6 text-white sm:p-8">
-                <div>
-                  <span className="technical-label text-red-300">{group.no}</span>
-                  <h3 className="mt-3 text-3xl font-bold leading-[0.95] tracking-[-0.04em]">{group.title}</h3>
-                  <p className="mt-3 max-w-md text-[0.72rem] leading-[1.65] tracking-[0.02em] text-slate-300">{group.text}</p>
+        <div className="mt-8 grid gap-4 lg:grid-cols-12">
+          {categories.map((category, index) => (
+            <Link
+              key={category.id}
+              href={`/products/${category.slug}`}
+              className={`group relative isolate min-h-80 overflow-hidden rounded-[6px] bg-brand-navy focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/30 ${categoryLayouts[index] ?? "lg:col-span-4"}`}
+            >
+              <div className="absolute inset-0">
+                <ImageFallback
+                  src={category.image}
+                  alt={`${category.title} uygulama örneği`}
+                  label={category.title}
+                  className="h-full w-full"
+                  imageClassName="object-cover transition-transform duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                  sizes={index === 0 ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 42vw, 100vw"}
+                />
+              </div>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,15,27,.08)_25%,rgba(8,15,27,.92)_100%)]" />
+              <div className="absolute inset-x-0 bottom-0 z-10 p-6 text-white sm:p-8">
+                <div className="flex items-end justify-between gap-5 border-t border-white/35 pt-5">
+                  <div>
+                    <h3 className="text-2xl font-bold leading-none tracking-[-0.035em] sm:text-3xl">{category.title}</h3>
+                    <p className="mt-3 max-w-lg text-base leading-7 text-slate-100">{category.description}</p>
+                  </div>
+                  <ArrowUpRight
+                    size={26}
+                    className="shrink-0 transition-transform duration-[400ms] group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </div>
-                <ArrowUpRight className="shrink-0 text-white transition duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:rotate-12" aria-hidden="true" />
               </div>
             </Link>
           ))}

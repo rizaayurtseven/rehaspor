@@ -73,7 +73,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 <strong className="text-2xl font-bold text-brand-navy">Proje bazlı teklif</strong>
                 <span className="text-xs font-semibold text-emerald-700">Siparişe uygun</span>
               </div>
-              <p className="mt-3 text-sm leading-6 text-brand-muted">Net fiyat ve termin; ölçü, adet, montaj yeri ve uygulama kapsamına göre hazırlanır.</p>
+              <p className="mt-3 text-base leading-7 text-brand-muted">Net fiyat ve termin; ölçü, adet, montaj yeri ve uygulama kapsamına göre hazırlanır.</p>
               <AddToQuoteButton product={product} className="mt-6 w-full" />
               <Link href={`/contact?subject=${encodeURIComponent(`${product.code} - ${product.title}`)}`} className="mt-3 flex min-h-12 items-center justify-center border border-brand-navy px-5 py-3 text-sm font-bold text-brand-navy hover:bg-brand-navy hover:text-white">Teknik ekibe danışın</Link>
             </div>

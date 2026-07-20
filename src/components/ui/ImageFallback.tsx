@@ -41,7 +41,7 @@ export function ImageFallback({
           fill
           sizes={sizes}
           priority={priority}
-          className={cn("object-cover transition duration-700", imageClassName)}
+          className={cn("object-cover", imageClassName)}
           onError={() => setHasError(true)}
         />
       ) : (

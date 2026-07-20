@@ -1,45 +1,60 @@
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { ImageReveal } from "@/components/motion/ImageReveal";
+import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
-import { SectionTitle } from "@/components/ui/SectionTitle";
 
-const strengths = [
-  "Keşiften teslimata tek ekip",
-  "İmalat ve montaj deneyimi",
-  "Projeye özel teknik çözüm",
-  "Kontrollü uygulama ve temiz teslim"
+const principles = [
+  "Sahada görülen probleme göre sistem seçimi",
+  "Uygulama öncesi altyapı ve detay kontrolü",
+  "Zemin, ekipman ve montajın birlikte planlanması"
 ];
 
 export function AboutPreviewSection() {
   return (
-    <section className="overflow-hidden bg-white py-24 sm:py-36">
-      <div className="container-page grid items-center gap-16 lg:grid-cols-12 lg:gap-8">
-        <div className="relative min-h-[520px] lg:col-span-7 lg:-ml-16">
-          <Image src="/images/site/reha-spor-court-hero.png" alt="Reha Spor saha uygulaması" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" />
-          <div className="absolute -bottom-8 right-[-1.5rem] bg-brand-red px-8 py-7 text-white lg:right-[-4.5rem]">
-            <strong className="block text-4xl font-bold leading-none tracking-[-0.055em]">2000’li yıllardan beri</strong>
-            <span className="mt-3 block max-w-56 text-[0.65rem] uppercase leading-[1.6] tracking-[0.12em] text-white/80">sahada üretim ve uygulama deneyimi</span>
-          </div>
-          <span className="absolute -left-2 top-10 bg-white px-3 py-8 font-mono text-[0.64rem] font-bold uppercase tracking-[0.2em] text-brand-red [writing-mode:vertical-rl]">İmalat / Uygulama</span>
-        </div>
-
-        <div className="stagger-in lg:col-span-5 lg:pl-12 lg:pt-24">
-          <SectionTitle
-            eyebrow="Reha Spor hakkında"
-            title="En iyi bildiğimiz işi yapıyoruz"
-            description="Spor zeminleri ve ekipmanlarıyla başlayan saha deneyimimizi; araştırma, imalat ve uygulama gücüyle geliştiriyoruz. Her projeyi, gelecekte göstereceğimiz bir referans olarak görüyoruz."
+    <section className="overflow-hidden bg-brand-navy text-white" aria-labelledby="experience-title">
+      <div className="grid lg:grid-cols-12">
+        <ImageReveal className="relative min-h-[26rem] lg:col-span-7 lg:min-h-[44rem]">
+          <Image
+            src="/images/about/santiyeden-uygulama.webp"
+            alt="Spor zemini uygulaması sırasında yüzey kontrolü yapan teknik ekip"
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 58vw, 100vw"
           />
-          <div className="mt-10 grid gap-x-8 gap-y-1 sm:grid-cols-2">
-            {strengths.map((item, index) => (
-              <div key={item} className={`flex items-center gap-3 border-t border-brand-line py-5 text-[0.78rem] font-semibold leading-5 text-brand-navy ${index % 2 ? "sm:translate-y-5" : ""}`}>
-                <span className="grid h-7 w-7 shrink-0 place-items-center bg-brand-red text-white transition duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:rotate-12 hover:bg-[rgb(var(--accent-hover))]"><Check size={15} /></span>
-                {item}
-              </div>
-            ))}
+          <div className="absolute inset-0 bg-brand-navy/18" />
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-white/30 bg-brand-navy/90 px-5 py-4 sm:px-8">
+            <p className="technical-label text-white/75">Uygulama disiplini</p>
+            <span className="h-px w-20 bg-brand-red sm:w-36" aria-hidden="true" />
           </div>
-          <Button href="/about" variant="secondary" className="mt-8">
-            Bizi yakından tanıyın <ArrowRight size={17} className="ml-2" />
-          </Button>
+        </ImageReveal>
+
+        <div className="relative flex items-center px-5 py-16 sm:px-8 lg:col-span-5 lg:px-12 lg:py-20 xl:px-16">
+          <div className="absolute left-0 top-0 hidden h-24 w-1 bg-brand-red lg:block" />
+          <Reveal>
+            <p className="technical-label text-red-300">Şantiyeden gelen tecrübe</p>
+            <h2
+              id="experience-title"
+              className="mt-5 max-w-xl text-[clamp(2.7rem,5vw,5.3rem)] font-bold leading-[0.9] tracking-[-0.058em]"
+            >
+              Çizimde doğru.
+              <span className="block text-red-400">Sahada çalışır.</span>
+            </h2>
+            <p className="mt-7 max-w-lg text-base leading-7 text-slate-200 sm:text-lg sm:leading-8">
+              Reha Spor; yalnızca malzeme tedarik etmez. Zeminin hazırlanmasından son çizgi ve ekipman montajına kadar uygulamanın bütününü birlikte ele alır.
+            </p>
+            <ul className="mt-8 grid gap-4">
+              {principles.map((principle, index) => (
+                <li key={principle} className="grid grid-cols-[2.5rem_1fr] gap-3 border-t border-white/15 pt-4 text-base leading-7 text-slate-200">
+                  <span className="technical-label pt-1 text-red-300">{String(index + 1).padStart(2, "0")}</span>
+                  <span>{principle}</span>
+                </li>
+              ))}
+            </ul>
+            <Button href="/about" className="mt-9">
+              Reha Spor&apos;u tanıyın <ArrowRight size={18} className="ml-2" aria-hidden="true" />
+            </Button>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -12,8 +12,8 @@ type EmptyStateProps = {
 
 export function EmptyState({ title, description, action, icon, className }: EmptyStateProps) {
   return (
-    <div className={cn("rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center", className)}>
-      <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-red-50 text-brand-red">
+    <div className={cn("rounded-[8px] border border-dashed border-slate-300 bg-white px-6 py-14 text-center", className)}>
+      <div className="mx-auto flex size-12 items-center justify-center rounded-[8px] bg-red-50 text-brand-red">
         {icon ?? <PackageSearch aria-hidden="true" size={22} />}
       </div>
       <h2 className="mt-5 text-xl font-extrabold tracking-tight text-brand-navy">{title}</h2>

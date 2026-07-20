@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
           eyebrow={product.code}
           label={categoryTitle}
           className="aspect-[4/3] w-full border-b border-brand-line"
-          imageClassName="transition-[transform,filter] duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.035] group-hover:-rotate-[0.35deg]"
+          imageClassName="transition-transform duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
           sizes="(min-width: 1200px) 25vw, (min-width: 768px) 50vw, 100vw"
         />
       </Link>
@@ -29,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="mt-3 text-2xl font-bold leading-[1.02] tracking-[-0.04em] text-brand-navy">
           <Link href={`/products/${product.categorySlug}/${product.slug}`} className="hover:text-brand-red">{product.title}</Link>
         </h3>
-        <p className="mt-3 line-clamp-2 text-[0.75rem] leading-[1.7] tracking-[0.015em] text-brand-muted">{product.shortDescription}</p>
+        <p className="mt-3 line-clamp-2 text-base leading-7 text-brand-muted">{product.shortDescription}</p>
 
         <div className="mt-6 border-t border-brand-line pt-5">
           <span className="technical-label block text-brand-steel">Fiyatlandırma</span>
@@ -37,8 +37,8 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="mt-1 block text-xs text-brand-muted">Termin ve montaj kapsamı ayrıca planlanır.</span>
         </div>
 
-        <Link href={`/products/${product.categorySlug}/${product.slug}`} className="mt-5 inline-flex min-h-11 items-center justify-between border-t border-brand-line pt-4 text-sm font-bold text-brand-navy transition duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:text-brand-red">
-          Teknik detayı incele <ArrowRight size={17} className="transition duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:-rotate-12" aria-hidden="true" />
+        <Link href={`/products/${product.categorySlug}/${product.slug}`} className="mt-5 inline-flex min-h-11 items-center justify-between border-t border-brand-line pt-4 text-sm font-bold text-brand-navy transition-colors duration-[400ms] hover:text-brand-red">
+          Teknik detayı incele <ArrowRight size={17} className="transition-transform duration-[400ms] group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </div>
     </article>

@@ -35,7 +35,7 @@ export function ContactForm({ initialSubject = "" }: ContactFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-brand-line bg-white p-6 shadow-card sm:p-8">
+    <form onSubmit={handleSubmit} className="rounded-[8px] border border-brand-line bg-white p-6 shadow-card sm:p-8">
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="grid gap-2 text-sm font-bold text-brand-navy">
           Ad soyad

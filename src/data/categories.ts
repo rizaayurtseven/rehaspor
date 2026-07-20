@@ -7,7 +7,7 @@ export const categories: Category[] = [
     title: "Zemin Kaplamaları",
     description:
       "Açık ve kapalı spor alanları için akrilik, poliüretan, EPDM ve sentetik çim zemin çözümleri.",
-    image: "/images/site/reha-spor-court-hero.png",
+    image: "/images/categories/zemin-kaplamalari.webp",
     productCount: 7
   },
   {
@@ -16,7 +16,7 @@ export const categories: Category[] = [
     title: "Spor Ekipmanları",
     description:
       "Basketbol, voleybol, futbol, tenis ve çok amaçlı sahalar için profesyonel ekipmanlar.",
-    image: "/images/site/basketball-equipment-gemini.webp",
+    image: "/images/categories/spor-ekipmanlari.webp",
     productCount: 4
   },
   {
@@ -25,7 +25,7 @@ export const categories: Category[] = [
     title: "Gym Ekipmanları",
     description:
       "Spor salonları ve kapalı tesisler için ekipman, skorboard, koruyucu panel ve tribün çözümleri.",
-    image: "/images/site/polyurethane-sports-hall.png",
+    image: "/images/categories/gym-ekipmanlari.webp",
     productCount: 3
   },
   {
@@ -34,7 +34,7 @@ export const categories: Category[] = [
     title: "Padel Court",
     description:
       "Standartlara uygun padel kort sistemleri, aydınlatma ve çevre ekipmanları.",
-    image: "/images/site/panoramic-padel-court.png",
+    image: "/images/categories/padel-court.webp",
     productCount: 3
   },
   {
@@ -43,7 +43,7 @@ export const categories: Category[] = [
     title: "Saha Çizgileri ve Uygulamalar",
     description:
       "Otopark, fabrika ve spor alanları için profesyonel çizgi uygulamaları.",
-    image: "/images/categories/saha-cizgileri/main.jpg",
+    image: "/images/categories/saha-cizgileri.webp",
     productCount: 1
   }
 ];

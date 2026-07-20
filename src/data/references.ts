@@ -8,7 +8,7 @@ export const references: ProjectReference[] = [
     year: 2024,
     description:
       "Kapalı spor salonunun poliüretan zemini, branş çizgileri ve son kontrolleri tamamlandı.",
-    image: "/images/site/polyurethane-sports-hall.png",
+    image: "/images/references/ankara-spor-salonu.webp",
     category: "Zemin Kaplamaları"
   },
   {
@@ -18,7 +18,7 @@ export const references: ProjectReference[] = [
     year: 2023,
     description:
       "Açık basketbol sahası için pota, koruma ekipmanları ve saha aksesuarları kuruldu.",
-    image: "/images/site/basketball-equipment-gemini.webp",
+    image: "/images/references/istanbul-basketbol-ekipmanlari.webp",
     category: "Spor Ekipmanları"
   },
   {
@@ -28,7 +28,7 @@ export const references: ProjectReference[] = [
     year: 2024,
     description:
       "Panoramik padel kortun çelik, cam, sentetik çim ve LED aydınlatma uygulamaları tamamlandı.",
-    image: "/images/site/panoramic-padel-court.png",
+    image: "/images/references/izmir-padel-kortu.webp",
     category: "Padel Court"
   },
   {
@@ -38,7 +38,7 @@ export const references: ProjectReference[] = [
     year: 2022,
     description:
       "Okul bahçesindeki çok amaçlı saha zemini ve temel spor ekipmanları yenilendi.",
-    image: "/images/references/konya-okul-spor-alani/main.jpg",
+    image: "/images/references/konya-okul-spor-alani.webp",
     category: "Çok Amaçlı Saha"
   },
   {
@@ -48,7 +48,7 @@ export const references: ProjectReference[] = [
     year: 2023,
     description:
       "Basketbol, voleybol ve tenis kullanımına uygun akrilik zemin ile ekipman kurulumu gerçekleştirildi.",
-    image: "/images/references/antalya-cok-amacli-saha/main.jpg",
+    image: "/images/references/antalya-cok-amacli-saha.webp",
     category: "Saha Uygulamaları"
   },
   {
@@ -58,7 +58,7 @@ export const references: ProjectReference[] = [
     year: 2024,
     description:
       "Kapalı salon için esnek spor zemini, yüzey kaplaması ve oyun çizgileri uygulandı.",
-    image: "/images/references/bursa-kapali-salon/main.jpg",
+    image: "/images/references/bursa-kapali-salon.webp",
     category: "Zemin Kaplamaları"
   }
 ];

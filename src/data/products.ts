@@ -31,13 +31,13 @@ export const products: Product[] = [
       "Üç kat akrilik renk uygulaması (katlar arası kuruma beklenerek)",
       "Uluslararası normlara uygun oyun çizgilerinin çizilmesi"
     ],
-    image: "/images/products/rh-z-001/main.jpg",
+    image: "/images/products/rh-z-001/main.webp",
     gallery: [
-      "/images/products/rh-z-001/gallery-1.jpg",
-      "/images/products/rh-z-001/gallery-2.jpg"
+      "/images/products/rh-z-001/gallery-01.webp",
+      "/images/products/rh-z-001/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-05.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: true
   },
   {
@@ -70,13 +70,13 @@ export const products: Product[] = [
       "Üç kat akrilik renk uygulaması",
       "Oyun çizgilerinin uluslararası normlara uygun çizilmesi"
     ],
-    image: "/images/products/rh-z-002/main.jpg",
+    image: "/images/products/rh-z-002/main.webp",
     gallery: [
-      "/images/products/rh-z-002/gallery-1.jpg",
-      "/images/products/rh-z-002/gallery-2.jpg"
+      "/images/products/rh-z-002/gallery-01.webp",
+      "/images/products/rh-z-002/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-07.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: true
   },
   {
@@ -109,13 +109,13 @@ export const products: Product[] = [
       "Akrilik renk katmanlarının uygulanması",
       "Oyun çizgilerinin çizilmesi"
     ],
-    image: "/images/products/rh-z-003/main.jpg",
+    image: "/images/products/rh-z-003/main.webp",
     gallery: [
-      "/images/products/rh-z-003/gallery-1.jpg",
-      "/images/products/rh-z-003/gallery-2.jpg"
+      "/images/products/rh-z-003/gallery-01.webp",
+      "/images/products/rh-z-003/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-09.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: false
   },
   {
@@ -147,13 +147,13 @@ export const products: Product[] = [
       "Poliüretan malzemenin kurumasının ardından poliüretan son kat boya işlemi",
       "İstenilen branşlara ait oyun çizgilerinin çizilmesi"
     ],
-    image: "/images/products/rh-z-004/main.jpg",
+    image: "/images/products/rh-z-004/main.webp",
     gallery: [
-      "/images/products/rh-z-004/gallery-1.jpg",
-      "/images/products/rh-z-004/gallery-2.jpg"
+      "/images/products/rh-z-004/gallery-01.webp",
+      "/images/products/rh-z-004/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-11.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: true
   },
   {
@@ -184,13 +184,13 @@ export const products: Product[] = [
       "Alt katman kuruduktan sonra EPDM granül ve bağlayıcı karışımının finisher ile serilmesi",
       "Standartlara uygun çizgilerin çizilmesi"
     ],
-    image: "/images/products/rh-z-005/main.jpg",
+    image: "/images/products/rh-z-005/main.webp",
     gallery: [
-      "/images/products/rh-z-005/gallery-1.jpg",
-      "/images/products/rh-z-005/gallery-2.jpg"
+      "/images/products/rh-z-005/gallery-01.webp",
+      "/images/products/rh-z-005/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-13.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: true
   },
   {
@@ -220,13 +220,13 @@ export const products: Product[] = [
       "Ek yerlerinin P.U. yapıştırıcı ile yapıştırılması",
       "Silisyum kuvars kum dolgusunun sahaya homojen şekilde uygulanması"
     ],
-    image: "/images/products/rh-z-006/main.jpg",
+    image: "/images/products/rh-z-006/main.webp",
     gallery: [
-      "/images/products/rh-z-006/gallery-1.jpg",
-      "/images/products/rh-z-006/gallery-2.jpg"
+      "/images/products/rh-z-006/gallery-01.webp",
+      "/images/products/rh-z-006/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-14.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: false
   },
   {
@@ -257,13 +257,13 @@ export const products: Product[] = [
       "Silisyum kum dolgusunun yapılması",
       "Özel ekipmanlar yardımıyla granül dolgunun zemine yayılması"
     ],
-    image: "/images/products/rh-z-007/main.jpg",
+    image: "/images/products/rh-z-007/main.webp",
     gallery: [
-      "/images/products/rh-z-007/gallery-1.jpg",
-      "/images/products/rh-z-007/gallery-2.jpg"
+      "/images/products/rh-z-007/gallery-01.webp",
+      "/images/products/rh-z-007/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-15.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: true
   },
   {
@@ -292,13 +292,13 @@ export const products: Product[] = [
       "Özel makine yardımı ile sınır çizgilerinin çekilmesi",
       "Özel ikon ve işaretçilerin (engelli, elektrikli araç vb.) şablonlanıp boyanması"
     ],
-    image: "/images/products/rh-z-008/main.jpg",
+    image: "/images/products/rh-z-008/main.webp",
     gallery: [
-      "/images/products/rh-z-008/gallery-1.jpg",
-      "/images/products/rh-z-008/gallery-2.jpg"
+      "/images/products/rh-z-008/gallery-01.webp",
+      "/images/products/rh-z-008/gallery-02.webp"
     ],
-    catalogPageImage: "/images/catalog-pages/page-16.jpg",
-    catalogPdfUrl: "/catalog/Katalog.pdf",
+    catalogPageImage: "",
+    catalogPdfUrl: "",
     isFeatured: false
   }
 ];

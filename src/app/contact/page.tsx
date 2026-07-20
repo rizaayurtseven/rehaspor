@@ -36,7 +36,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </div>
 
           <aside className="grid gap-5">
-            <div className="rounded-xl bg-brand-navy p-7 text-white shadow-brand sm:p-8">
+            <div className="rounded-[8px] bg-brand-navy p-7 text-white shadow-brand sm:p-8">
               <p className="text-xs font-black uppercase tracking-[0.16em] text-red-300">Firma Bilgileri</p>
               <h2 className="mt-3 text-2xl font-black">Reha Spor ile iletişime geçin</h2>
               <div className="mt-7 grid gap-5 text-sm text-slate-300">
@@ -71,7 +71,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
               href={settings.mapUrl}
               target="_blank"
               rel="noreferrer"
-              className="group grid min-h-56 place-items-center rounded-xl border border-dashed border-slate-300 bg-white p-7 text-center transition hover:border-brand-red"
+              className="group grid min-h-56 place-items-center rounded-[8px] border border-dashed border-slate-300 bg-white p-7 text-center transition-colors hover:border-brand-red"
             >
               <span>
                 <Navigation className="mx-auto text-brand-red" size={29} aria-hidden="true" />

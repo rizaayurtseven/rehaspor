@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Focus, RefreshCw, ShieldCheck, UsersRound } from "lucide-react";
 import { ContactCTASection } from "@/components/sections/ContactCTASection";
 import { PublicPageHero } from "@/components/sections/PublicPageHero";
 import { SectionTitle } from "@/components/ui/SectionTitle";
@@ -11,22 +10,18 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    icon: Focus,
     title: "Deneyim",
     description: "2000’li yıllara dayanan sektör bilgimizi her projenin teknik ve operasyonel ihtiyacına yansıtırız."
   },
   {
-    icon: ShieldCheck,
     title: "Kaliteli Uygulama",
     description: "İmalat, montaj ve saha uygulamasında detayları kontrol ederek projeleri minimum hata hedefiyle tamamlarız."
   },
   {
-    icon: UsersRound,
     title: "Müşteri Odaklılık",
     description: "Doğru ürünü seçmekten teslim sonrasına kadar açık iletişim kurar, ihtiyaca uygun çözümler geliştiririz."
   },
   {
-    icon: RefreshCw,
     title: "Sürekli Gelişim",
     description: "Dünya standartlarına yaklaşan ekipman ve uygulamalar için araştırır, süreçlerimizi ve ürün bilgimizi yenileriz."
   }
@@ -69,14 +64,14 @@ export default function AboutPage() {
             description="Kararlarımızı ve saha uygulamalarımızı dört temel değer yönlendirir."
             align="center"
           />
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {values.map(({ icon: Icon, title, description }) => (
-              <article key={title} className="rounded-lg border border-brand-line bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-card">
-                <span className="grid h-12 w-12 place-items-center rounded-lg bg-red-50 text-brand-red">
-                  <Icon size={23} aria-hidden="true" />
-                </span>
-                <h2 className="mt-6 text-xl font-black text-brand-navy">{title}</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{description}</p>
+          <div className="mt-10 grid border-y border-brand-line md:grid-cols-2">
+            {values.map(({ title, description }, index) => (
+              <article key={title} className="grid grid-cols-[3.25rem_1fr] gap-4 border-b border-brand-line py-7 md:px-7 md:odd:border-r md:[&:nth-last-child(-n+2)]:border-b-0">
+                <span className="technical-label pt-1 text-brand-red">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h2 className="text-xl font-black text-brand-navy">{title}</h2>
+                  <p className="mt-3 text-base leading-7 text-brand-muted">{description}</p>
+                </div>
               </article>
             ))}
           </div>
