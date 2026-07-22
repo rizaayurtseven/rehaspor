@@ -9,13 +9,16 @@ export function TrustStripSection() {
   return (
     <section aria-label="Reha Spor çalışma yaklaşımı" className="border-b border-brand-line bg-white">
       <div className="container-page">
-        <ul className="grid divide-y divide-brand-line sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+        <ul className="grid grid-cols-2 lg:grid-cols-4">
           {trustItems.map(({ title, text }, index) => (
-            <li key={title} className="grid min-h-32 grid-cols-[2.5rem_1fr] items-start gap-3 px-1 py-7 sm:px-5 lg:px-7 first:pl-0 last:pr-0">
-              <span className="technical-label pt-0.5 text-brand-red">{String(index + 1).padStart(2, "0")}</span>
+            <li
+              key={title}
+              className={`grid min-h-36 grid-cols-1 content-start gap-3 p-5 sm:p-6 lg:min-h-32 lg:grid-cols-[2.25rem_1fr] lg:px-7 lg:py-7 ${index > 1 ? "border-t border-brand-line lg:border-t-0" : ""} ${index % 2 === 1 ? "border-l border-brand-line" : ""} ${index > 0 ? "lg:border-l lg:border-brand-line" : "lg:pl-0"} ${index === trustItems.length - 1 ? "lg:pr-0" : ""}`}
+            >
+              <span className="technical-label pt-0.5 text-brand-red" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <div>
-                <h2 className="text-sm font-bold text-brand-navy">{title}</h2>
-                <p className="mt-1.5 text-base leading-6 text-brand-muted">{text}</p>
+                <h2 className="text-[0.92rem] font-bold leading-5 text-brand-navy">{title}</h2>
+                <p className="mt-1.5 text-[0.92rem] leading-6 text-brand-muted">{text}</p>
               </div>
             </li>
           ))}

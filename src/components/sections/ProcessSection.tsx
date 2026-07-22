@@ -26,14 +26,14 @@ export function ProcessSection() {
   const { ref, isInView } = useInViewOnce<HTMLElement>({ threshold: 0.2 });
 
   return (
-    <section ref={ref} className="bg-brand-cream py-20 sm:py-28 lg:py-32" aria-labelledby="process-title">
+    <section ref={ref} className="bg-brand-cream py-20 sm:py-24 lg:py-28" aria-labelledby="process-title">
       <div className="container-page">
         <div className="grid gap-8 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
-            <p className="technical-label text-brand-red">Uygulama süreci</p>
+            <p className="section-kicker text-brand-red">Uygulama süreci</p>
             <h2
               id="process-title"
-              className="mt-4 max-w-xl text-[clamp(2.7rem,5vw,5rem)] font-bold leading-[0.92] tracking-[-0.055em] text-brand-navy"
+              className="display-heading mt-4 max-w-xl text-[clamp(2.7rem,5vw,5rem)] text-brand-navy"
             >
               Karardan teslime, aynı teknik çizgi.
             </h2>

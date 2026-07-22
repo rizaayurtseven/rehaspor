@@ -227,7 +227,7 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(215, 25, 32, 0.32);
+  outline: 3px solid rgb(var(--brand-red) / 0.36);
   outline-offset: 3px;
 }
 
@@ -310,6 +310,25 @@ a {
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
+}
+
+.section-kicker {
+  font-family: var(--font-hanken), "Segoe UI", Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.display-heading {
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.display-heading--hero {
+  line-height: 0.9;
 }
 
 .rule-link {
@@ -507,6 +526,12 @@ a {
 @media (max-width: 640px) {
   .container-page {
     width: min(100% - 32px, 1180px);
+  }
+}
+
+@media (max-width: 359px) {
+  .display-heading--hero {
+    font-size: 2.25rem;
   }
 }
 

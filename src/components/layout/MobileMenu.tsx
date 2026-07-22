@@ -50,7 +50,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 h-[100dvh] lg:hidden">
+    <div className="fixed inset-0 z-50 h-[100dvh] xl:hidden">
       <div aria-hidden="true" className="absolute inset-0 bg-brand-navy/70" onClick={onClose} />
       <aside ref={dialogRef} role="dialog" aria-modal="true" aria-label="Mobil menü" className="absolute right-0 top-0 flex h-[100dvh] w-[min(92vw,420px)] flex-col bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-brand-line px-6 py-5">

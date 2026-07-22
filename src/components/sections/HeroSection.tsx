@@ -22,12 +22,12 @@ export function HeroSection() {
 
       <div className="container-page relative z-10 flex min-h-[640px] flex-col justify-between py-14 sm:min-h-[700px] sm:py-16 lg:min-h-[760px] lg:py-20">
         <div className="hero-sequence max-w-4xl pt-4 sm:pt-8 lg:pt-10">
-          <p className="hero-accent-line technical-label relative inline-flex items-center gap-3 pl-4 text-white/80">
+          <p className="hero-accent-line section-kicker relative inline-flex items-center gap-3 pl-4 text-white/80">
             Zemin · ekipman · uygulama
           </p>
           <h1
             id="home-hero-title"
-            className="mt-6 max-w-[12ch] text-[clamp(3rem,7.1vw,6.7rem)] font-bold leading-[0.9] tracking-[-0.058em]"
+            className="display-heading display-heading--hero mt-6 max-w-[14ch] text-[clamp(2.75rem,6.6vw,6rem)]"
           >
             Sahanın tamamı,
             <span className="block text-red-400">tek sorumluluk.</span>

@@ -9,16 +9,16 @@ export function ContactCTASection() {
     <section className="bg-brand-red py-16 text-white sm:py-20" aria-labelledby="contact-cta-title">
       <div className="container-page grid gap-10 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-8">
-          <p className="technical-label text-white/70">Yeni proje · renovasyon · ekipman</p>
+          <p className="section-kicker text-white/75">Yeni proje · renovasyon · ekipman</p>
           <h2
             id="contact-cta-title"
-            className="mt-4 max-w-4xl text-[clamp(2.7rem,5vw,5.4rem)] font-bold leading-[0.9] tracking-[-0.06em]"
+            className="display-heading display-heading--hero mt-4 max-w-4xl text-[clamp(2.7rem,5vw,5.4rem)]"
           >
             Sahanız için doğru sistemi birlikte planlayalım.
           </h2>
         </div>
         <div className="flex flex-col gap-3 lg:col-span-4 lg:items-stretch">
-          <Button href="/contact" className="bg-white text-brand-navy hover:bg-brand-navy hover:text-white">
+          <Button href="/contact" className="bg-white !text-brand-navy hover:bg-brand-navy hover:!text-white">
             Projenizi paylaşın <ArrowRight size={18} className="ml-2" aria-hidden="true" />
           </Button>
           <a

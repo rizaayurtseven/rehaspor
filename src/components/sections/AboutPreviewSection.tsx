@@ -32,10 +32,10 @@ export function AboutPreviewSection() {
         <div className="relative flex items-center px-5 py-16 sm:px-8 lg:col-span-5 lg:px-12 lg:py-20 xl:px-16">
           <div className="absolute left-0 top-0 hidden h-24 w-1 bg-brand-red lg:block" />
           <Reveal>
-            <p className="technical-label text-red-300">Şantiyeden gelen tecrübe</p>
+            <p className="section-kicker text-red-300">Şantiyeden gelen tecrübe</p>
             <h2
               id="experience-title"
-              className="mt-5 max-w-xl text-[clamp(2.7rem,5vw,5.3rem)] font-bold leading-[0.9] tracking-[-0.058em]"
+              className="display-heading display-heading--hero mt-5 max-w-xl text-[clamp(2.7rem,5vw,5.3rem)]"
             >
               Çizimde doğru.
               <span className="block text-red-400">Sahada çalışır.</span>

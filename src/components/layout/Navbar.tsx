@@ -26,7 +26,7 @@ export function Navbar() {
 
   return (
     <header className={`sticky top-0 z-40 border-b bg-white transition-[border-color,box-shadow] duration-300 ${scrolled ? "border-brand-line shadow-[0_6px_20px_rgba(15,23,42,0.06)]" : "border-transparent"}`}>
-      <div className="hidden bg-brand-red text-white lg:block">
+      <div className="hidden bg-brand-red text-white xl:block">
         <div className="container-page flex h-9 items-center justify-end gap-7 text-[0.68rem] tracking-[0.035em]">
           <a href={`tel:${siteSettings.phone.replace(/[^+\d]/g, "")}`} className="inline-flex min-h-9 items-center gap-2 transition-colors duration-300 hover:text-white/75">
             <Phone size={13} /> {siteSettings.phone}
@@ -46,7 +46,7 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Ana menü">
+        <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Ana menü">
           {publicNavItems.map((item) => {
             const active = isRouteActive(pathname, item.href);
             if (item.href === "/products") {
@@ -55,7 +55,7 @@ export function Navbar() {
                   <Link href={item.href} aria-current={active ? "page" : undefined} className={`inline-flex items-center gap-1 border-b-2 px-3 py-6 text-sm font-semibold transition-colors ${active ? "border-brand-red text-brand-red" : "border-transparent text-slate-700 hover:border-brand-line hover:text-brand-red"}`}>
                     {item.label} <ChevronDown size={15} />
                   </Link>
-                  <div className="invisible absolute left-1/2 top-full w-[760px] -translate-x-1/2 translate-y-2 rounded-[8px] border border-brand-line border-l-4 border-l-brand-red bg-white p-7 opacity-0 shadow-[0_14px_35px_rgba(15,23,42,0.08)] transition duration-300 group-hover/menu:visible group-hover/menu:translate-y-0 group-hover/menu:opacity-100">
+                  <div className="invisible absolute left-1/2 top-full w-[760px] -translate-x-1/2 translate-y-2 overflow-hidden rounded-[8px] border border-brand-line bg-white p-7 opacity-0 shadow-[0_14px_35px_rgba(15,23,42,0.08)] transition duration-300 before:absolute before:left-0 before:top-0 before:h-1 before:w-20 before:bg-brand-red group-hover/menu:visible group-hover/menu:translate-y-0 group-hover/menu:opacity-100">
                     <div className="grid grid-cols-4 gap-7">
                       {productMenuGroups.map((group) => (
                         <div key={group.title}>
@@ -80,12 +80,12 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-3 lg:flex">
+        <div className="hidden shrink-0 items-center gap-3 xl:flex">
           <Link href="/cart" aria-label="Teklif sepeti" className="grid h-11 w-11 place-items-center border border-brand-line text-brand-navy transition-colors hover:border-brand-red hover:text-brand-red"><ShoppingBag size={18} /></Link>
           <Link href="/contact" className="rounded-[5px] bg-brand-red px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[rgb(var(--accent-hover))] active:bg-[rgb(var(--accent-active))]">Teklif Al</Link>
         </div>
 
-        <button type="button" aria-label="Menüyü aç" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)} className="border border-brand-line p-2.5 text-brand-navy transition-colors hover:border-brand-red lg:hidden">
+        <button type="button" aria-label="Menüyü aç" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)} className="border border-brand-line p-2.5 text-brand-navy transition-colors hover:border-brand-red xl:hidden">
           <Menu size={22} />
         </button>
       </div>

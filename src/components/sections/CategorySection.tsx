@@ -14,15 +14,15 @@ const categoryLayouts = [
 
 export function CategorySection({ categories }: { categories: Category[] }) {
   return (
-    <section className="bg-brand-cream py-20 sm:py-28 lg:py-32" aria-labelledby="solutions-title">
+    <section className="bg-brand-cream py-20 sm:py-24 lg:py-28" aria-labelledby="solutions-title">
       <div className="container-page">
         <Reveal>
           <div className="grid gap-6 border-b border-brand-line pb-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
-              <p className="technical-label text-brand-red">Ana çözüm alanları</p>
+              <p className="section-kicker text-brand-red">Ana çözüm alanları</p>
               <h2
                 id="solutions-title"
-                className="mt-4 max-w-4xl text-[clamp(2.7rem,6vw,5.8rem)] font-bold leading-[0.92] tracking-[-0.058em] text-brand-navy"
+                className="display-heading mt-4 max-w-4xl text-[clamp(2.7rem,6vw,5.8rem)] text-brand-navy"
               >
                 Spor tesisinin bütün katmanları.
               </h2>

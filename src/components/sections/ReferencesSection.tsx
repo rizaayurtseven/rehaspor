@@ -12,15 +12,15 @@ const referenceLayouts = [
 
 export function ReferencesSection({ references }: { references: ProjectReference[] }) {
   return (
-    <section className="bg-white py-20 sm:py-28 lg:py-32" aria-labelledby="references-title">
+    <section className="bg-white py-20 sm:py-24 lg:py-28" aria-labelledby="references-title">
       <div className="container-page">
         <Reveal>
           <div className="flex flex-col gap-7 border-b border-brand-line pb-8 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="technical-label text-brand-red">Seçili referanslar</p>
+              <p className="section-kicker text-brand-red">Seçili referanslar</p>
               <h2
                 id="references-title"
-                className="mt-4 text-[clamp(2.7rem,5vw,5.2rem)] font-bold leading-[0.92] tracking-[-0.058em] text-brand-navy"
+                className="display-heading mt-4 text-[clamp(2.7rem,5vw,5.2rem)] text-brand-navy"
               >
                 Sahada tamamlanan işler.
               </h2>
