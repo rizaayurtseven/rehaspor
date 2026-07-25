@@ -22,11 +22,14 @@
     "db:status": "docker compose ps",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
-    "test:health": "node scripts/smoke-health.mjs"
+    "test:health": "node scripts/smoke-health.mjs",
+    "test:db:clean": "node scripts/smoke-clean-database.mjs",
+    "admin:create": "tsx scripts/create-admin.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.8.0",
     "@prisma/client": "7.8.0",
+    "argon2": "^0.45.1",
     "clsx": "^2.1.1",
     "dotenv": "17.4.2",
     "lucide-react": "^0.468.0",

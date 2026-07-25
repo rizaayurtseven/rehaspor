@@ -1,6 +1,6 @@
 # Reha Spor Backend ve Entegrasyon Ana Planı
 
-> Durum: Faz 0, Faz 1 ve Faz 2 seed akışı tamamlandı; temiz veritabanı tekrar testi bekliyor  
+> Durum: Faz 0, Faz 1 ve Faz 2 tamamlandı; Faz 3 auth ve admin güvenliği devam ediyor  
 > Son güncelleme: 25 Temmuz 2026  
 > Amaç: Bu doküman, Reha Spor frontend demosunu güvenli, kalıcı veriye bağlı ve üretime alınabilir tam bir uygulamaya dönüştürmek için ana çalışma kaynağıdır.
 
@@ -17,8 +17,9 @@
 - [x] İlk migration local PostgreSQL üzerinde üretildi ve uygulandı.
 - [x] Mock veriler için idempotent seed yazıldı ve local PostgreSQL'e aktarıldı.
 - [x] Uygulama içi health readiness smoke testi local PostgreSQL'e karşı başarılı.
+- [x] Temiz PostgreSQL veritabanında iki migration ve seed sıfırdan başarıyla doğrulandı.
 
-İş tabloları, migration, seed, auth, storage ve mail entegrasyonu henüz kurulmadı.
+Auth, CRUD, storage ve mail entegrasyonu henüz kurulmadı.
 
 ## 1. Hedef
 
@@ -530,10 +531,10 @@ Public içerik Server Component'larda service katmanından okunur. Harici public
 
 ### Yapılacaklar
 
-- [ ] İlk admin kullanıcısını seed veya tek kullanımlık kurulum komutuyla oluştur.
-- [ ] Argon2id parola hash yardımcılarını yaz.
-- [ ] Session oluşturma, doğrulama, yenileme ve iptal mekanizmasını kur.
-- [ ] `/admin/login` dışındaki admin route'larını middleware/layout seviyesinde koru.
+- [ ] İlk admin kullanıcısını tek kullanımlık kurulum komutuyla oluştur ve başarılı giriş testini yap.
+- [x] Argon2id parola hash yardımcılarını yaz.
+- [~] Session oluşturma, doğrulama, yenileme ve iptal mekanizmasını kur.
+- [x] `/admin/login` dışındaki admin route'larını server layout seviyesinde koru.
 - [ ] Her admin API endpoint'inde ayrıca sunucu tarafı auth kontrolü yap.
 - [ ] Başarısız login denemelerine rate limit ekle.
 - [ ] Cookie ve security header ayarlarını yapılandır.
@@ -784,16 +785,16 @@ Kurallar:
 - [x] Foreign key, unique index ve sorgu index'lerini ekle.
 - [x] İlk migration'ı üret ve uygula (`20260725122954_initial_schema`).
 - [x] Mevcut mock verilerden idempotent seed yaz ve tekrar çalıştırılabilirliğini doğrula.
-- [ ] Temiz veritabanında migration + seed testi yap.
+- [x] Temiz veritabanında migration + seed testi yap.
 
 **Kabul kriteri:** Tüm mevcut içerik PostgreSQL'den okunabilir ve ilişkiler doğrulanmış durumda.
 
-### Faz 3 — Auth ve admin güvenliği
+### Faz 3 — Auth ve admin güvenliği `[~]`
 
-- [ ] Kullanıcı ve session repository/service katmanını yaz.
-- [ ] Login, logout ve session endpoint'lerini yaz.
-- [ ] Cookie ve password güvenliğini kur.
-- [ ] Admin sayfa ve endpoint korumasını ekle.
+- [~] Kullanıcı ve session repository/service katmanını yaz.
+- [x] Login, logout ve session endpoint'lerini yaz.
+- [x] Cookie ve password güvenliğini kur.
+- [~] Admin sayfa ve endpoint korumasını ekle.
 - [ ] Rate limit ve audit log'u auth akışına bağla.
 - [ ] Login ekranını gerçek API'ye bağla.
 
@@ -957,8 +958,8 @@ Durum anlamları:
 
 ## 19. Sıradaki Uygulama Oturumu
 
-Backend temel iskeleti, Prisma iş modeli, migration, seed ve health doğrulaması kuruldu. Sonraki parça:
+Backend temel iskeleti, Prisma iş modeli, migration, seed, health ve temiz veritabanı doğrulaması kuruldu. Auth çekirdeği ve admin sayfa koruması da eklendi. Sonraki parça:
 
-1. Temiz veritabanında migration + seed testini yap.
-2. Ardından Faz 3 auth ve admin güvenliğine geç.
+1. İlk admin hesabını oluşturup başarılı login/logout/session testini yap.
+2. Faz 3 için rate limit, origin kontrolü ve admin API korumasını tamamla.
 3. Her bağımlılık güncellemesinde audit'i yeniden çalıştır; zorlayıcı `npm audit fix --force` kullanma.

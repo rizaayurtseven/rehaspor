@@ -54,6 +54,15 @@ export function toAppError(error: unknown): AppError {
     return error;
   }
 
+  if (error instanceof ZodError) {
+    const fields = error.flatten().fieldErrors;
+    return new AppError("Gönderilen bilgiler geçersiz.", {
+      code: "VALIDATION_ERROR",
+      status: 400,
+      details: { fields },
+    });
+  }
+
   return new AppError("An unexpected error occurred.", {
     code: "INTERNAL_SERVER_ERROR",
     status: 500,
@@ -61,3 +70,4 @@ export function toAppError(error: unknown): AppError {
     cause: error,
   });
 }
+import { ZodError } from "zod";

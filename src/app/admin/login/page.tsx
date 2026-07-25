@@ -9,11 +9,33 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmitting(true);
-    window.setTimeout(() => router.push("/admin/dashboard"), 350);
+    setFormError(null);
+
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/v1/auth/login", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        password: formData.get("password"),
+        rememberMe: formData.get("rememberMe") === "on",
+      }),
+    }).catch(() => null);
+
+    if (!response?.ok) {
+      const payload = await response?.json().catch(() => null);
+      setFormError(payload?.error?.message ?? "Giriş yapılamadı. Lütfen tekrar deneyin.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.replace("/admin/dashboard");
+    router.refresh();
   }
 
   return (
@@ -30,9 +52,9 @@ export default function AdminLoginPage() {
         </Link>
 
         <div className="relative max-w-xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-slate-300">
-            <ShieldCheck size={15} className="text-red-400" />
-            Frontend demo paneli
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-slate-300">
+              <ShieldCheck size={15} className="text-red-400" />
+            Güvenli yönetim paneli
           </span>
           <h1 className="mt-6 text-4xl font-black leading-tight tracking-tight xl:text-5xl">
             Kataloğunuzu tek bir merkezden yönetin.
@@ -64,7 +86,7 @@ export default function AdminLoginPage() {
             <div>
               <p className="text-xs font-black uppercase tracking-[0.18em] text-brand-red">Yönetim paneli</p>
               <h2 className="mt-2 text-3xl font-black tracking-tight text-brand-navy">Tekrar hoş geldiniz</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-500">Devam etmek için demo yönetici bilgilerinizi girin.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">Devam etmek için yönetici bilgilerinizle giriş yapın.</p>
             </div>
 
             <form className="mt-8 grid gap-5" onSubmit={handleSubmit}>
@@ -78,7 +100,6 @@ export default function AdminLoginPage() {
                     type="email"
                     required
                     autoComplete="email"
-                    defaultValue="admin@rehaspor.com"
                     className="w-full rounded-xl border border-brand-line bg-white py-3 pl-11 pr-4 text-sm outline-none transition focus:border-brand-red focus:ring-4 focus:ring-red-50"
                   />
                 </span>
@@ -93,9 +114,8 @@ export default function AdminLoginPage() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    minLength={4}
+                    minLength={8}
                     autoComplete="current-password"
-                    defaultValue="demo1234"
                     className="w-full rounded-xl border border-brand-line bg-white py-3 pl-11 pr-12 text-sm outline-none transition focus:border-brand-red focus:ring-4 focus:ring-red-50"
                   />
                   <button
@@ -111,7 +131,7 @@ export default function AdminLoginPage() {
 
               <div className="flex items-center justify-between gap-4 text-xs">
                 <label className="flex items-center gap-2 font-semibold text-slate-600">
-                  <input type="checkbox" defaultChecked className="h-4 w-4 accent-brand-red" />
+                  <input name="rememberMe" type="checkbox" className="h-4 w-4 accent-brand-red" />
                   Beni hatırla
                 </label>
                 <span className="font-semibold text-slate-400">Demo erişimi</span>
@@ -125,10 +145,15 @@ export default function AdminLoginPage() {
                 {isSubmitting ? "Yönlendiriliyor..." : "Giriş yap"}
                 <ArrowRight size={17} />
               </button>
+              {formError ? (
+                <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700" role="alert">
+                  {formError}
+                </p>
+              ) : null}
             </form>
           </div>
           <p className="mt-5 text-center text-xs leading-5 text-slate-500">
-            Bu ekran gerçek kimlik doğrulaması içermez; backend entegrasyonuna hazır bir frontend demosudur.
+            Oturumunuz güvenli, yalnızca sunucuda tutulan bir oturum kaydıyla korunur.
           </p>
         </div>
       </section>
