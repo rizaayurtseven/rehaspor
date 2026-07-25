@@ -19,7 +19,7 @@
 - [x] Uygulama içi health readiness smoke testi local PostgreSQL'e karşı başarılı.
 - [x] Temiz PostgreSQL veritabanında iki migration ve seed sıfırdan başarıyla doğrulandı.
 
-Auth, CRUD, storage ve mail entegrasyonu henüz kurulmadı.
+CRUD, storage ve mail entegrasyonu henüz kurulmadı; auth temel akışı uygulanmış, güvenlik sertleştirmesi sürmektedir.
 
 ## 1. Hedef
 
@@ -531,7 +531,7 @@ Public içerik Server Component'larda service katmanından okunur. Harici public
 
 ### Yapılacaklar
 
-- [ ] İlk admin kullanıcısını tek kullanımlık kurulum komutuyla oluştur ve başarılı giriş testini yap.
+- [x] İlk admin kullanıcısını tek kullanımlık kurulum komutuyla oluştur ve başarılı giriş/çıkış testini yap.
 - [x] Argon2id parola hash yardımcılarını yaz.
 - [~] Session oluşturma, doğrulama, yenileme ve iptal mekanizmasını kur.
 - [x] `/admin/login` dışındaki admin route'larını server layout seviyesinde koru.
@@ -795,8 +795,8 @@ Kurallar:
 - [x] Login, logout ve session endpoint'lerini yaz.
 - [x] Cookie ve password güvenliğini kur.
 - [~] Admin sayfa ve endpoint korumasını ekle.
-- [ ] Rate limit ve audit log'u auth akışına bağla.
-- [ ] Login ekranını gerçek API'ye bağla.
+- [~] Rate limit ve audit log'u auth akışına bağla.
+- [x] Login ekranını gerçek API'ye bağla.
 
 **Kabul kriteri:** Giriş yapmayan kullanıcı hiçbir admin sayfasına veya admin API'sine erişemiyor; logout session'ı gerçekten iptal ediyor.
 
@@ -960,6 +960,5 @@ Durum anlamları:
 
 Backend temel iskeleti, Prisma iş modeli, migration, seed, health ve temiz veritabanı doğrulaması kuruldu. Auth çekirdeği ve admin sayfa koruması da eklendi. Sonraki parça:
 
-1. İlk admin hesabını oluşturup başarılı login/logout/session testini yap.
-2. Faz 3 için rate limit, origin kontrolü ve admin API korumasını tamamla.
-3. Her bağımlılık güncellemesinde audit'i yeniden çalıştır; zorlayıcı `npm audit fix --force` kullanma.
+1. Faz 3 için rate limit, origin kontrolü ve admin API korumasını tamamla.
+2. Her bağımlılık güncellemesinde audit'i yeniden çalıştır; zorlayıcı `npm audit fix --force` kullanma.

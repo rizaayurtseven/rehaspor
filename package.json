@@ -23,6 +23,7 @@
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "test:health": "node scripts/smoke-health.mjs",
+    "test:auth": "node scripts/smoke-auth.mjs",
     "test:db:clean": "node scripts/smoke-clean-database.mjs",
     "admin:create": "tsx scripts/create-admin.ts"
   },
