@@ -1,6 +1,6 @@
 # Reha Spor Backend ve Entegrasyon Ana Planı
 
-> Durum: Faz 0 tamamlandı; Faz 1 altyapı iskeleti ve Faz 2 şema tasarımı tamamlandı, migration/seed yerel PostgreSQL bağlantısını bekliyor  
+> Durum: Faz 0, Faz 1 ve Faz 2 seed akışı tamamlandı; temiz veritabanı tekrar testi bekliyor  
 > Son güncelleme: 25 Temmuz 2026  
 > Amaç: Bu doküman, Reha Spor frontend demosunu güvenli, kalıcı veriye bağlı ve üretime alınabilir tam bir uygulamaya dönüştürmek için ana çalışma kaynağıdır.
 
@@ -10,11 +10,13 @@
 - [x] Hedef backend mimarisi seçildi.
 - [x] Temel ürün ve işletim kararları kesinleştirildi.
 - [x] Node/npm, Prisma/Zod, ortak server katmanı ve health endpoint iskeleti kuruldu.
-- [ ] Yerel PostgreSQL çalıştırılıp readiness bağlantısı doğrulanacak.
+- [x] Yerel PostgreSQL 18.4 bağlantısı doğrulandı ve `rehaspor` veritabanı oluşturuldu.
 - [x] Next.js 16.2.11 ve React 19.2.8'e kontrollü geçiş tamamlandı; tip, lint ve production build başarılı.
 - [!] Güncel audit'te Next.js zincirinden gelen PostCSS/Sharp ve Prisma CLI zincirinden gelen transitive açıklar raporlanıyor. Zorlayıcı otomatik düzeltme güvenli olmadığı için sonraki güvenli upstream sürümde yeniden değerlendirilecek.
 - [x] Prisma iş modeli, foreign key ve indeks tasarımı doğrulandı.
-- [ ] İlk migration ve seed, local PostgreSQL erişimi sağlandığında üretilecek.
+- [x] İlk migration local PostgreSQL üzerinde üretildi ve uygulandı.
+- [x] Mock veriler için idempotent seed yazıldı ve local PostgreSQL'e aktarıldı.
+- [x] Uygulama içi health readiness smoke testi local PostgreSQL'e karşı başarılı.
 
 İş tabloları, migration, seed, auth, storage ve mail entegrasyonu henüz kurulmadı.
 
@@ -772,7 +774,7 @@ Kurallar:
 - [x] Prisma client singleton ve transaction yardımcısını kur.
 - [x] Standart hata sınıfları ve request ID ekle.
 - [x] Health endpoint'lerini oluştur.
-- [!] PostgreSQL bağlantısını doğrula — bu makinede Docker/PostgreSQL kurulu değil; `compose.yaml` hazır.
+- [x] PostgreSQL bağlantısını doğrula — local PostgreSQL 18.4 ve `rehaspor` veritabanı ile migration uygulandı.
 
 **Kabul kriteri:** Uygulama veritabanına bağlanıyor, health kontrolleri çalışıyor ve hata cevapları standardize.
 
@@ -780,9 +782,9 @@ Kurallar:
 
 - [x] Tüm Prisma modellerini oluştur.
 - [x] Foreign key, unique index ve sorgu index'lerini ekle.
-- [!] İlk migration'ı üret — local PostgreSQL bağlantısı bekleniyor.
-- [ ] Mevcut mock verilerden idempotent seed yaz.
-- [!] Temiz veritabanında migration + seed testi yap — local PostgreSQL bağlantısı bekleniyor.
+- [x] İlk migration'ı üret ve uygula (`20260725122954_initial_schema`).
+- [x] Mevcut mock verilerden idempotent seed yaz ve tekrar çalıştırılabilirliğini doğrula.
+- [ ] Temiz veritabanında migration + seed testi yap.
 
 **Kabul kriteri:** Tüm mevcut içerik PostgreSQL'den okunabilir ve ilişkiler doğrulanmış durumda.
 
@@ -947,16 +949,16 @@ Durum anlamları:
 | 2026-07-25 | Sağlayıcı ve domain bağımsız uygulama | Demo ortamından production'a kodu değiştirmeden geçebilmek |
 | 2026-07-25 | Node 24 ve npm 11 çalışma standardı | Prisma 7 desteği ve tekrarlanabilir local/build ortamı |
 | 2026-07-25 | Local PostgreSQL için Docker Compose | Production sağlayıcısına bağlanmadan ortak geliştirme ortamı |
-| 2026-07-25 | PostgreSQL 17 local hedefi | Desteklenen, kararlı sürüm ve yönetilen servislerle geniş uyumluluk |
+| 2026-07-25 | PostgreSQL 18 local hedefi | Yerel PostgreSQL 18.4 ile eşleşen, desteklenen geliştirme ortamı |
 | 2026-07-25 | Next.js major yükseltmesini ayrı iş olarak yapmak | Audit riskini kapatırken mevcut frontend kırılmalarını kontrollü ele almak |
 | 2026-07-25 | Next.js 16.2.11 + React 19.2.8 | Next 14 güvenlik ve destek riskini kapatmak; async request API'leri ile güncel uyumluluk |
 | 2026-07-25 | Prisma şeması: ilişkisel içerik + media + audit | Public/admin alan farklarını kayıpsız yönetmek ve ileride genişlemeyi desteklemek |
+| 2026-07-25 | Seed statik dosya yollarını asset storage key olarak tutar | Mock içerikleri kaybetmeden sonraki object storage geçişine hazırlanmak |
 
 ## 19. Sıradaki Uygulama Oturumu
 
-Backend temel iskeleti ve Prisma iş modeli kuruldu. Sonraki parça:
+Backend temel iskeleti, Prisma iş modeli, migration, seed ve health doğrulaması kuruldu. Sonraki parça:
 
-1. Docker/PostgreSQL bulunan ortamda local veritabanını başlat ve readiness endpoint'ini doğrula.
-2. İlk migration'ı üret, mock verilerden idempotent seed yaz ve temiz veritabanında test et.
-3. Ardından Faz 3 auth ve admin güvenliğine geç.
-4. Her bağımlılık güncellemesinde audit'i yeniden çalıştır; zorlayıcı `npm audit fix --force` kullanma.
+1. Temiz veritabanında migration + seed testini yap.
+2. Ardından Faz 3 auth ve admin güvenliğine geç.
+3. Her bağımlılık güncellemesinde audit'i yeniden çalıştır; zorlayıcı `npm audit fix --force` kullanma.

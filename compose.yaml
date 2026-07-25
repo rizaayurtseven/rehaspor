@@ -2,12 +2,13 @@ name: rehaspor-local
 
 services:
   database:
-    image: postgres:17.10-alpine3.24
+    image: postgres:18.4-alpine3.24
     restart: unless-stopped
     environment:
       POSTGRES_DB: rehaspor
       POSTGRES_USER: rehaspor
       POSTGRES_PASSWORD: rehaspor
+      PGDATA: /var/lib/postgresql/18/docker
     ports:
       - "5432:5432"
     healthcheck:
@@ -16,7 +17,7 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - rehaspor_postgres_data:/var/lib/postgresql/data
+      - rehaspor_postgres_data:/var/lib/postgresql
 
 volumes:
   rehaspor_postgres_data:

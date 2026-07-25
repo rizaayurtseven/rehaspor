@@ -210,7 +210,7 @@ model ProjectReference {
 
   @@index([status, sortOrder])
   @@index([deletedAt])
-  @@map("references")
+  @@map("project_references")
 }
 
 model Catalog {
