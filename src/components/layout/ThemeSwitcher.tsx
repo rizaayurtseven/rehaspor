@@ -1,10 +1,9 @@
 "use client";
 
 import { Check, Palette } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { defaultTheme, isThemeId, themes, type ThemeId, type ThemeOption } from "@/lib/themes";
-
-const storageKey = "reha-spor-theme";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { getServerThemeSnapshot, getThemeSnapshot, persistTheme, subscribeToTheme } from "@/lib/themeStore";
+import { themes, type ThemeId, type ThemeOption } from "@/lib/themes";
 
 function ThemeSwatch({ theme }: { theme: ThemeOption }) {
   return (
@@ -18,15 +17,12 @@ function ThemeSwatch({ theme }: { theme: ThemeOption }) {
 
 export function ThemeSwitcher() {
   const [open, setOpen] = useState(false);
-  const [selectedTheme, setSelectedTheme] = useState<ThemeId>(defaultTheme);
+  const selectedTheme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
   const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const storedTheme = window.localStorage.getItem(storageKey);
-    const theme = isThemeId(storedTheme) ? storedTheme : defaultTheme;
-    setSelectedTheme(theme);
-    document.documentElement.dataset.theme = theme;
-  }, []);
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
@@ -47,9 +43,7 @@ export function ThemeSwitcher() {
   const currentTheme = themes.find((theme) => theme.id === selectedTheme) ?? themes[0];
 
   const selectTheme = (theme: ThemeId) => {
-    setSelectedTheme(theme);
-    document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem(storageKey, theme);
+    persistTheme(theme);
     setOpen(false);
   };
 

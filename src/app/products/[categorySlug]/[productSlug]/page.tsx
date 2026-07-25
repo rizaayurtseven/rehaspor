@@ -10,7 +10,7 @@ import { ImageFallback } from "@/components/ui/ImageFallback";
 import { getCategoryBySlug, getProductBySlug, getProducts, getProductsByCategory } from "@/lib/api";
 
 type ProductPageProps = {
-  params: { categorySlug: string; productSlug: string };
+  params: Promise<{ categorySlug: string; productSlug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -19,9 +19,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const product = await getProductBySlug(params.productSlug);
+  const { categorySlug, productSlug } = await params;
+  const product = await getProductBySlug(productSlug);
 
-  return product && product.categorySlug === params.categorySlug
+  return product && product.categorySlug === categorySlug
     ? { title: product.title, description: product.shortDescription }
     : { title: "Ürün Bulunamadı" };
 }
@@ -36,8 +37,9 @@ function buildSpecCards(product: NonNullable<Awaited<ReturnType<typeof getProduc
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
-  const product = await getProductBySlug(params.productSlug);
-  if (!product || product.categorySlug !== params.categorySlug) notFound();
+  const { categorySlug, productSlug } = await params;
+  const product = await getProductBySlug(productSlug);
+  if (!product || product.categorySlug !== categorySlug) notFound();
 
   const [category, sameCategoryProducts] = await Promise.all([
     getCategoryBySlug(product.categorySlug),

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { getCategories, getCategoryBySlug, getProductsByCategory } from "@/lib/api";
 
 type CategoryPageProps = {
-  params: { categorySlug: string };
+  params: Promise<{ categorySlug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -17,7 +17,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const category = await getCategoryBySlug(params.categorySlug);
+  const { categorySlug } = await params;
+  const category = await getCategoryBySlug(categorySlug);
 
   return category
     ? { title: category.title, description: category.description }
@@ -25,9 +26,10 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default async function CategoryDetailPage({ params }: CategoryPageProps) {
+  const { categorySlug } = await params;
   const [category, products] = await Promise.all([
-    getCategoryBySlug(params.categorySlug),
-    getProductsByCategory(params.categorySlug)
+    getCategoryBySlug(categorySlug),
+    getProductsByCategory(categorySlug)
   ]);
 
   if (!category) notFound();

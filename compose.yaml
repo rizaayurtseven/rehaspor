@@ -1,0 +1,22 @@
+name: rehaspor-local
+
+services:
+  database:
+    image: postgres:17.10-alpine3.24
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: rehaspor
+      POSTGRES_USER: rehaspor
+      POSTGRES_PASSWORD: rehaspor
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rehaspor -d rehaspor"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - rehaspor_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  rehaspor_postgres_data:

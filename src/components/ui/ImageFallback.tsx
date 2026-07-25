@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 type ImageFallbackProps = {
@@ -26,11 +26,8 @@ export function ImageFallback({
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false
 }: ImageFallbackProps) {
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    setHasError(false);
-  }, [src]);
+  const [failedSource, setFailedSource] = useState<string | null>(null);
+  const hasError = failedSource === src;
 
   return (
     <div className={cn("relative isolate overflow-hidden bg-brand-navy", className)}>
@@ -42,7 +39,7 @@ export function ImageFallback({
           sizes={sizes}
           priority={priority}
           className={cn("object-cover transition duration-700", imageClassName)}
-          onError={() => setHasError(true)}
+          onError={() => setFailedSource(src)}
         />
       ) : (
         <div

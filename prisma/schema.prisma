@@ -1,0 +1,319 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CatalogLanguage {
+  TR
+  EN
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  ARCHIVED
+}
+
+enum AssetStatus {
+  PENDING
+  READY
+  REJECTED
+  DELETED
+}
+
+enum ProductMediaKind {
+  MAIN
+  GALLERY
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  displayName  String
+  role         UserRole   @default(ADMIN)
+  status       UserStatus @default(ACTIVE)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  sessions       Session[]        @relation("UserSessions")
+  uploadedAssets Asset[]          @relation("UploadedAssets")
+  readMessages   ContactMessage[] @relation("MessageReader")
+  auditLogs      AuditLog[]       @relation("AuditActor")
+
+  @@map("users")
+}
+
+model Session {
+  id          String   @id @default(cuid())
+  userId      String
+  tokenHash   String   @unique
+  expiresAt   DateTime
+  lastSeenAt  DateTime @default(now())
+  ipHash      String?
+  userAgent   String?  @db.VarChar(512)
+  createdAt   DateTime @default(now())
+
+  user User @relation("UserSessions", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model Category {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  description    String        @db.Text
+  imageAssetId   String?
+  sortOrder      Int           @default(0)
+  status         ContentStatus @default(DRAFT)
+  seoTitle       String?
+  seoDescription String?       @db.Text
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+
+  image    Asset?    @relation("CategoryImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+  products Product[]
+
+  @@index([status, sortOrder])
+  @@index([deletedAt])
+  @@map("categories")
+}
+
+model Product {
+  id                 String        @id @default(cuid())
+  code               String        @unique
+  title              String
+  slug               String        @unique
+  categoryId         String
+  shortDescription   String        @db.Text
+  description        String        @db.Text
+  isFeatured         Boolean       @default(false)
+  status             ContentStatus @default(DRAFT)
+  sortOrder          Int           @default(0)
+  catalogPageAssetId String?
+  catalogPdfAssetId  String?
+  seoTitle           String?
+  seoDescription     String?       @db.Text
+  publishedAt        DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  deletedAt          DateTime?
+
+  category         Category                 @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  catalogPageAsset Asset?                   @relation("ProductCatalogPage", fields: [catalogPageAssetId], references: [id], onDelete: SetNull)
+  catalogPdfAsset  Asset?                   @relation("ProductCatalogPdf", fields: [catalogPdfAssetId], references: [id], onDelete: SetNull)
+  technicalDetails ProductTechnicalDetail[]
+  usageAreas       ProductUsageArea[]
+  applicationSteps ProductApplicationStep[]
+  media            ProductMedia[]
+
+  @@index([categoryId, status, sortOrder])
+  @@index([isFeatured, status])
+  @@index([deletedAt])
+  @@map("products")
+}
+
+model ProductTechnicalDetail {
+  id        String   @id @default(cuid())
+  productId String
+  text      String   @db.Text
+  sortOrder Int      @default(0)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, sortOrder])
+  @@map("product_technical_details")
+}
+
+model ProductUsageArea {
+  id        String   @id @default(cuid())
+  productId String
+  text      String   @db.Text
+  sortOrder Int      @default(0)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, sortOrder])
+  @@map("product_usage_areas")
+}
+
+model ProductApplicationStep {
+  id        String   @id @default(cuid())
+  productId String
+  text      String   @db.Text
+  sortOrder Int      @default(0)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, sortOrder])
+  @@map("product_application_steps")
+}
+
+model ProductMedia {
+  id        String           @id @default(cuid())
+  productId String
+  assetId   String
+  kind      ProductMediaKind
+  sortOrder Int              @default(0)
+  altText   String?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  asset   Asset   @relation("ProductMediaAsset", fields: [assetId], references: [id], onDelete: Restrict)
+
+  @@unique([productId, kind, sortOrder])
+  @@index([assetId])
+  @@map("product_media")
+}
+
+model ProjectReference {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  city           String
+  year           Int
+  category       String
+  description    String        @db.Text
+  imageAssetId   String?
+  sortOrder      Int           @default(0)
+  status         ContentStatus @default(DRAFT)
+  seoTitle       String?
+  seoDescription String?       @db.Text
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+
+  image Asset? @relation("ReferenceImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+
+  @@index([status, sortOrder])
+  @@index([deletedAt])
+  @@map("references")
+}
+
+model Catalog {
+  id          String          @id @default(cuid())
+  title       String
+  language    CatalogLanguage
+  description String          @db.Text
+  fileAssetId String?
+  status      ContentStatus   @default(DRAFT)
+  version     Int             @default(1)
+  publishedAt DateTime?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  fileAsset Asset? @relation("CatalogFile", fields: [fileAssetId], references: [id], onDelete: SetNull)
+
+  @@index([language, status])
+  @@map("catalogs")
+}
+
+model SiteSettings {
+  id                    String   @id @default(cuid())
+  siteName              String
+  phone                 String
+  email                 String
+  address               String   @db.Text
+  whatsapp              String
+  instagram             String
+  mapUrl                String   @db.Text
+  workingHours          String
+  defaultSeoTitle       String?
+  defaultSeoDescription String?  @db.Text
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model ContactMessage {
+  id           String        @id @default(cuid())
+  fullName     String
+  email        String
+  phone        String
+  subject      String
+  message      String        @db.Text
+  status       MessageStatus @default(UNREAD)
+  source       String        @default("WEB")
+  readAt       DateTime?
+  readByUserId String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+
+  readBy User? @relation("MessageReader", fields: [readByUserId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([readByUserId])
+  @@index([deletedAt])
+  @@map("contact_messages")
+}
+
+model Asset {
+  id               String      @id @default(cuid())
+  storageKey       String      @unique
+  originalName     String
+  mimeType         String
+  size             Int
+  width            Int?
+  height           Int?
+  checksum         String?
+  status           AssetStatus @default(PENDING)
+  uploadedByUserId String?
+  createdAt        DateTime    @default(now())
+  deletedAt        DateTime?
+
+  uploadedBy        User?              @relation("UploadedAssets", fields: [uploadedByUserId], references: [id], onDelete: SetNull)
+  categoryImages    Category[]         @relation("CategoryImage")
+  catalogPageImages Product[]          @relation("ProductCatalogPage")
+  catalogPdfFiles   Product[]          @relation("ProductCatalogPdf")
+  referenceImages   ProjectReference[] @relation("ReferenceImage")
+  catalogFiles      Catalog[]          @relation("CatalogFile")
+  productMedia      ProductMedia[]     @relation("ProductMediaAsset")
+
+  @@index([status, createdAt])
+  @@index([uploadedByUserId])
+  @@map("assets")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?
+  action      String
+  entityType  String
+  entityId    String
+  beforeJson  Json?
+  afterJson   Json?
+  requestId   String?
+  createdAt   DateTime @default(now())
+
+  actor User? @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@index([requestId])
+  @@map("audit_logs")
+}
