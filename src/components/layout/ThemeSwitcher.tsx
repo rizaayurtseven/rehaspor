@@ -51,6 +51,7 @@ export function ThemeSwitcher() {
     <div ref={wrapperRef} className="relative">
       <button
         type="button"
+        aria-label={`Tema seç: ${currentTheme.name}`}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}

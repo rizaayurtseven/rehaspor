@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Mail, Menu, Phone } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { ThemeSwitcher } from "@/components/layout/ThemeSwitcher";
 import { siteSettings } from "@/data/siteSettings";
@@ -16,6 +16,8 @@ function isRouteActive(pathname: string, href: string) {
 export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-brand-line bg-brand-panel/95 backdrop-blur-md">
@@ -78,11 +80,11 @@ export function Navbar() {
           <Link href="/contact" className="rounded bg-brand-red px-4 py-3 text-sm font-semibold text-white hover:bg-brand-navy">Teklif Al</Link>
         </div>
 
-        <button type="button" aria-label="Menüyü aç" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)} className="rounded border border-brand-line p-2.5 text-brand-navy lg:hidden">
+        <button ref={menuButtonRef} type="button" aria-label="Menüyü aç" aria-controls="mobile-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)} className="grid min-h-11 min-w-11 place-items-center rounded border border-brand-line text-brand-navy lg:hidden">
           <Menu size={22} />
         </button>
       </div>
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileMenu open={menuOpen} onClose={closeMenu} returnFocusRef={menuButtonRef} />
     </header>
   );
 }
