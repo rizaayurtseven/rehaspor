@@ -7,7 +7,7 @@ export function ReferenceCard({ reference }: { reference: ProjectReference }) {
     <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-brand-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-card">
       <ImageFallback
         src={reference.image}
-        alt={`${reference.title} proje görseli`}
+        alt=""
         eyebrow={reference.category}
         label={reference.city}
         className="h-52"

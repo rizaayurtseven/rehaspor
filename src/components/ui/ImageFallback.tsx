@@ -14,6 +14,7 @@ type ImageFallbackProps = {
   imageClassName?: string;
   sizes?: string;
   priority?: boolean;
+  fit?: "cover" | "contain";
 };
 
 export function ImageFallback({
@@ -24,7 +25,8 @@ export function ImageFallback({
   className,
   imageClassName,
   sizes = "(max-width: 768px) 100vw, 50vw",
-  priority = false
+  priority = false,
+  fit = "cover"
 }: ImageFallbackProps) {
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const hasError = failedSource === src;
@@ -38,14 +40,15 @@ export function ImageFallback({
           fill
           sizes={sizes}
           priority={priority}
-          className={cn("object-cover transition duration-700", imageClassName)}
+          className={cn(fit === "cover" ? "object-cover" : "object-contain", "transition duration-700", imageClassName)}
           onError={() => setFailedSource(src)}
         />
       ) : (
         <div
           className="absolute inset-0 flex flex-col justify-end bg-gradient-to-br from-[#152c46] via-brand-navy to-[#03070d] p-6 text-white"
-          role="img"
-          aria-label={alt}
+          role={alt ? "img" : undefined}
+          aria-label={alt || undefined}
+          aria-hidden={alt ? undefined : true}
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.16]"

@@ -12,7 +12,7 @@ type ButtonProps = {
 
 export function Button({ children, variant = "primary", href, className, ...props }: ButtonProps) {
   const styles = cn(
-    "label-caps inline-flex min-h-11 items-center justify-center rounded px-5 py-3 transition duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/20 disabled:pointer-events-none disabled:opacity-50",
+    "label-caps inline-flex min-h-11 items-center justify-center rounded px-5 py-3 transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
     variant === "primary" && "bg-brand-red text-white hover:bg-[#b91c1c]",
     variant === "secondary" && "bg-brand-navy text-white hover:bg-black",
     variant === "ghost" && "border-2 border-brand-navy bg-transparent text-brand-navy hover:bg-brand-navy hover:text-white",

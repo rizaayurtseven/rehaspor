@@ -80,7 +80,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                     alt={`${product.title} ana ürün görseli`}
                     eyebrow={product.code}
                     label={category.title}
-                    className="h-[360px] sm:h-[520px]"
+                    className="aspect-[4/3] sm:h-[520px] sm:aspect-auto"
+                    imageClassName="bg-brand-soft p-2 sm:p-4"
+                    fit="contain"
                     sizes="(min-width: 1024px) 55vw, 100vw"
                     priority
                   />
@@ -213,6 +215,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               eyebrow="Reha Spor Katalog"
               label={product.code}
               className="h-72"
+              fit="contain"
               sizes="(min-width: 1024px) 40vw, 100vw"
             />
             <div>
