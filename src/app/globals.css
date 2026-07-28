@@ -233,11 +233,25 @@ a {
   background-size: 24px 24px;
 }
 
+.industrial-grid {
+  background-image:
+    linear-gradient(rgba(226, 232, 240, 0.42) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 232, 240, 0.42) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
 .label-caps {
   font-family: var(--font-jetbrains), monospace;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.industrial-heading {
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
   text-transform: uppercase;
 }
 

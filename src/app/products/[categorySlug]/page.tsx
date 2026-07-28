@@ -42,7 +42,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
         description={category.description}
         breadcrumbs={[{ label: "Ürünler", href: "/products" }, { label: category.title }]}
       >
-        <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-slate-200">
+        <span className="label-caps inline-flex rounded border border-white/15 bg-white/10 px-4 py-2 text-slate-200">
           {products.length} ürün ve sistem
         </span>
       </PublicPageHero>
@@ -51,8 +51,8 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
         <div className="container-page">
           <div className="mb-9 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-brand-red">Ürün Listesi</p>
-              <h2 className="mt-2 text-3xl font-black tracking-tight text-brand-navy">{category.title} çözümleri</h2>
+              <p className="label-caps text-brand-red">Ürün listesi</p>
+              <h2 className="industrial-heading mt-3 text-3xl text-brand-navy">{category.title} çözümleri</h2>
             </div>
             <Button href="/products" variant="ghost" className="self-start sm:self-auto">
               <ArrowLeft size={17} className="mr-2" aria-hidden="true" /> Kategorilere dön
@@ -66,7 +66,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
               ))}
             </div>
           ) : (
-            <div className="grid min-h-72 place-items-center rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
+            <div className="grid min-h-72 place-items-center rounded border border-dashed border-slate-300 bg-white p-8 text-center">
               <div>
                 <PackageSearch className="mx-auto text-brand-red" size={38} aria-hidden="true" />
                 <h2 className="mt-4 text-xl font-black text-brand-navy">Bu kategoride henüz ürün bulunmuyor</h2>

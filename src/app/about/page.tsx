@@ -42,12 +42,12 @@ export default function AboutPage() {
         breadcrumbs={[{ label: "Hakkımızda" }]}
       />
 
-      <section className="section-padding bg-white">
+      <section className="industrial-grid section-padding bg-white">
         <div className="container-page grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div>
             <SectionTitle eyebrow="Reha Spor" title="Tecrübe, araştırma ve uygulama disiplini" />
           </div>
-          <div className="space-y-5 text-base leading-8 text-slate-600">
+          <div className="space-y-5 border-l-2 border-brand-line pl-6 text-base leading-8 text-brand-muted sm:pl-8">
             <p>
               2000’li yıllara uzanan sektör deneyimimizle spor zemin kaplamaları, saha ekipmanları ve tesis uygulamalarında imalat ile montaj süreçlerini bir bütün olarak ele alıyoruz. Her projeye hazır bir kalıp yerine alanın kullanım amacı, altyapısı ve işletme koşullarına göre yaklaşıyoruz.
             </p>
@@ -70,13 +70,19 @@ export default function AboutPage() {
             align="center"
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {values.map(({ icon: Icon, title, description }) => (
-              <article key={title} className="rounded-lg border border-brand-line bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-card">
-                <span className="grid h-12 w-12 place-items-center rounded-lg bg-red-50 text-brand-red">
+            {values.map(({ icon: Icon, title, description }, index) => (
+              <article
+                key={title}
+                className={index === 0 ? "border border-brand-navy bg-brand-navy p-7 text-white" : index === 3 ? "border border-brand-red bg-brand-red p-7 text-white" : "border border-brand-line bg-white p-7"}
+              >
+                <span className={index === 0 || index === 3 ? "grid h-12 w-12 place-items-center text-white" : "grid h-12 w-12 place-items-center text-brand-red"}>
                   <Icon size={23} aria-hidden="true" />
                 </span>
-                <h2 className="mt-6 text-xl font-black text-brand-navy">{title}</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{description}</p>
+                <p className={index === 0 || index === 3 ? "label-caps mt-6 text-white/60" : "label-caps mt-6 text-brand-red"}>
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h2 className={index === 0 || index === 3 ? "mt-3 text-xl font-black uppercase" : "mt-3 text-xl font-black uppercase text-brand-navy"}>{title}</h2>
+                <p className={index === 0 || index === 3 ? "mt-3 text-sm leading-6 text-white/70" : "mt-3 text-sm leading-6 text-brand-muted"}>{description}</p>
               </article>
             ))}
           </div>

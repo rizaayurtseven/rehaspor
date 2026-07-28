@@ -23,8 +23,8 @@ export default async function ProductsPage() {
         breadcrumbs={[{ label: "Ürünler" }]}
       >
         <div className="flex flex-wrap gap-3 text-sm font-semibold text-slate-200">
-          <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2">{categories.length} ana kategori</span>
-          <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2">{totalProducts} ürün ve sistem</span>
+          <span className="label-caps rounded border border-white/15 bg-white/10 px-4 py-2">{categories.length} ana kategori</span>
+          <span className="label-caps rounded border border-white/15 bg-white/10 px-4 py-2">{totalProducts} ürün ve sistem</span>
         </div>
       </PublicPageHero>
 

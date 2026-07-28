@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock3, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import { BookOpen, Clock3, ExternalLink, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { PublicPageHero } from "@/components/sections/PublicPageHero";
 import { getSiteSettings } from "@/lib/api";
@@ -27,64 +27,89 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   return (
     <>
       <PublicPageHero
-        eyebrow="İletişim"
+        eyebrow="Teknik iletişim"
         title="Projenizi birlikte planlayalım"
-        description="Alanınız ve ihtiyacınız hakkında kısa bilgi paylaşın. Uygun zemin, ekipman veya saha sistemi için ekibimiz sizinle iletişime geçsin."
+        description="Alanınız ve ihtiyacınız hakkında kısa bilgi paylaşın. Uygun zemin, ekipman veya saha sistemi için teknik ekibimiz sizinle iletişime geçsin."
         breadcrumbs={[{ label: "İletişim" }]}
       />
 
-      <section className="section-padding bg-brand-soft">
+      <section className="industrial-grid section-padding bg-brand-soft">
         <div className="container-page grid items-start gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <div>
-            <p className="mb-5 text-xs font-black uppercase tracking-[0.16em] text-brand-red">Teklif Formu</p>
-            <ContactForm initialSubject={initialSubject} />
-          </div>
+          <ContactForm initialSubject={initialSubject} />
 
           <aside className="grid gap-5">
-            <div className="rounded-xl bg-brand-navy p-7 text-white shadow-brand sm:p-8">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-red-300">Firma Bilgileri</p>
-              <h2 className="mt-3 text-2xl font-black">Reha Spor ile iletişime geçin</h2>
-              <div className="mt-7 grid gap-5 text-sm text-slate-300">
+            <div className="bg-brand-navy p-7 text-white sm:p-9">
+              <p className="label-caps text-red-300">Merkez ofis</p>
+              <h2 className="mt-3 text-2xl font-black uppercase">Reha Spor ile iletişime geçin</h2>
+              <div className="mt-8 grid gap-6 text-sm text-slate-300">
                 <a href={phoneHref} className="flex items-start gap-4 transition hover:text-white">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white/10 text-red-300"><Phone size={18} aria-hidden="true" /></span>
-                  <span><strong className="block text-xs uppercase tracking-[0.1em] text-slate-400">Telefon</strong><span className="mt-1 block font-semibold">{settings.phone}</span></span>
+                  <Phone size={19} className="mt-0.5 shrink-0 text-red-300" aria-hidden="true" />
+                  <span><strong className="label-caps block text-slate-400">Telefon</strong><span className="mt-1 block font-semibold">{settings.phone}</span></span>
                 </a>
                 <a href={`mailto:${settings.email}`} className="flex items-start gap-4 transition hover:text-white">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white/10 text-red-300"><Mail size={18} aria-hidden="true" /></span>
-                  <span className="min-w-0"><strong className="block text-xs uppercase tracking-[0.1em] text-slate-400">E-posta</strong><span className="mt-1 block break-all font-semibold">{settings.email}</span></span>
+                  <Mail size={19} className="mt-0.5 shrink-0 text-red-300" aria-hidden="true" />
+                  <span className="min-w-0"><strong className="label-caps block text-slate-400">E-posta</strong><span className="mt-1 block break-all font-semibold">{settings.email}</span></span>
                 </a>
                 <div className="flex items-start gap-4">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white/10 text-red-300"><MapPin size={18} aria-hidden="true" /></span>
-                  <span><strong className="block text-xs uppercase tracking-[0.1em] text-slate-400">Adres</strong><span className="mt-1 block font-semibold">{settings.address}</span></span>
+                  <MapPin size={19} className="mt-0.5 shrink-0 text-red-300" aria-hidden="true" />
+                  <span><strong className="label-caps block text-slate-400">Adres</strong><span className="mt-1 block font-semibold">{settings.address}</span></span>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white/10 text-red-300"><Clock3 size={18} aria-hidden="true" /></span>
-                  <span><strong className="block text-xs uppercase tracking-[0.1em] text-slate-400">Çalışma Saatleri</strong><span className="mt-1 block font-semibold">{settings.workingHours}</span></span>
+                  <Clock3 size={19} className="mt-0.5 shrink-0 text-red-300" aria-hidden="true" />
+                  <span><strong className="label-caps block text-slate-400">Çalışma saatleri</strong><span className="mt-1 block font-semibold">{settings.workingHours}</span></span>
                 </div>
               </div>
-              <a
-                href={`https://wa.me/${whatsappNumber}`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-7 inline-flex w-full items-center justify-center rounded-md bg-brand-red px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
-              >
-                <MessageCircle size={18} className="mr-2" aria-hidden="true" /> WhatsApp ile Yazın
-              </a>
             </div>
 
             <a
-              href={settings.mapUrl}
+              href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noreferrer"
-              className="group grid min-h-56 place-items-center rounded-xl border border-dashed border-slate-300 bg-white p-7 text-center transition hover:border-brand-red"
+              className="group flex items-center justify-between bg-brand-steel p-6 text-white transition hover:bg-brand-navy focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2"
+            >
+              <span className="flex items-center gap-4">
+                <MessageCircle size={25} aria-hidden="true" />
+                <span><span className="label-caps block text-white/65">Canlı destek</span><strong className="mt-1 block text-lg">WhatsApp’tan yazın</strong></span>
+              </span>
+              <ExternalLink className="transition group-hover:translate-x-1" size={20} aria-hidden="true" />
+            </a>
+
+            <a
+              href="/e-catalog"
+              className="group flex min-h-44 items-center justify-between border border-brand-steel bg-white p-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2"
             >
               <span>
-                <Navigation className="mx-auto text-brand-red" size={29} aria-hidden="true" />
-                <strong className="mt-4 block text-lg font-black text-brand-navy">Haritada görüntüleyin</strong>
-                <span className="mt-2 block text-sm leading-6 text-slate-500">Konum bağlantısı yeni sekmede açılır.</span>
+                <BookOpen className="text-brand-red" size={25} aria-hidden="true" />
+                <span className="label-caps mt-5 block text-brand-red">Teknik doküman</span>
+                <strong className="mt-2 block text-xl font-black uppercase text-brand-navy">E-Katalog</strong>
               </span>
+              <ExternalLink className="text-brand-navy transition group-hover:translate-x-1" size={21} aria-hidden="true" />
             </a>
           </aside>
+        </div>
+      </section>
+
+      <section className="bg-white pb-16 sm:pb-24">
+        <div className="container-page">
+          <div className="mb-8 flex flex-col gap-4 border-b border-brand-line pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="label-caps text-brand-red">Ulaşım</p>
+              <h2 className="industrial-heading mt-3 text-3xl text-brand-navy">Operasyon merkezimiz</h2>
+            </div>
+            <span className="label-caps text-slate-500">{settings.address}</span>
+          </div>
+          <a
+            href={settings.mapUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="technical-grid group grid min-h-72 place-items-center border border-brand-line bg-brand-soft p-8 text-center transition hover:border-brand-red focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 sm:min-h-96"
+          >
+            <span>
+              <Navigation className="mx-auto text-brand-red" size={32} aria-hidden="true" />
+              <strong className="mt-4 block text-xl font-black uppercase text-brand-navy">Haritada görüntüleyin</strong>
+              <span className="mt-2 block text-sm text-slate-500">Konum bağlantısı yeni sekmede açılır.</span>
+            </span>
+          </a>
         </div>
       </section>
     </>

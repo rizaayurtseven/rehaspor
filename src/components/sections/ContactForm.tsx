@@ -11,22 +11,24 @@ type ContactFormProps = {
   initialSubject?: string;
 };
 
-const emptyForm: ContactFormValues & { website?: string } = {
+type ContactFormState = ContactFormValues & { website: string };
+
+const emptyForm: ContactFormState = {
   fullName: "",
   email: "",
   phone: "",
   subject: "",
   message: "",
-  website: "", // Honeypot field
+  website: ""
 };
 
 export function ContactForm({ initialSubject = "" }: ContactFormProps) {
-  const [form, setForm] = useState({ ...emptyForm, subject: initialSubject });
+  const [form, setForm] = useState<ContactFormState>({ ...emptyForm, subject: initialSubject });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const updateField = (field: string, value: string) => {
+  const updateField = (field: keyof ContactFormState, value: string) => {
     setSubmitted(false);
     setErrorMessage(null);
     setForm((current) => ({ ...current, [field]: value }));
@@ -35,7 +37,6 @@ export function ContactForm({ initialSubject = "" }: ContactFormProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Anti-spam honeypot check
     if (form.website) {
       setSubmitted(true);
       return;
@@ -48,16 +49,8 @@ export function ContactForm({ initialSubject = "" }: ContactFormProps) {
       const response = await fetch("/api/v1/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          fullName: form.fullName,
-          email: form.email,
-          phone: form.phone,
-          subject: form.subject,
-          message: form.message,
-          website: form.website,
-        }),
+        body: JSON.stringify(form)
       });
-
       const payload = await response.json();
 
       if (!response.ok) {
@@ -66,115 +59,69 @@ export function ContactForm({ initialSubject = "" }: ContactFormProps) {
 
       setSubmitted(true);
       setForm({ ...emptyForm });
-    } catch (err: any) {
-      setErrorMessage(err.message || "İletişim sunucusuna ulaşılamadı.");
+    } catch (error: unknown) {
+      setErrorMessage(error instanceof Error ? error.message : "İletişim sunucusuna ulaşılamadı.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-brand-line bg-white p-6 shadow-card sm:p-8">
-      {/* Honeypot hidden input */}
+    <form onSubmit={handleSubmit} className="border border-brand-line bg-white p-6 sm:p-10">
       <input
         type="text"
         name="website"
         value={form.website}
-        onChange={(e) => updateField("website", e.target.value)}
+        onChange={(event) => updateField("website", event.target.value)}
         tabIndex={-1}
         autoComplete="off"
         className="hidden"
         aria-hidden="true"
       />
 
+      <h2 className="industrial-heading mb-8 text-2xl text-brand-navy">Teknik proje talebi</h2>
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="grid gap-2 text-sm font-bold text-brand-navy">
+        <label className="label-caps grid gap-2 text-brand-navy">
           Ad soyad
-          <Input
-            name="fullName"
-            autoComplete="name"
-            placeholder="Adınız ve soyadınız"
-            value={form.fullName}
-            onChange={(event) => updateField("fullName", event.target.value)}
-            required
-            disabled={loading}
-          />
+          <Input name="fullName" autoComplete="name" placeholder="Adınız ve soyadınız" value={form.fullName} onChange={(event) => updateField("fullName", event.target.value)} required disabled={loading} />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-brand-navy">
+        <label className="label-caps grid gap-2 text-brand-navy">
           E-posta
-          <Input
-            name="email"
-            type="email"
-            autoComplete="email"
-            placeholder="ornek@firma.com"
-            value={form.email}
-            onChange={(event) => updateField("email", event.target.value)}
-            required
-            disabled={loading}
-          />
+          <Input name="email" type="email" autoComplete="email" placeholder="ornek@firma.com" value={form.email} onChange={(event) => updateField("email", event.target.value)} required disabled={loading} />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-brand-navy">
+        <label className="label-caps grid gap-2 text-brand-navy">
           Telefon
-          <Input
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            placeholder="+90 5xx xxx xx xx"
-            value={form.phone}
-            onChange={(event) => updateField("phone", event.target.value)}
-            required
-            disabled={loading}
-          />
+          <Input name="phone" type="tel" autoComplete="tel" placeholder="+90 5xx xxx xx xx" value={form.phone} onChange={(event) => updateField("phone", event.target.value)} required disabled={loading} />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-brand-navy">
+        <label className="label-caps grid gap-2 text-brand-navy">
           Konu
-          <Input
-            name="subject"
-            placeholder="Proje veya ürün konusu"
-            value={form.subject}
-            onChange={(event) => updateField("subject", event.target.value)}
-            required
-            disabled={loading}
-          />
+          <Input name="subject" placeholder="Proje veya ürün konusu" value={form.subject} onChange={(event) => updateField("subject", event.target.value)} required disabled={loading} />
         </label>
       </div>
-      <label className="mt-5 grid gap-2 text-sm font-bold text-brand-navy">
-        Mesaj
-        <Textarea
-          name="message"
-          placeholder="Alan, ölçü, kullanım amacı ve ihtiyacınız hakkında kısa bilgi paylaşın."
-          value={form.message}
-          onChange={(event) => updateField("message", event.target.value)}
-          required
-          rows={6}
-          disabled={loading}
-        />
+      <label className="label-caps mt-5 grid gap-2 text-brand-navy">
+        Proje detayları / Mesaj
+        <Textarea name="message" placeholder="Alan, ölçü, kullanım amacı ve ihtiyacınız hakkında kısa bilgi paylaşın." value={form.message} onChange={(event) => updateField("message", event.target.value)} required rows={6} disabled={loading} />
       </label>
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-5 text-slate-500">Talebiniz kaydedildikten sonra ekibimiz en kısa sürede dönüş yapacaktır.</p>
-        <Button type="submit" disabled={loading} className="w-full shrink-0 sm:w-auto">
+        <p className="max-w-md text-xs leading-5 text-brand-muted">Talebiniz kaydedildikten sonra ekibimiz en kısa sürede dönüş yapacaktır.</p>
+        <Button type="submit" variant="secondary" disabled={loading} className="w-full shrink-0 sm:w-auto">
           {loading ? (
-            <>
-              Gönderiliyor <Loader2 size={17} className="ml-2 animate-spin" aria-hidden="true" />
-            </>
+            <>Gönderiliyor <Loader2 size={17} className="ml-2 animate-spin" aria-hidden="true" /></>
           ) : (
-            <>
-              Mesaj Gönder <Send size={17} className="ml-2" aria-hidden="true" />
-            </>
+            <>Mesaj gönder <Send size={17} className="ml-2" aria-hidden="true" /></>
           )}
         </Button>
       </div>
 
       <div aria-live="polite">
         {submitted ? (
-          <p className="mt-5 flex items-center gap-2 rounded-lg bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">
+          <p className="mt-5 flex items-center gap-2 border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">
             <CheckCircle2 size={19} aria-hidden="true" /> Mesajınız başarıyla iletildi. En kısa sürede sizinle iletişime geçeceğiz.
           </p>
         ) : null}
-
         {errorMessage ? (
-          <p className="mt-5 flex items-center gap-2 rounded-lg bg-rose-50 p-4 text-sm font-semibold text-rose-700">
+          <p className="mt-5 flex items-center gap-2 border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-700">
             <AlertCircle size={19} aria-hidden="true" /> {errorMessage}
           </p>
         ) : null}
