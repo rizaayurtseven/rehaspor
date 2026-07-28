@@ -22,6 +22,11 @@ const config: Config = {
         lift: "0 24px 70px rgba(15, 23, 42, 0.12)"
       },
       borderRadius: {
+        DEFAULT: "0.125rem",
+        sm: "0.125rem",
+        md: "0.1875rem",
+        lg: "0.25rem",
+        xl: "0.5rem",
         "2xl": "0.75rem"
       }
     }

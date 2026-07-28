@@ -32,9 +32,9 @@ export default async function ReferencesPage() {
               description="Her proje, bulunduğu alanın teknik ihtiyacına ve kullanım yoğunluğuna göre planlanmıştır."
             />
             <div className="flex flex-wrap gap-2" aria-label="Referans kategorileri">
-              <span className="rounded-full bg-brand-red px-4 py-2 text-xs font-bold text-white">Tümü</span>
+              <span className="label-caps rounded bg-brand-red px-4 py-2 text-white">Tümü</span>
               {categories.map((category) => (
-                <span key={category} className="rounded-full border border-brand-line bg-white px-4 py-2 text-xs font-bold text-slate-600">
+                <span key={category} className="label-caps rounded border border-brand-line bg-white px-4 py-2 text-slate-600">
                   {category}
                 </span>
               ))}

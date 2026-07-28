@@ -19,6 +19,7 @@ export function PublicPageHero({ eyebrow, title, description, breadcrumbs, child
   return (
     <section className="surface-grid relative overflow-hidden bg-brand-navy py-16 text-white sm:py-24">
       <div className="absolute right-0 top-0 h-full w-1/3 translate-x-1/3 skew-x-12 bg-brand-red/15" aria-hidden="true" />
+      <div className="absolute -bottom-1/2 -left-24 h-full w-1/4 -skew-x-12 bg-brand-red/10" aria-hidden="true" />
       <div className="container-page relative">
         {breadcrumbs?.length ? (
           <nav aria-label="Sayfa yolu" className="mb-7">
@@ -41,7 +42,7 @@ export function PublicPageHero({ eyebrow, title, description, breadcrumbs, child
         ) : null}
 
         <p className="label-caps text-red-300">{eyebrow}</p>
-        <h1 className="mt-4 max-w-4xl text-balance text-4xl font-black uppercase leading-tight sm:text-5xl">{title}</h1>
+        <h1 className="industrial-heading mt-4 max-w-4xl text-balance text-4xl sm:text-5xl">{title}</h1>
         <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">{description}</p>
         {children ? <div className="mt-8">{children}</div> : null}
       </div>
