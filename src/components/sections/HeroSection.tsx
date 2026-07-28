@@ -28,8 +28,10 @@ export function HeroSection() {
             </span>
             Endüstriyel kalite
           </div>
-          <h1 className="industrial-heading max-w-3xl text-4xl sm:text-6xl lg:text-[68px]">
-            Doğru zemin. Sağlam ekipman. Temiz işçilik.
+          <h1 className="industrial-heading max-w-3xl text-4xl sm:text-5xl lg:text-[58px] xl:text-[68px]">
+            <span className="block">Doğru zemin.</span>
+            <span className="block">Sağlam ekipman.</span>
+            <span className="block">Temiz işçilik.</span>
           </h1>
           <p className="mt-7 max-w-2xl border-l-4 border-brand-red pl-5 text-base leading-7 text-white/80 sm:text-lg sm:leading-8">
             Açık ve kapalı spor alanlarını projelendiriyor; zemin kaplamasından ekipman montajına kadar tüm uygulamayı tek ekip olarak yönetiyoruz.
