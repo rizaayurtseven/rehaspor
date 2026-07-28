@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
     >
       <ImageFallback
         src={product.image}
-        alt={`${product.title} ürün görseli`}
+        alt=""
         eyebrow={product.code}
         label={categoryTitle}
         className="h-56"

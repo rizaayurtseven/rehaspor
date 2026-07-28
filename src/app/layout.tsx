@@ -13,7 +13,7 @@ const description =
   "Spor tesisleri için profesyonel zemin kaplamaları, saha uygulamaları, spor ekipmanları ve padel kort çözümleri.";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = headers();
+  const requestHeaders = await headers();
   const forwardedHost = requestHeaders.get("x-forwarded-host")?.split(",")[0]?.trim();
   const forwardedProtocol = requestHeaders.get("x-forwarded-proto")?.split(",")[0]?.trim();
   const host = forwardedHost ?? requestHeaders.get("host") ?? "localhost:3000";

@@ -11,7 +11,7 @@ export function CategoryCard({ category }: { category: Category }) {
     >
       <ImageFallback
         src={category.image}
-        alt={`${category.title} kategori görseli`}
+        alt=""
         eyebrow="Reha Spor"
         label={category.title}
         className="absolute inset-0 h-full"

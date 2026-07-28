@@ -10,7 +10,7 @@ import { ImageFallback } from "@/components/ui/ImageFallback";
 import { getCategoryBySlug, getProductBySlug, getProducts, getProductsByCategory } from "@/lib/api";
 
 type ProductPageProps = {
-  params: { categorySlug: string; productSlug: string };
+  params: Promise<{ categorySlug: string; productSlug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -19,9 +19,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const product = await getProductBySlug(params.productSlug);
+  const { categorySlug, productSlug } = await params;
+  const product = await getProductBySlug(productSlug);
 
-  return product && product.categorySlug === params.categorySlug
+  return product && product.categorySlug === categorySlug
     ? { title: product.title, description: product.shortDescription }
     : { title: "Ürün Bulunamadı" };
 }
@@ -36,8 +37,9 @@ function buildSpecCards(product: NonNullable<Awaited<ReturnType<typeof getProduc
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
-  const product = await getProductBySlug(params.productSlug);
-  if (!product || product.categorySlug !== params.categorySlug) notFound();
+  const { categorySlug, productSlug } = await params;
+  const product = await getProductBySlug(productSlug);
+  if (!product || product.categorySlug !== categorySlug) notFound();
 
   const [category, sameCategoryProducts] = await Promise.all([
     getCategoryBySlug(product.categorySlug),
@@ -78,7 +80,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                     alt={`${product.title} ana ürün görseli`}
                     eyebrow={product.code}
                     label={category.title}
-                    className="h-[360px] sm:h-[520px]"
+                    className="aspect-[4/3] sm:h-[520px] sm:aspect-auto"
+                    imageClassName="bg-brand-soft p-2 sm:p-4"
+                    fit="contain"
                     sizes="(min-width: 1024px) 55vw, 100vw"
                     priority
                   />
@@ -211,6 +215,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               eyebrow="Reha Spor Katalog"
               label={product.code}
               className="h-72"
+              fit="contain"
               sizes="(min-width: 1024px) 40vw, 100vw"
             />
             <div>

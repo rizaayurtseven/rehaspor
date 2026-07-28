@@ -1,8 +1,25 @@
 # Reha Spor Backend ve Entegrasyon Ana Planı
 
-> Durum: Planlama  
-> Son güncelleme: 24 Temmuz 2026  
+> Durum: Faz 0, Faz 1 ve Faz 2 tamamlandı; Faz 3 auth ve admin güvenliği devam ediyor  
+> Son güncelleme: 25 Temmuz 2026  
 > Amaç: Bu doküman, Reha Spor frontend demosunu güvenli, kalıcı veriye bağlı ve üretime alınabilir tam bir uygulamaya dönüştürmek için ana çalışma kaynağıdır.
+
+### Mevcut ilerleme
+
+- [x] Mevcut frontend ve mock veri yapısı incelendi.
+- [x] Hedef backend mimarisi seçildi.
+- [x] Temel ürün ve işletim kararları kesinleştirildi.
+- [x] Node/npm, Prisma/Zod, ortak server katmanı ve health endpoint iskeleti kuruldu.
+- [x] Yerel PostgreSQL 18.4 bağlantısı doğrulandı ve `rehaspor` veritabanı oluşturuldu.
+- [x] Next.js 16.2.11 ve React 19.2.8'e kontrollü geçiş tamamlandı; tip, lint ve production build başarılı.
+- [!] Güncel audit'te Next.js zincirinden gelen PostCSS/Sharp ve Prisma CLI zincirinden gelen transitive açıklar raporlanıyor. Zorlayıcı otomatik düzeltme güvenli olmadığı için sonraki güvenli upstream sürümde yeniden değerlendirilecek.
+- [x] Prisma iş modeli, foreign key ve indeks tasarımı doğrulandı.
+- [x] İlk migration local PostgreSQL üzerinde üretildi ve uygulandı.
+- [x] Mock veriler için idempotent seed yazıldı ve local PostgreSQL'e aktarıldı.
+- [x] Uygulama içi health readiness smoke testi local PostgreSQL'e karşı başarılı.
+- [x] Temiz PostgreSQL veritabanında iki migration ve seed sıfırdan başarıyla doğrulandı.
+
+CRUD, storage ve mail entegrasyonu henüz kurulmadı; auth temel akışı uygulanmış, güvenlik sertleştirmesi sürmektedir.
 
 ## 1. Hedef
 
@@ -64,6 +81,24 @@ Public Server Component'lar kendi uygulamasına HTTP isteği atmayacak; servis k
 - Client Component'lara hassas veri, secret veya Prisma nesnesi aktarılmaz.
 - Public ve admin DTO'ları veritabanı modellerinden bağımsız tutulur.
 - `src/data` içindeki mock veriler üretim veri kaynağı olarak kullanılmaz.
+
+### 2.4 Kesinleşen ürün kararları
+
+- İlk sürüm yalnızca Türkçe olacaktır. Kimlikler ve ilişkiler dilden bağımsız tasarlanacak; ileride çeviri tabloları eklenebilmesi engellenmeyecektir.
+- Başlangıçta tek `ADMIN` kullanıcısı olacaktır. Kullanıcı ve yetki modeli ileride yeni roller eklenebilecek şekilde kurulacaktır.
+- İçerikler `DRAFT`, `PUBLISHED` ve `ARCHIVED` durumlarını destekleyecektir.
+- Ürün, kategori ve referans kayıtları fiziksel olarak hemen silinmeyecek; arşivleme/soft-delete kullanılacaktır.
+- İletişim mesajları önce veritabanına güvenli biçimde kaydedilecektir. Mail servisi tanımlıysa ayrıca bildirim gönderilecek; mail hatası mesaj kaydını kaybettirmeyecektir.
+- Domain, veritabanı, storage ve mail hesapları canlıya geçişte müşteriye ait hesaplarda tutulacaktır.
+- Demo ve geliştirme aşaması sağlayıcı bağımsız yürütülecektir. Domain veya servis sağlayıcısı değişikliği kod değişikliği değil, adapter ve ortam değişkeni değişikliği olmalıdır.
+
+### 2.5 Ortam ve sahiplik yaklaşımı
+
+- `local`: Geliştiricilerin yerel ortamı; gerçek müşteri hesabı gerektirmez.
+- `staging/demo`: Müşteriye gösterim ve kabul testleri için geçici ortam.
+- `production`: Müşteri tarafından sahip olunan hesaplar, domain, veritabanı, storage ve mail servisi.
+- Production erişimleri kişisel geliştirici hesaplarına kalıcı olarak bağlanmaz.
+- Uygulama taşınabilir olmalı; sağlayıcıya özel kod yalnızca integration adapter'larında bulunmalıdır.
 
 ## 3. Hedef Klasör Yapısı
 
@@ -496,10 +531,10 @@ Public içerik Server Component'larda service katmanından okunur. Harici public
 
 ### Yapılacaklar
 
-- [ ] İlk admin kullanıcısını seed veya tek kullanımlık kurulum komutuyla oluştur.
-- [ ] Argon2id parola hash yardımcılarını yaz.
-- [ ] Session oluşturma, doğrulama, yenileme ve iptal mekanizmasını kur.
-- [ ] `/admin/login` dışındaki admin route'larını middleware/layout seviyesinde koru.
+- [x] İlk admin kullanıcısını tek kullanımlık kurulum komutuyla oluştur ve başarılı giriş/çıkış testini yap.
+- [x] Argon2id parola hash yardımcılarını yaz.
+- [~] Session oluşturma, doğrulama, yenileme ve iptal mekanizmasını kur.
+- [x] `/admin/login` dışındaki admin route'larını server layout seviyesinde koru.
 - [ ] Her admin API endpoint'inde ayrıca sunucu tarafı auth kontrolü yap.
 - [ ] Başarısız login denemelerine rate limit ekle.
 - [ ] Cookie ve security header ayarlarını yapılandır.
@@ -721,44 +756,47 @@ Kurallar:
 
 ### Faz 0 — Mevcut durum ve kararların sabitlenmesi
 
-- [ ] Node ve package manager sürümünü sabitle.
-- [ ] Temiz kurulum, lint ve production build al.
-- [ ] Mevcut route ve veri kullanım haritasını çıkar.
-- [ ] Public ve admin alan uyuşmazlıklarını listele.
-- [ ] Deployment, PostgreSQL, object storage ve mail sağlayıcısını seç.
-- [ ] `.env.example` oluştur.
+- [x] Node ve package manager sürümünü sabitle.
+- [x] Temiz kurulum, lint ve production build al.
+- [x] Mevcut route ve veri kullanım haritasını çıkar.
+- [x] Public ve admin alan uyuşmazlıklarını listele.
+- [x] Production servislerinin müşteri hesaplarında tutulması kararını kaydet.
+- [x] Local/demo ortamı için sağlayıcı bağımsız PostgreSQL çalışma yöntemini ve adapter sınırını netleştir.
+- [x] `.env.example` oluştur.
+- [x] Next.js 16.2.11 ve React 19.2.8'e geç; async request API'lerini ve ESLint CLI'yi uyarla; audit/build al.
+- [!] Güncel audit bulgularını takip et — Next.js bağımlılık zincirindeki PostCSS/Sharp ve Prisma CLI transitive bulguları için güvenli upstream düzeltme bekleniyor.
 
-**Kabul kriteri:** Mevcut frontend temiz ortamda çalışıyor; dış servis kararları kayda geçmiş durumda.
+**Kabul kriteri:** Mevcut frontend temiz ortamda çalışıyor; local/demo çalışma şekli belirlenmiş ve production sağlayıcısının sonradan ortam değişkenleriyle seçilebildiği doğrulanmış durumda.
 
 ### Faz 1 — Backend temeli
 
-- [ ] Prisma ve Zod bağımlılıklarını ekle.
-- [ ] `src/server`, `src/contracts` ve API response altyapısını kur.
-- [ ] Prisma client singleton ve transaction yardımcısını kur.
-- [ ] Standart hata sınıfları ve request ID ekle.
-- [ ] Health endpoint'lerini oluştur.
-- [ ] PostgreSQL bağlantısını doğrula.
+- [x] Prisma ve Zod bağımlılıklarını ekle.
+- [x] `src/server`, `src/contracts` ve API response altyapısını kur.
+- [x] Prisma client singleton ve transaction yardımcısını kur.
+- [x] Standart hata sınıfları ve request ID ekle.
+- [x] Health endpoint'lerini oluştur.
+- [x] PostgreSQL bağlantısını doğrula — local PostgreSQL 18.4 ve `rehaspor` veritabanı ile migration uygulandı.
 
 **Kabul kriteri:** Uygulama veritabanına bağlanıyor, health kontrolleri çalışıyor ve hata cevapları standardize.
 
 ### Faz 2 — Şema, migration ve seed
 
-- [ ] Tüm Prisma modellerini oluştur.
-- [ ] Foreign key, unique index ve sorgu index'lerini ekle.
-- [ ] İlk migration'ı üret.
-- [ ] Mevcut mock verilerden idempotent seed yaz.
-- [ ] Temiz veritabanında migration + seed testi yap.
+- [x] Tüm Prisma modellerini oluştur.
+- [x] Foreign key, unique index ve sorgu index'lerini ekle.
+- [x] İlk migration'ı üret ve uygula (`20260725122954_initial_schema`).
+- [x] Mevcut mock verilerden idempotent seed yaz ve tekrar çalıştırılabilirliğini doğrula.
+- [x] Temiz veritabanında migration + seed testi yap.
 
 **Kabul kriteri:** Tüm mevcut içerik PostgreSQL'den okunabilir ve ilişkiler doğrulanmış durumda.
 
-### Faz 3 — Auth ve admin güvenliği
+### Faz 3 — Auth ve admin güvenliği `[~]`
 
-- [ ] Kullanıcı ve session repository/service katmanını yaz.
-- [ ] Login, logout ve session endpoint'lerini yaz.
-- [ ] Cookie ve password güvenliğini kur.
-- [ ] Admin sayfa ve endpoint korumasını ekle.
-- [ ] Rate limit ve audit log'u auth akışına bağla.
-- [ ] Login ekranını gerçek API'ye bağla.
+- [~] Kullanıcı ve session repository/service katmanını yaz.
+- [x] Login, logout ve session endpoint'lerini yaz.
+- [x] Cookie ve password güvenliğini kur.
+- [~] Admin sayfa ve endpoint korumasını ekle.
+- [~] Rate limit ve audit log'u auth akışına bağla.
+- [x] Login ekranını gerçek API'ye bağla.
 
 **Kabul kriteri:** Giriş yapmayan kullanıcı hiçbir admin sayfasına veya admin API'sine erişemiyor; logout session'ı gerçekten iptal ediyor.
 
@@ -904,14 +942,23 @@ Durum anlamları:
 | 2026-07-24 | Opaque server-side session | Tek web istemcisi için güvenli cookie tabanlı auth |
 | 2026-07-24 | S3 uyumlu object storage | Görsel ve PDF binary verilerini veritabanından ayırmak |
 | 2026-07-24 | Public Server Component'larda doğrudan service çağrısı | Uygulamanın kendi API'sine gereksiz HTTP isteğini engellemek |
+| 2026-07-25 | Tek admin, genişletilebilir rol modeli | İlk sürümü sade tutarken ileride rol eklemeyi engellememek |
+| 2026-07-25 | Türkçe ilk sürüm | Mevcut ihtiyaç Türkçe; ilişkiler ileride çeviriye uygun kalacak |
+| 2026-07-25 | Taslak, yayın ve arşiv durumları | İçeriklerin kontrollü biçimde canlıya alınması |
+| 2026-07-25 | Mesaj kaydı mail bildiriminden bağımsız | Mail sağlayıcısı hatasında müşteri talebini kaybetmemek |
+| 2026-07-25 | Production altyapısı müşteri hesaplarında | Sahiplik, faturalandırma ve teslim sürecini doğru ayırmak |
+| 2026-07-25 | Sağlayıcı ve domain bağımsız uygulama | Demo ortamından production'a kodu değiştirmeden geçebilmek |
+| 2026-07-25 | Node 24 ve npm 11 çalışma standardı | Prisma 7 desteği ve tekrarlanabilir local/build ortamı |
+| 2026-07-25 | Local PostgreSQL için Docker Compose | Production sağlayıcısına bağlanmadan ortak geliştirme ortamı |
+| 2026-07-25 | PostgreSQL 18 local hedefi | Yerel PostgreSQL 18.4 ile eşleşen, desteklenen geliştirme ortamı |
+| 2026-07-25 | Next.js major yükseltmesini ayrı iş olarak yapmak | Audit riskini kapatırken mevcut frontend kırılmalarını kontrollü ele almak |
+| 2026-07-25 | Next.js 16.2.11 + React 19.2.8 | Next 14 güvenlik ve destek riskini kapatmak; async request API'leri ile güncel uyumluluk |
+| 2026-07-25 | Prisma şeması: ilişkisel içerik + media + audit | Public/admin alan farklarını kayıpsız yönetmek ve ileride genişlemeyi desteklemek |
+| 2026-07-25 | Seed statik dosya yollarını asset storage key olarak tutar | Mock içerikleri kaybetmeden sonraki object storage geçişine hazırlanmak |
 
-## 19. İlk Uygulama Oturumu
+## 19. Sıradaki Uygulama Oturumu
 
-Bir sonraki geliştirme oturumunda Faz 0 ile başlanacaktır:
+Backend temel iskeleti, Prisma iş modeli, migration, seed, health ve temiz veritabanı doğrulaması kuruldu. Auth çekirdeği ve admin sayfa koruması da eklendi. Sonraki parça:
 
-1. Bağımlılıkları kur ve mevcut production build'i doğrula.
-2. Kullanılacak deployment, PostgreSQL ve storage ortamını netleştir.
-3. Public/admin alan eşleşme tablosunu çıkar.
-4. Prisma şemasının ilk sürümünü hazırla.
-5. `.env.example` ve backend klasör iskeletini oluştur.
-
+1. Faz 3 için rate limit, origin kontrolü ve admin API korumasını tamamla.
+2. Her bağımlılık güncellemesinde audit'i yeniden çalıştır; zorlayıcı `npm audit fix --force` kullanma.

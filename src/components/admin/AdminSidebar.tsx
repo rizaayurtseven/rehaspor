@@ -14,7 +14,8 @@ import {
   X
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 type NavigationItem = {
   href: string;
@@ -39,6 +40,16 @@ type AdminSidebarProps = {
 
 export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  async function handleLogout() {
+    setIsLoggingOut(true);
+    await fetch("/api/v1/auth/logout", { method: "POST" }).catch(() => undefined);
+    onClose?.();
+    router.replace("/admin/login");
+    router.refresh();
+  }
 
   return (
     <aside
@@ -105,14 +116,15 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
             <span className="block truncate text-xs text-slate-500">admin@rehaspor.com</span>
           </span>
         </div>
-        <Link
-          href="/admin/login"
-          onClick={onClose}
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
           className="label-caps flex items-center justify-center gap-2 border border-white/10 px-4 py-3 text-slate-300 transition hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-200"
         >
           <LogOut size={15} />
-          Çıkış
-        </Link>
+          {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış"}
+        </button>
       </div>
     </aside>
   );

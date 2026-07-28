@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Download, Eye, FileCheck2, Layers3, Trophy, Wrench } from "lucide-react";
+import { Download, ExternalLink, Eye, FileCheck2, Layers3, Trophy, Wrench } from "lucide-react";
 import { PublicPageHero } from "@/components/sections/PublicPageHero";
 import { getCatalogs } from "@/lib/api";
 
@@ -30,9 +30,7 @@ export default async function CatalogPage() {
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <a
-            href={catalogUrl}
-            target="_blank"
-            rel="noreferrer"
+            href="#catalog-viewer"
             className="inline-flex items-center justify-center rounded-md bg-brand-red px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
           >
             <Eye size={18} className="mr-2" aria-hidden="true" /> Kataloğu Görüntüle
@@ -46,6 +44,58 @@ export default async function CatalogPage() {
           </a>
         </div>
       </PublicPageHero>
+
+      <section id="catalog-viewer" aria-labelledby="catalog-viewer-title" className="scroll-mt-24 bg-brand-soft py-8 sm:py-12">
+        <div className="container-page">
+          <div className="overflow-hidden rounded-xl border border-brand-line bg-white shadow-brand">
+            <div className="flex flex-col gap-4 border-b border-brand-line px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-brand-red">Çevrim içi görüntüleyici</p>
+                <h2 id="catalog-viewer-title" className="mt-1 text-xl font-black tracking-tight text-brand-navy sm:text-2xl">
+                  Reha Spor Ürün Kataloğu
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={catalogUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-brand-line px-4 py-2 text-sm font-bold text-brand-navy transition hover:border-brand-red hover:text-brand-red"
+                >
+                  <ExternalLink size={17} className="mr-2" aria-hidden="true" /> Yeni sekmede aç
+                </a>
+                <a
+                  href={catalogUrl}
+                  download
+                  className="inline-flex min-h-11 items-center justify-center rounded-md bg-brand-red px-4 py-2 text-sm font-bold text-white transition hover:bg-red-700"
+                >
+                  <Download size={17} className="mr-2" aria-hidden="true" /> PDF indir
+                </a>
+              </div>
+            </div>
+
+            <object
+              data={`${catalogUrl}#view=FitH&toolbar=1&navpanes=0`}
+              type="application/pdf"
+              title="Reha Spor ürün kataloğu PDF görüntüleyici"
+              className="h-[72vh] min-h-[32rem] w-full bg-slate-100 sm:min-h-[42rem]"
+            >
+              <div className="grid min-h-[32rem] place-items-center p-6 text-center">
+                <div className="max-w-md">
+                  <FileCheck2 className="mx-auto text-brand-red" size={36} aria-hidden="true" />
+                  <h3 className="mt-4 text-xl font-black text-brand-navy">Tarayıcınız PDF önizlemesini desteklemiyor</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Kataloğu yeni sekmede açabilir veya cihazınıza indirebilirsiniz.
+                  </p>
+                  <a href={catalogUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center rounded-md bg-brand-red px-5 py-2 text-sm font-bold text-white">
+                    Kataloğu aç
+                  </a>
+                </div>
+              </div>
+            </object>
+          </div>
+        </div>
+      </section>
 
       <section className="section-padding bg-white">
         <div className="container-page grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -68,7 +118,7 @@ export default async function CatalogPage() {
             <p className="text-xs font-black uppercase tracking-[0.16em] text-brand-red">Dijital Katalog</p>
             <h2 className="mt-3 text-3xl font-black tracking-tight text-brand-navy sm:text-4xl">Teknik ürün seçimine hızlı bir başlangıç</h2>
             <p className="mt-5 leading-8 text-slate-600">
-              {primaryCatalog?.description ?? "Reha Spor ürün ve uygulama portföyünü özetleyen dijital katalog."} Katalog dosyası daha sonra <strong className="font-bold text-brand-navy">public/catalog/Katalog.pdf</strong> konumuna eklendiğinde mevcut bağlantılar otomatik olarak çalışır.
+              {primaryCatalog?.description ?? "Reha Spor ürün ve uygulama portföyünü özetleyen dijital katalog."} Güncel Türkçe kataloğu çevrim içi görüntüleyebilir veya cihazınıza PDF olarak indirebilirsiniz.
             </p>
             <div className="mt-8 grid gap-4">
               {contents.map(({ icon: Icon, title, text }) => (
@@ -85,7 +135,7 @@ export default async function CatalogPage() {
             </div>
             <div className="mt-7 flex items-start gap-3 rounded-lg bg-brand-soft p-4 text-sm leading-6 text-slate-600">
               <FileCheck2 className="mt-0.5 shrink-0 text-brand-red" size={19} aria-hidden="true" />
-              PDF henüz eklenmemiş olsa da sayfa ve ürün bağlantıları çalışmaya devam eder; dosya eklendiğinde kod değişikliği gerekmez.
+              Katalog; ürün gruplarını, teknik özellikleri ve gerçek uygulama fotoğraflarını 64 sayfada bir araya getirir.
             </div>
           </div>
         </div>

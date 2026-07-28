@@ -11,10 +11,6 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!isMenuOpen) {
       return;
     }
@@ -54,7 +50,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           >
             <Menu size={20} />
           </button>
-          <Link href="/admin/dashboard" className="text-sm font-black tracking-wide text-brand-navy">
+          <Link href="/admin/dashboard" onClick={() => setIsMenuOpen(false)} className="text-sm font-black tracking-wide text-brand-navy">
             REHA SPOR <span className="text-brand-red">ADMIN</span>
           </Link>
           <Link

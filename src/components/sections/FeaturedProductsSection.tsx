@@ -12,13 +12,13 @@ const featured = [
   {
     title: "Poliüretan Sistemler",
     subtitle: "Çok amaçlı kapalı salonlar",
-    image: "/images/site/polyurethane-sports-hall.png",
+    image: "/images/references/ankara-spor-salonu/main.jpg",
     href: "/products/zemin-kaplamalari/poliuretan-zemin-kaplamasi"
   },
   {
     title: "Panoramik Padel Kort",
     subtitle: "Anahtar teslim kort kurulumu",
-    image: "/images/site/panoramic-padel-court.png",
+    image: "/images/references/izmir-padel-kort/main.jpg",
     href: "/products/padel-court/panoramik-padel-kort"
   }
 ];
@@ -39,14 +39,14 @@ export function FeaturedProductsSection() {
           {featured.map((item) => (
             <Link key={item.title} href={item.href} className="group bg-white">
               <div className="relative aspect-[4/3] overflow-hidden">
-                <Image src={item.image} alt={item.title} fill className="object-cover transition duration-500 group-hover:scale-[1.03]" sizes="(min-width: 1024px) 33vw, 100vw" />
+                <Image src={item.image} alt="" fill className="object-cover transition duration-500 group-hover:scale-[1.03]" sizes="(min-width: 1024px) 33vw, 100vw" />
               </div>
               <div className="flex items-center justify-between border border-t-0 border-brand-line p-6">
                 <div>
                   <h3 className="text-lg font-bold text-brand-navy">{item.title}</h3>
                   <p className="mt-1 text-sm text-slate-500">{item.subtitle}</p>
                 </div>
-                <ArrowRight size={20} className="text-brand-red transition group-hover:translate-x-1" />
+                <ArrowRight size={20} className="text-brand-red transition group-hover:translate-x-1" aria-hidden="true" />
               </div>
             </Link>
           ))}

@@ -15,7 +15,7 @@ export function AboutPreviewSection() {
     <section className="section-padding bg-white">
       <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="relative min-h-[470px] overflow-hidden rounded-md">
-          <Image src="/images/site/reha-spor-court-hero.png" alt="Reha Spor saha uygulaması" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" />
+          <Image src="/images/site/reha-spor-court-hero.png" alt="" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" />
           <div className="absolute bottom-0 left-0 bg-brand-red px-7 py-6 text-white">
             <strong className="block text-2xl font-bold">2000’li yıllardan beri</strong>
             <span className="mt-1 block text-sm text-white/80">sahada üretim ve uygulama deneyimi</span>

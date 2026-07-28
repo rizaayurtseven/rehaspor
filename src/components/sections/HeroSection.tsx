@@ -9,10 +9,10 @@ export function HeroSection() {
     <section className="relative min-h-[690px] overflow-hidden bg-brand-navy text-white">
       <Image
         src="/images/site/reha-spor-court-hero.png"
-        alt="Reha Spor tarafından tamamlanan açık hava spor sahası"
+        alt=""
         fill
         priority
-        className="object-cover object-center"
+        className="object-cover object-[58%_center] sm:object-center"
         sizes="100vw"
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,14,20,.92)_0%,rgba(8,14,20,.78)_38%,rgba(8,14,20,.20)_72%,rgba(8,14,20,.08)_100%)]" />

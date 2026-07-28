@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
-import { defaultTheme, isThemeId } from "@/lib/themes";
-
-const storageKey = "reha-spor-theme";
+import { useEffect, useSyncExternalStore } from "react";
+import { getServerThemeSnapshot, getThemeSnapshot, subscribeToTheme } from "@/lib/themeStore";
 
 export function ThemeProvider() {
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
+
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem(storageKey);
-    const theme = isThemeId(storedTheme) ? storedTheme : defaultTheme;
     document.documentElement.dataset.theme = theme;
-  }, []);
+  }, [theme]);
 
   return null;
 }

@@ -10,12 +10,17 @@ export const metadata: Metadata = {
 };
 
 type ContactPageProps = {
-  searchParams?: { subject?: string | string[] };
+  searchParams?: Promise<{ subject?: string | string[] }>;
 };
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
-  const settings = await getSiteSettings();
-  const initialSubject = Array.isArray(searchParams?.subject) ? searchParams?.subject[0] : searchParams?.subject;
+  const [settings, resolvedSearchParams] = await Promise.all([
+    getSiteSettings(),
+    searchParams ?? Promise.resolve<{ subject?: string | string[] }>({})
+  ]);
+  const initialSubject = Array.isArray(resolvedSearchParams.subject)
+    ? resolvedSearchParams.subject[0]
+    : resolvedSearchParams.subject;
   const whatsappNumber = settings.whatsapp.replace(/\D/g, "");
   const phoneHref = `tel:${settings.phone.replace(/[^+\d]/g, "")}`;
 
