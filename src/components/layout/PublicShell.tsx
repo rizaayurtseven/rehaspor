@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 
 export function PublicShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -23,6 +24,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
       <main id="main-content" className="min-h-[60vh]" tabIndex={-1}>
         {children}
       </main>
+      <WhatsAppButton />
       <Footer />
     </>
   );
