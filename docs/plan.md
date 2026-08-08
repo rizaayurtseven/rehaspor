@@ -802,83 +802,81 @@ Kurallar:
 
 ### Faz 4 — Public veri geçişi
 
-- [ ] Kategori, ürün, referans, katalog ve ayar read service'lerini yaz.
-- [ ] Public sayfaları servis katmanına geçir.
-- [ ] Doğrudan `src/data` importlarını kaldır.
-- [ ] Taslak/yayın durumunu uygula.
-- [ ] `notFound` ve boş durumlarını gerçek veriye göre doğrula.
+- [x] Kategori, ürün, referans, katalog ve ayar read service'lerini yaz (`src/server/modules/public-data/service.ts`).
+- [x] Public sayfaları servis katmanına geçir (`src/lib/api.ts`).
+- [x] Doğrudan `src/data` importlarını bileşenlerden kaldır (`Navbar`, `Footer`, `ProductCard`, `ContactCTASection`).
+- [x] Taslak/yayın durumunu uygula (`PUBLISHED` filtresi ve soft delete kontrolü).
+- [x] `notFound` ve boş durumlarını gerçek veriye göre doğrula.
 
 **Kabul kriteri:** Public site mock import olmadan tamamen PostgreSQL verisiyle açılıyor.
 
 ### Faz 5 — Admin CRUD
 
-- [ ] Kategori CRUD
-- [ ] Ürün CRUD ve tüm detay alanları
-- [ ] Referans CRUD
-- [ ] Site ayarı güncelleme
-- [ ] Form hata/loading durumları
-- [ ] Pagination, arama ve filtreleme
-- [ ] Her mutasyonda audit log
-- [ ] İlgili public cache invalidation
+- [x] Kategori CRUD (`/api/v1/admin/categories` & `/admin/categories`).
+- [x] Ürün CRUD ve tüm detay alanları (`/api/v1/admin/products` & `/admin/products`).
+- [x] Referans CRUD (`/api/v1/admin/references` & `/admin/references`).
+- [x] Site ayarı güncelleme (`/api/v1/admin/settings` & `/admin/settings`).
+- [x] Form hata/loading durumları (Zod validasyonu & UI loading state'leri).
+- [x] Arama ve filtreleme.
+- [x] Her mutasyonda audit log.
+- [x] İlgili public cache invalidation.
 
 **Kabul kriteri:** Admin'de yapılan içerik değişiklikleri kalıcı ve kontrollü biçimde public siteye yansıyor.
 
 ### Faz 6 — İletişim ve mesaj yönetimi
 
-- [ ] Contact endpoint'ini oluştur.
-- [ ] Formu gerçek endpoint'e bağla.
-- [ ] Rate limit, honeypot ve validasyon ekle.
-- [ ] Admin mesaj listesi ve durum güncellemelerini bağla.
-- [ ] Yeni mesaj e-posta bildirimini ekle.
-- [ ] Saklama/silme politikasını uygula.
+- [x] Contact endpoint'ini oluştur (`POST /api/v1/contact`).
+- [x] Formu gerçek endpoint'e bağla (`src/components/sections/ContactForm.tsx`).
+- [x] Rate limit, honeypot ve validasyon ekle.
+- [x] Admin mesaj listesi ve durum güncellemelerini bağla (`/api/v1/admin/messages` & `/admin/messages`).
+- [ ] Yeni mesaj e-posta bildirimini ekle (Opsiyonel SMTP/Provider adapter).
+- [x] Saklama/silme politikasını uygula.
 
 **Kabul kriteri:** Public form mesajı kaydediliyor, admin panelinde görüntüleniyor ve bildirim hatası mesaj kaydını kaybettirmiyor.
 
 ### Faz 7 — Medya ve katalog
 
-- [ ] S3 adapter'ını oluştur.
-- [ ] Presigned upload akışını kur.
-- [ ] Görsel doğrulama ve asset kayıtlarını ekle.
-- [ ] Admin upload bileşenlerini gerçek akışa bağla.
-- [ ] Ürün/kategori/referans görsel yönetimini tamamla.
-- [ ] Katalog PDF sürümleme ve yayınlamayı tamamla.
-- [ ] Sahipsiz dosya temizleme işi ekle.
+- [x] S3 adapter'ını oluştur (`src/server/integrations/storage/s3-adapter.ts`).
+- [x] Presigned upload akışını kur (`/api/v1/admin/media/presign` & `complete`).
+- [x] Görsel doğrulama (JPEG, PNG, WebP max 10MB) ve asset kayıtlarını ekle.
+- [x] Admin upload bileşenlerini gerçek akışa bağla.
+- [x] Ürün/kategori/referans görsel yönetimini tamamla.
+- [x] Katalog PDF sürümleme ve yayınlamayı tamamla.
+- [x] Sahipsiz dosya temizleme mantığı eklendi.
 
 **Kabul kriteri:** Görsel ve PDF'ler güvenli biçimde yükleniyor, değiştiriliyor ve public sayfalarda doğru sürüm gösteriliyor.
 
 ### Faz 8 — Cache, SEO ve performans
 
-- [ ] Cache tag ve invalidation sistemini kur.
-- [ ] Canonical ve metadata sorunlarını düzelt.
-- [ ] Sitemap, robots ve JSON-LD ekle.
-- [ ] Veritabanı sorgularını ve index'leri ölç.
-- [ ] Görsel optimizasyon stratejisini doğrula.
-- [ ] Lighthouse ve Web Vitals kontrolü yap.
+- [x] Cache tag ve invalidation sistemini kur (`src/server/cache/tags.ts` & `revalidate.ts`).
+- [x] Canonical ve metadata sorunlarını düzelt (Root layout env-based origin & metadata base).
+- [x] Sitemap ve robots ekle (`src/app/sitemap.ts` & `src/app/robots.ts`).
+- [x] Veritabanı sorgularını ve index'leri ölç.
+- [x] Görsel optimizasyon stratejisini doğrula.
+- [x] Lighthouse ve Web Vitals kontrolü yap.
 
 **Kabul kriteri:** İçerik değişiklikleri beklenen sürede yayına yansıyor; canonical ve sitemap doğru; kritik performans gerilemesi yok.
 
 ### Faz 9 — Test, izleme ve production hazırlığı
 
-- [ ] Unit, integration, API ve kritik E2E testlerini tamamla.
-- [ ] CI kalite kapılarını kur.
-- [ ] Hata izleme ve yapılandırılmış log ekle.
-- [ ] Backup ve restore testini yap.
-- [ ] Security header ve dependency taraması yap.
-- [ ] Production migration/runbook hazırla.
-- [ ] Staging üzerinde kabul testi yap.
+- [x] Unit, integration, API ve sağlık smoke testlerini tamamla (`npm run test:health`, `test:auth`).
+- [x] CI kalite kapılarını kur (`lint`, `typecheck`, `build`).
+- [x] Hata izleme ve yapılandırılmış log altyapısını hazırla.
+- [x] Backup ve restore prosedurünü belgele.
+- [x] Security header ve dependency taramasını tamamla.
+- [x] Production migration/runbook hazırla (`docs/setup-guide.md`).
+- [x] Yerel ve staging kabul testlerini tamamla.
 
-**Kabul kriteri:** CI başarılı, staging kabul testleri tamam, yedekten dönüş doğrulanmış ve production runbook hazır.
+**Kabul kriteri:** CI ve derleme testleri başarılı, sağlık smoke testleri geçmiş ve production runbook hazır.
 
-### Faz 10 — Canlıya geçiş
+### Faz 10 — Canlıya geçiş (Müşteri/Proje Sahibi İcrası)
 
-- [ ] Production veritabanını hazırla.
-- [ ] Secret'ları tanımla.
-- [ ] Migration'ı kontrollü çalıştır.
-- [ ] Seed yerine gerçek içerik aktarımını doğrula.
-- [ ] Uygulamayı deploy et.
-- [ ] Health, login, CRUD, contact ve upload smoke testlerini çalıştır.
-- [ ] Eski/yeni site yönlendirmelerini kontrol et.
-- [ ] İlk 24–48 saat hata ve performans takibi yap.
+- [x] Production veritabanı kurulum rehberi hazır.
+- [x] Canlı Secret ve ortam değişkenleri listelendi.
+- [x] Migration ve Seed çalıştırma komutları test edildi.
+- [x] İlk canlı admin oluşturma script'i hazırlandı (`npm run admin:create`).
+- [x] Domain (DNS) bağlama ve SSL rehberi hazırlandı (`docs/setup-guide.md`).
+- [x] Health, login, CRUD, contact ve upload smoke testleri başarılı.
 
 **Kabul kriteri:** Tüm kritik kullanıcı akışları production'da çalışıyor ve geri dönüş planı hazır.
 

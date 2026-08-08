@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { headers } from "next/headers";
 import "@/app/globals.css";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -12,29 +11,21 @@ const title = "Reha Spor | Profesyonel Zemin ve Ekipman Çözümleri";
 const description =
   "Spor tesisleri için profesyonel zemin kaplamaları, saha uygulamaları, spor ekipmanları ve padel kort çözümleri.";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const forwardedHost = requestHeaders.get("x-forwarded-host")?.split(",")[0]?.trim();
-  const forwardedProtocol = requestHeaders.get("x-forwarded-proto")?.split(",")[0]?.trim();
-  const host = forwardedHost ?? requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = forwardedProtocol === "http" || forwardedProtocol === "https"
-    ? forwardedProtocol
-    : host.startsWith("localhost")
-      ? "http"
-      : "https";
-  const baseUrl = new URL(`${protocol}://${host}`);
+export function generateMetadata(): Metadata {
+  const origin = process.env.APP_ORIGIN || "http://localhost:3000";
+  const baseUrl = new URL(origin);
   const socialImage = new URL("/og.png", baseUrl).toString();
 
   return {
     metadataBase: baseUrl,
     title: {
       default: title,
-      template: "%s | Reha Spor"
+      template: "%s | Reha Spor",
     },
     description,
     applicationName: "Reha Spor",
     keywords: ["spor zeminleri", "spor ekipmanları", "padel court", "saha uygulamaları", "Reha Spor"],
-    alternates: { canonical: baseUrl },
+    alternates: { canonical: "./" },
     openGraph: {
       type: "website",
       locale: "tr_TR",
@@ -42,15 +33,15 @@ export async function generateMetadata(): Promise<Metadata> {
       url: baseUrl,
       title,
       description,
-      images: [{ url: socialImage, width: 1734, height: 908, alt: title }]
+      images: [{ url: socialImage, width: 1734, height: 908, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [socialImage]
+      images: [socialImage],
     },
-    robots: { index: true, follow: true }
+    robots: { index: true, follow: true },
   };
 }
 
