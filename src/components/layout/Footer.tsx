@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Clock3, Instagram, Mail, MapPin, Phone } from "lucide-react";
-import { categories } from "@/data/categories";
-import { siteSettings } from "@/data/siteSettings";
-import { publicNavItems, siteName } from "@/lib/constants";
+import { defaultFooterCategories as categories, defaultSiteSettings as siteSettings, publicNavItems, siteName } from "@/lib/constants";
 
 const phoneHref = `tel:${siteSettings.phone.replace(/[^+\d]/g, "")}`;
 
