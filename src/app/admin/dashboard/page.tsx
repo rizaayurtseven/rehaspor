@@ -3,10 +3,9 @@ import Link from "next/link";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { AdminStatCard } from "@/components/admin/AdminStatCard";
 import { AdminTable } from "@/components/admin/AdminTable";
-import { adminMessages } from "@/components/admin/adminMockData";
-import { categories } from "@/data/categories";
-import { products } from "@/data/products";
-import { references } from "@/data/references";
+import { getPrisma } from "@/server/db/prisma";
+
+export const dynamic = "force-dynamic";
 
 const quickActions = [
   { href: "/admin/products", label: "Yeni ürün ekle", description: "Kataloğa yeni bir ürün kaydı oluştur.", icon: Plus },
@@ -15,22 +14,44 @@ const quickActions = [
   { href: "/admin/settings", label: "Site ayarları", description: "İletişim ve sosyal bağlantıları düzenle.", icon: Settings },
 ];
 
-export default function AdminDashboardPage() {
-  const unreadMessageCount = adminMessages.filter((message) => !message.isRead).length;
+export default async function AdminDashboardPage() {
+  const prisma = getPrisma();
+
+  const [categoryCount, productCount, featuredProductCount, referenceCount, unreadMessageCount, totalMessageCount, recentMessages] =
+    await Promise.all([
+      prisma.category.count({ where: { deletedAt: null } }),
+      prisma.product.count({ where: { deletedAt: null } }),
+      prisma.product.count({ where: { isFeatured: true, deletedAt: null } }),
+      prisma.projectReference.count({ where: { deletedAt: null } }),
+      prisma.contactMessage.count({ where: { status: "UNREAD", deletedAt: null } }),
+      prisma.contactMessage.count({ where: { deletedAt: null } }),
+      prisma.contactMessage.findMany({
+        where: { deletedAt: null },
+        orderBy: { createdAt: "desc" },
+        take: 4,
+      }),
+    ]);
+
+  const todayFormatted = new Date().toLocaleDateString("tr-TR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    weekday: "long",
+  });
 
   return (
     <>
       <AdminHeader
         title="Genel Bakış"
         description="Reha Spor dijital kataloğunun güncel durumunu ve son müşteri taleplerini takip edin."
-        eyebrow="10 Temmuz 2026 · Cuma"
+        eyebrow={todayFormatted}
       />
       <main className="p-4 sm:p-6 xl:p-8">
         <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
-          <AdminStatCard label="Toplam kategori" value={categories.length} description="Aktif ürün grupları" icon={Tags} tone="blue" />
-          <AdminStatCard label="Toplam ürün" value={products.length} description={`${products.filter((product) => product.isFeatured).length} ürün öne çıkarılıyor`} icon={Boxes} tone="red" />
-          <AdminStatCard label="Referans proje" value={references.length} description="Portfolyoda yayınlanan projeler" icon={FolderKanban} tone="green" />
-          <AdminStatCard label="Okunmamış mesaj" value={unreadMessageCount} description={`${adminMessages.length} toplam müşteri talebi`} icon={Mail} tone="navy" />
+          <AdminStatCard label="Toplam kategori" value={categoryCount} description="Aktif ürün grupları" icon={Tags} tone="blue" />
+          <AdminStatCard label="Toplam ürün" value={productCount} description={`${featuredProductCount} ürün öne çıkarılıyor`} icon={Boxes} tone="red" />
+          <AdminStatCard label="Referans proje" value={referenceCount} description="Portfolyoda yayınlanan projeler" icon={FolderKanban} tone="green" />
+          <AdminStatCard label="Okunmamış mesaj" value={unreadMessageCount} description={`${totalMessageCount} toplam müşteri talebi`} icon={Mail} tone="navy" />
         </div>
 
         <div className="mt-6 grid grid-cols-1 items-start gap-6 2xl:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.55fr)]">
@@ -45,24 +66,40 @@ export default function AdminDashboardPage() {
               </Link>
             }
           >
-            {adminMessages.slice(0, 4).map((message) => (
-              <tr key={message.id} className="transition hover:bg-slate-50/70">
-                <td className="px-5 py-4">
-                  <p className="font-bold text-brand-navy">{message.name}</p>
-                  <p className="mt-0.5 text-xs text-slate-500">{message.email}</p>
-                </td>
-                <td className="max-w-xs px-5 py-4 font-medium text-slate-700">{message.subject}</td>
-                <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{message.receivedAt}</td>
-                <td className="px-5 py-4">
-                  <span className={message.isRead ? "rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-black text-slate-600" : "rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-black text-brand-red"}>
-                    {message.isRead ? "Okundu" : "Yeni"}
-                  </span>
-                </td>
-                <td className="px-5 py-4 text-right">
-                  <Link href={`/admin/messages?message=${message.id}`} className="font-bold text-brand-navy hover:text-brand-red">İncele</Link>
+            {recentMessages.length ? (
+              recentMessages.map((message) => (
+                <tr key={message.id} className="transition hover:bg-slate-50/70">
+                  <td className="px-5 py-4">
+                    <p className="font-bold text-brand-navy">{message.fullName}</p>
+                    <p className="mt-0.5 text-xs text-slate-500">{message.email}</p>
+                  </td>
+                  <td className="max-w-xs px-5 py-4 font-medium text-slate-700">{message.subject}</td>
+                  <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{message.createdAt.toLocaleDateString("tr-TR")}</td>
+                  <td className="px-5 py-4">
+                    <span
+                      className={
+                        message.status === "READ"
+                          ? "rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-black text-slate-600"
+                          : "rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-black text-brand-red"
+                      }
+                    >
+                      {message.status === "READ" ? "Okundu" : "Yeni"}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-right">
+                    <Link href={`/admin/messages`} className="font-bold text-brand-navy hover:text-brand-red">
+                      İncele
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="p-8 text-center text-slate-500">
+                  Henüz bir iletişim mesajı alınmadı.
                 </td>
               </tr>
-            ))}
+            )}
           </AdminTable>
 
           <section className="rounded-2xl border border-brand-line bg-white p-5 shadow-sm">
