@@ -52,8 +52,8 @@ export default function AdminLoginPage() {
         </Link>
 
         <div className="relative max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-slate-300">
-              <ShieldCheck size={15} className="text-red-400" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-slate-300">
+            <ShieldCheck size={15} className="text-red-400" />
             Güvenli yönetim paneli
           </span>
           <h1 className="mt-6 text-4xl font-black leading-tight tracking-tight xl:text-5xl">
@@ -114,7 +114,6 @@ export default function AdminLoginPage() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    minLength={8}
                     autoComplete="current-password"
                     className="w-full rounded-xl border border-brand-line bg-white py-3 pl-11 pr-12 text-sm outline-none transition focus:border-brand-red focus:ring-4 focus:ring-red-50"
                   />

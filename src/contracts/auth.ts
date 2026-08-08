@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const loginInputSchema = z.object({
   email: z.string().trim().toLowerCase().email("Geçerli bir e-posta adresi girin.").max(320),
-  password: z.string().min(8, "Şifre en az 8 karakter olmalıdır.").max(256),
+  password: z.string().min(6, "Şifre en az 6 karakter olmalıdır.").max(256),
   rememberMe: z.boolean().default(false),
 });
 

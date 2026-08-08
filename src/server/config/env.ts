@@ -10,6 +10,7 @@ const runtimeEnvSchema = z.object({
 export type RuntimeEnv = z.infer<typeof runtimeEnvSchema>;
 
 const authEnvSchema = runtimeEnvSchema.extend({
+  APP_ORIGIN: z.string().url().optional().or(z.literal("")),
   SESSION_COOKIE_NAME: z.string().regex(/^[a-zA-Z0-9_-]{1,64}$/).default("rehaspor_session"),
   SESSION_SECRET: z.string().min(32, "SESSION_SECRET must be at least 32 characters"),
 });
