@@ -139,13 +139,64 @@ npm run test:db:clean -- rehaspor_clean_test_YYYYMMDD
 
 Bu komut adı verilen yeni, geçici veritabanını oluşturur; mevcut `rehaspor` veritabanına yazmaz. Aynı test adı ikinci kez kullanılmaz.
 
-## Production öncesi zorunlu adımlar
+## Production Öncesi Zorunlu Adımlar
 
 - Müşteriye ait veritabanı, domain, storage ve mail hesaplarını kullanın.
 - `SESSION_SECRET` değerini yeni ve rastgele üretin; local değerini taşımayın.
 - Ayrı bir production admin hesabı oluşturun; local demo hesabını taşımayın.
 - `NODE_ENV=production` ve doğru `APP_ORIGIN` değerini ayarlayın. Böylece session cookie `Secure` olur.
 - Migration'ı önce staging ortamında deneyin ve yedek/geri dönüş planını doğrulayın.
-- Rate limit, origin/CSRF kontrolü, güvenlik header'ları, admin CRUD ve medya yükleme tamamlanmadan public production yayını yapmayın.
 
-Detaylı mimari, fazlar ve kalan işler için [ana plan](./plan.md) esas kaynaktır.
+---
+
+## 7. Domain Bağlama ve Canlıya Geçiş (Production Runbook)
+
+Müşteri veya proje sahibi uygulamayı canlıya alırken aşağıdaki adımları izlemelidir:
+
+### Adım 1: Canlı Veritabanı (PostgreSQL) Hazırlığı
+Canlı PostgreSQL veritabanı kurulur (AWS RDS, Supabase, Neon, Hetzner veya kendi VPS sunucunuz).
+`DATABASE_URL` ve `DIRECT_DATABASE_URL` canlı bağlantı dizesi olarak tanımlanır.
+
+### Adım 2: Canlı Ortam Değişkenleri (Environment Variables)
+Deployment platformunda (Vercel, Railway, Coolify, Docker vb.) aşağıdaki ortam değişkenleri girilir:
+
+```dotenv
+NODE_ENV=production
+APP_ORIGIN=https://www.rehaspor.com.tr
+DATABASE_URL=postgresql://kullanici:sifre@canli-db-host:5432/rehaspor?schema=public
+DIRECT_DATABASE_URL=postgresql://kullanici:sifre@canli-db-host:5432/rehaspor?schema=public
+SESSION_COOKIE_NAME=rehaspor_session
+SESSION_SECRET=32-karakterden-uzun-gizli-rastgele-str-key
+
+# Opsiyonel S3 Object Storage (Cloudflare R2, AWS S3, MinIO)
+S3_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
+S3_REGION=auto
+S3_BUCKET=rehaspor-assets
+S3_ACCESS_KEY_ID=...
+S3_SECRET_ACCESS_KEY=...
+S3_PUBLIC_BASE_URL=https://assets.rehaspor.com.tr
+```
+
+### Adım 3: Migration ve Seed Komutlarının Çalıştırılması
+Canlı veritabanına tabloları ve varsayılan içerikleri aktarmak için:
+
+```bash
+npx prisma migrate deploy
+npx prisma db seed
+```
+
+### Adım 4: Canlı Admin Hesabının Oluşturulması
+Canlı ortamda yönetim paneline giriş için gerçek admin hesabı açılır:
+
+```bash
+npx tsx scripts/create-admin.ts --email yonetim@rehaspor.com.tr --password "GucluParola123!" --name "Reha Spor Yönetim"
+```
+
+### Adım 5: Domain (DNS) Bağlama
+1. **A Kaydı (A Record)**: Domain sağlayıcınızda (Netsis, İsimtescil, GoDaddy, Cloudflare vb.) `@` ve `www` kayıtlarını sunucunuzun IP adresine veya Vercel/Cloudflare CNAME hedefine yönlendirin:
+   - `CNAME www cname.vercel-dns.com.` veya sunucu IP adresi.
+2. **SSL / HTTPS Certificate**: Caddy, Nginx veya Vercel/Cloudflare tarafından otomatik HTTPS SSL sertifikası üretilecektir.
+
+---
+
+Detaylı mimari, fazlar ve karar günlüğü için [ana plan](./plan.md) esas kaynaktır.

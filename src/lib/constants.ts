@@ -2,6 +2,24 @@ export const siteName = "Reha Spor";
 
 export const catalogPdfUrl = "/catalog/Katalog.pdf";
 
+export const defaultSiteSettings = {
+  phone: "+90 533 677 14 45",
+  email: "info@rehaspor.com.tr",
+  address: "İvedik OSB Çağdaş Emek Sanayi Sitesi, 1437. Cadde No:9, Yenimahalle / Ankara",
+  whatsapp: "+90 533 677 14 45",
+  instagram: "https://www.instagram.com/rehaspor",
+  mapUrl: "https://maps.google.com/?q=Ivedik+OSB+1437+Cadde+No+9+Ankara",
+  workingHours: "Pazartesi - Cumartesi, 09.00 - 18.00"
+};
+
+export const defaultFooterCategories = [
+  { id: "cat-1", slug: "zemin-kaplamalari", title: "Zemin Kaplamaları" },
+  { id: "cat-2", slug: "spor-ekipmanlari", title: "Spor Ekipmanları" },
+  { id: "cat-3", slug: "gym-ekipmanlari", title: "Gym Ekipmanları" },
+  { id: "cat-4", slug: "padel-court", title: "Padel Court" },
+  { id: "cat-5", slug: "saha-cizgileri", title: "Saha Çizgileri ve Uygulamalar" }
+];
+
 export const publicNavItems = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/about", label: "Kurumsal" },

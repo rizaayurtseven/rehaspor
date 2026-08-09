@@ -6,8 +6,7 @@ import { ChevronDown, Mail, Menu, Phone } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { ThemeSwitcher } from "@/components/layout/ThemeSwitcher";
-import { siteSettings } from "@/data/siteSettings";
-import { productMenuGroups, publicNavItems, siteName } from "@/lib/constants";
+import { defaultSiteSettings as siteSettings, productMenuGroups, publicNavItems, siteName } from "@/lib/constants";
 
 function isRouteActive(pathname: string, href: string) {
   return href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);

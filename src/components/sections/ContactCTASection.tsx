@@ -1,6 +1,6 @@
 import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { siteSettings } from "@/data/siteSettings";
+import { defaultSiteSettings as siteSettings } from "@/lib/constants";
 
 export function ContactCTASection() {
   return (

@@ -6,9 +6,10 @@ type AdminFormFieldProps = {
   htmlFor?: string;
   hint?: string;
   required?: boolean;
+  error?: string;
 };
 
-export function AdminFormField({ label, children, htmlFor, hint, required = false }: AdminFormFieldProps) {
+export function AdminFormField({ label, children, htmlFor, hint, required = false, error }: AdminFormFieldProps) {
   return (
     <label className="grid gap-2" htmlFor={htmlFor}>
       <span className="flex items-center gap-1 text-sm font-bold text-brand-navy">
@@ -16,7 +17,7 @@ export function AdminFormField({ label, children, htmlFor, hint, required = fals
         {required ? <span className="text-brand-red">*</span> : null}
       </span>
       {children}
-      {hint ? <span className="text-xs leading-5 text-slate-500">{hint}</span> : null}
+      {error ? <span className="text-xs font-semibold text-rose-600">{error}</span> : hint ? <span className="text-xs leading-5 text-slate-500">{hint}</span> : null}
     </label>
   );
 }

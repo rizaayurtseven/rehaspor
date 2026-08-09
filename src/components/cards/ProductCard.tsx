@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { ImageFallback } from "@/components/ui/ImageFallback";
-import { categories } from "@/data/categories";
 import type { Product } from "@/types/product";
 
-export function ProductCard({ product }: { product: Product }) {
-  const categoryTitle = categories.find((category) => category.slug === product.categorySlug)?.title ?? "Ürün";
+export function ProductCard({ product, categoryTitle }: { product: Product; categoryTitle?: string }) {
+  const displayCategoryName = categoryTitle || product.categorySlug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 
   return (
     <Link
@@ -16,7 +15,7 @@ export function ProductCard({ product }: { product: Product }) {
         src={product.image}
         alt=""
         eyebrow={product.code}
-        label={categoryTitle}
+        label={displayCategoryName}
         className="h-56"
         imageClassName="transition duration-700 group-hover:scale-105"
         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
