@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Download, ExternalLink, Eye, FileCheck2, Layers3, Trophy, Wrench } from "lucide-react";
 import { PublicPageHero } from "@/components/sections/PublicPageHero";
+import { CatalogViewerLoader } from "@/components/catalog/CatalogViewerLoader";
 import { getCatalogs } from "@/lib/api";
 
 export const metadata: Metadata = {
@@ -45,9 +46,9 @@ export default async function CatalogPage() {
         </div>
       </PublicPageHero>
 
-      <section id="catalog-viewer" aria-labelledby="catalog-viewer-title" className="scroll-mt-24 bg-brand-soft py-8 sm:py-12">
-        <div className="container-page">
-          <div className="overflow-hidden rounded-xl border border-brand-line bg-white shadow-brand">
+      <section id="catalog-viewer" aria-labelledby="catalog-viewer-title" className="w-full min-w-0 max-w-full scroll-mt-24 overflow-hidden bg-brand-soft py-8 sm:py-12">
+        <div className="container-page min-w-0 max-w-full">
+          <div className="w-full min-w-0 max-w-full">
             <div className="flex flex-col gap-4 border-b border-brand-line px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.16em] text-brand-red">Çevrim içi görüntüleyici</p>
@@ -74,30 +75,12 @@ export default async function CatalogPage() {
               </div>
             </div>
 
-            <object
-              data={`${catalogUrl}#view=FitH&toolbar=1&navpanes=0`}
-              type="application/pdf"
-              title="Reha Spor ürün kataloğu PDF görüntüleyici"
-              className="h-[72vh] min-h-[32rem] w-full bg-slate-100 sm:min-h-[42rem]"
-            >
-              <div className="grid min-h-[32rem] place-items-center p-6 text-center">
-                <div className="max-w-md">
-                  <FileCheck2 className="mx-auto text-brand-red" size={36} aria-hidden="true" />
-                  <h3 className="mt-4 text-xl font-black text-brand-navy">Tarayıcınız PDF önizlemesini desteklemiyor</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    Kataloğu yeni sekmede açabilir veya cihazınıza indirebilirsiniz.
-                  </p>
-                  <a href={catalogUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center rounded-md bg-brand-red px-5 py-2 text-sm font-bold text-white">
-                    Kataloğu aç
-                  </a>
-                </div>
-              </div>
-            </object>
+            <CatalogViewerLoader file={catalogUrl} title="Reha Spor Ürün Kataloğu" />
           </div>
         </div>
       </section>
 
-      <section className="section-padding bg-white">
+      <section className="section-padding overflow-hidden bg-white">
         <div className="container-page grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div className="relative mx-auto w-full max-w-md">
             <div className="absolute -inset-4 rounded-2xl bg-brand-soft" aria-hidden="true" />
