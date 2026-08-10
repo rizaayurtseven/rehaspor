@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="bg-brand-navy text-white">
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_0.8fr_1.2fr] lg:py-16">
         <div>
-          <Link href="/" className="inline-flex items-center gap-3" aria-label={`${siteName} ana sayfa`}>
+          <Link href="/" className="inline-flex items-center gap-3">
             <span className="grid h-11 w-11 place-items-center rounded-md bg-brand-red text-sm font-black">RS</span>
             <span className="text-xl font-black tracking-tight">{siteName}</span>
           </Link>

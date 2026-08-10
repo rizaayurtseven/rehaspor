@@ -2,6 +2,14 @@ import { CalendarDays, MapPin } from "lucide-react";
 import { ImageFallback } from "@/components/ui/ImageFallback";
 import type { ProjectReference } from "@/types/reference";
 
+function getReferenceFallback(reference: ProjectReference) {
+  const context = `${reference.category} ${reference.title}`.toLocaleLowerCase("tr-TR");
+
+  if (context.includes("padel")) return "/images/site/panoramic-padel-court.png";
+  if (context.includes("salon") || context.includes("zemin")) return "/images/site/polyurethane-sports-hall.png";
+  return "/images/site/reha-spor-court-hero.png";
+}
+
 export function ReferenceCard({ reference }: { reference: ProjectReference }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden border border-brand-line bg-white transition duration-300 hover:border-brand-navy">
@@ -10,6 +18,8 @@ export function ReferenceCard({ reference }: { reference: ProjectReference }) {
         alt=""
         eyebrow={reference.category}
         label={reference.city}
+        fallbackSrc={getReferenceFallback(reference)}
+        fallbackAlt={`${reference.title} için temsili Reha Spor uygulama görseli`}
         className="h-52"
         imageClassName="grayscale transition duration-700 group-hover:scale-110 group-hover:grayscale-0"
         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

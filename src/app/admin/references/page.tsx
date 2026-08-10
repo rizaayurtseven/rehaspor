@@ -86,7 +86,8 @@ export default function AdminReferencesPage() {
   }
 
   useEffect(() => {
-    loadReferences();
+    const timer = window.setTimeout(() => void loadReferences(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const filteredRows = useMemo(() => {

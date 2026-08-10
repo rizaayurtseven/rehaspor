@@ -78,11 +78,11 @@ export default function AboutPage() {
                 <span className={index === 0 || index === 3 ? "grid h-12 w-12 place-items-center text-white" : "grid h-12 w-12 place-items-center text-brand-red"}>
                   <Icon size={23} aria-hidden="true" />
                 </span>
-                <p className={index === 0 || index === 3 ? "label-caps mt-6 text-white/60" : "label-caps mt-6 text-brand-red"}>
+                <p className={index === 0 || index === 3 ? "label-caps mt-6 text-white" : "label-caps mt-6 text-brand-red"}>
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h2 className={index === 0 || index === 3 ? "mt-3 text-xl font-black uppercase" : "mt-3 text-xl font-black uppercase text-brand-navy"}>{title}</h2>
-                <p className={index === 0 || index === 3 ? "mt-3 text-sm leading-6 text-white/70" : "mt-3 text-sm leading-6 text-brand-muted"}>{description}</p>
+                <p className={index === 0 || index === 3 ? "mt-3 text-sm leading-6 text-white" : "mt-3 text-sm leading-6 text-brand-muted"}>{description}</p>
               </article>
             ))}
           </div>

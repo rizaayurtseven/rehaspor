@@ -47,7 +47,7 @@ export function generateMetadata(): Metadata {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr">
+    <html lang="tr" data-scroll-behavior="smooth">
       <body className={`${inter.variable} ${jetBrainsMono.variable} bg-brand-cream text-brand-ink antialiased`}>
         <ThemeProvider />
         <PublicShell>{children}</PublicShell>

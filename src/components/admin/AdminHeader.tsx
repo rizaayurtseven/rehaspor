@@ -11,12 +11,12 @@ type AdminHeaderProps = {
 
 export function AdminHeader({ title, description, eyebrow = "Yönetim paneli", action }: AdminHeaderProps) {
   return (
-    <header className="border-b border-brand-line bg-brand-cream">
-      <div className="flex flex-col gap-5 px-4 py-6 sm:px-6 md:flex-row md:items-center md:justify-between xl:px-8">
+    <header className="border-b border-brand-line bg-white">
+      <div className="flex flex-col gap-5 px-4 py-6 sm:px-6 md:flex-row md:items-center md:justify-between xl:px-8 xl:py-7">
         <div>
           <p className="label-caps text-brand-red">{eyebrow}</p>
-          <h1 className="mt-2 text-2xl font-black uppercase text-brand-navy sm:text-3xl">{title}</h1>
-          {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{description}</p> : null}
+          <h1 className="mt-2 text-2xl font-black tracking-[-0.025em] text-brand-navy sm:text-3xl">{title}</h1>
+          {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-brand-muted">{description}</p> : null}
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {action}

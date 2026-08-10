@@ -17,7 +17,7 @@ export function AdminFormField({ label, children, htmlFor, hint, required = fals
         {required ? <span className="text-brand-red">*</span> : null}
       </span>
       {children}
-      {error ? <span className="text-xs font-semibold text-rose-600">{error}</span> : hint ? <span className="text-xs leading-5 text-slate-500">{hint}</span> : null}
+      {error ? <span className="text-xs font-semibold text-rose-700">{error}</span> : hint ? <span className="text-xs leading-5 text-brand-muted">{hint}</span> : null}
     </label>
   );
 }

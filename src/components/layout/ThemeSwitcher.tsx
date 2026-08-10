@@ -5,9 +5,9 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { getServerThemeSnapshot, getThemeSnapshot, persistTheme, subscribeToTheme } from "@/lib/themeStore";
 import { themes, type ThemeId, type ThemeOption } from "@/lib/themes";
 
-function ThemeSwatch({ theme }: { theme: ThemeOption }) {
+function ThemeSwatch({ theme, compact = false }: { theme: ThemeOption; compact?: boolean }) {
   return (
-    <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-white/10">
+    <span className={`relative shrink-0 overflow-hidden rounded-full border border-current/15 ${compact ? "h-5 w-5" : "h-6 w-6"}`}>
       <span className="absolute inset-y-0 left-0 w-1/2" style={{ backgroundColor: theme.swatches[0] }} />
       <span className="absolute right-0 top-0 h-1/2 w-1/2" style={{ backgroundColor: theme.swatches[1] }} />
       <span className="absolute bottom-0 right-0 h-1/2 w-1/2" style={{ backgroundColor: theme.swatches[2] }} />
@@ -51,22 +51,22 @@ export function ThemeSwitcher() {
     <div ref={wrapperRef} className="relative">
       <button
         type="button"
-        aria-label={`Tema seç: ${currentTheme.name}`}
+        aria-label={`Renk temasını değiştir. Seçili tema: ${currentTheme.name}`}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-11 items-center gap-2 rounded border border-brand-line bg-white/80 px-3 text-sm font-bold text-brand-navy transition hover:border-brand-red"
+        className="inline-flex h-10 items-center gap-2 rounded border border-brand-line bg-brand-cream px-3 text-sm font-bold text-brand-ink transition hover:border-brand-red focus-visible:outline-brand-red"
       >
-        <ThemeSwatch theme={currentTheme} />
-        <span className="hidden xl:inline">{currentTheme.name}</span>
-        <Palette size={16} aria-hidden="true" />
+        <ThemeSwatch theme={currentTheme} compact />
+        <span className="hidden 2xl:inline">{currentTheme.name}</span>
+        <Palette size={15} className="text-brand-muted" aria-hidden="true" />
       </button>
 
       {open ? (
         <div
           role="listbox"
           aria-label="Tema seç"
-          className="absolute right-0 top-[calc(100%+10px)] z-50 w-72 overflow-hidden rounded-lg border border-white/10 bg-[#181a1c] p-2 text-white shadow-2xl"
+          className="absolute right-0 top-[calc(100%+10px)] z-50 w-64 overflow-hidden rounded border border-slate-700 bg-slate-950 p-2 text-white shadow-2xl"
         >
           {themes.map((theme) => {
             const active = theme.id === selectedTheme;
@@ -80,8 +80,8 @@ export function ThemeSwitcher() {
                 onClick={() => selectTheme(theme.id)}
                 className={
                   active
-                    ? "flex w-full items-center gap-3 rounded-md bg-white/8 px-3 py-3 text-left text-sm font-bold"
-                    : "flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-bold text-slate-200 transition hover:bg-white/6"
+                    ? "flex w-full items-center gap-3 rounded bg-white/10 px-3 py-2.5 text-left text-sm font-bold text-white"
+                    : "flex w-full items-center gap-3 rounded px-3 py-2.5 text-left text-sm font-semibold text-slate-200 transition hover:bg-white/5 hover:text-white"
                 }
               >
                 <ThemeSwatch theme={theme} />

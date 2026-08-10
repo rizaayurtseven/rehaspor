@@ -50,7 +50,8 @@ export default function AdminSettingsPage() {
   }
 
   useEffect(() => {
-    loadSettings();
+    const timer = window.setTimeout(() => void loadSettings(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   function updateField<Key extends keyof SettingsForm>(key: Key, value: SettingsForm[Key]) {

@@ -16,11 +16,11 @@ export type ThemeOption = {
   swatches: [string, string, string];
 };
 
-export const defaultTheme: ThemeId = "carbon";
+export const defaultTheme: ThemeId = "bauhaus";
 
 export const themes: ThemeOption[] = [
   { id: "alexandria", name: "Alexandria", swatches: ["#3b82f6", "#eab308", "#1f2937"] },
-  { id: "bauhaus", name: "Bauhaus", swatches: ["#ef4444", "#2563eb", "#171717"] },
+  { id: "bauhaus", name: "Reha Kırmızı", swatches: ["#c81e1e", "#2563eb", "#171717"] },
   { id: "glacier", name: "Glacier", swatches: ["#7dd3fc", "#d8b4fe", "#1e293b"] },
   { id: "carbon", name: "Carbon", swatches: ["#2563eb", "#22c55e", "#101818"] },
   { id: "neon-tokyo", name: "Neon Tokyo", swatches: ["#ec4899", "#2dd4bf", "#facc15"] },

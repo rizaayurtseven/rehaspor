@@ -107,9 +107,11 @@ export default function AdminProductsPage() {
       }
       if (catRes.ok && catData.data?.categories) {
         setCategories(catData.data.categories);
-        if (catData.data.categories.length > 0 && !form.categoryId) {
-          setForm((curr) => ({ ...curr, categoryId: catData.data.categories[0].id }));
-        }
+        setForm((current) =>
+          current.categoryId || !catData.data.categories[0]
+            ? current
+            : { ...current, categoryId: catData.data.categories[0].id },
+        );
       }
     } catch {
       setToast("Ürünler yüklenirken hata oluştu.");
@@ -119,7 +121,8 @@ export default function AdminProductsPage() {
   }
 
   useEffect(() => {
-    loadData();
+    const timer = window.setTimeout(() => void loadData(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const filteredRows = useMemo(() => {

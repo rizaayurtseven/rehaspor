@@ -29,9 +29,9 @@ export function HeroSection() {
             Endüstriyel kalite
           </div>
           <h1 className="industrial-heading max-w-3xl text-4xl sm:text-5xl lg:text-[58px] xl:text-[68px]">
-            <span className="block">Doğru zemin.</span>
-            <span className="block">Sağlam ekipman.</span>
-            <span className="block">Temiz işçilik.</span>
+            <span className="block">Doğru zemin</span>
+            <span className="block">Sağlam ekipman</span>
+            <span className="block">Temiz işçilik</span>
           </h1>
           <p className="mt-7 max-w-2xl border-l-4 border-brand-red pl-5 text-base leading-7 text-white/80 sm:text-lg sm:leading-8">
             Açık ve kapalı spor alanlarını projelendiriyor; zemin kaplamasından ekipman montajına kadar tüm uygulamayı tek ekip olarak yönetiyoruz.
@@ -40,7 +40,11 @@ export function HeroSection() {
             <Button href="/contact" className="bg-brand-red text-white hover:bg-white hover:text-brand-navy">
               Projenizi konuşalım <ArrowRight size={18} className="ml-2" aria-hidden="true" />
             </Button>
-            <Button href="/references" variant="ghost" className="border-white/60 text-white hover:bg-white hover:text-brand-navy">
+            <Button
+              href="/references"
+              variant="ghost"
+              className="!border-white/60 !text-white hover:!bg-white hover:!text-brand-navy"
+            >
               Uygulamalarımız
             </Button>
           </div>

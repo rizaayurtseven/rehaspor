@@ -31,12 +31,12 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="container-page flex h-[76px] items-center justify-between gap-5">
-        <Link href="/" className="group flex shrink-0 items-center gap-3" aria-label={`${siteName} ana sayfa`}>
-          <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-base font-bold text-white">RS</span>
-          <span className="leading-none">
-            <span className="block text-lg font-bold text-brand-navy">{siteName}</span>
-            <span className="mt-1 block text-[11px] text-slate-500">Spor zeminleri ve ekipmanları</span>
+      <div className="container-page flex h-[72px] items-center justify-between gap-5">
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
+          <span className="grid h-9 w-9 place-items-center rounded bg-brand-red text-sm font-black tracking-tight text-white">RS</span>
+          <span className="min-w-0 leading-none">
+            <span className="block text-base font-extrabold tracking-[-0.02em] text-brand-navy">{siteName}</span>
+            <span className="mt-1.5 block text-[10px] font-medium leading-none text-brand-muted">Spor zeminleri ve ekipmanları</span>
           </span>
         </Link>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Check, ClipboardCheck, Download, FileText, Layers3, MapPin } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/cards/ProductCard";
+import { ProductSectionNav, type ProductSectionLink } from "@/components/products/ProductSectionNav";
 import { ContactCTASection } from "@/components/sections/ContactCTASection";
 import { PublicPageHero } from "@/components/sections/PublicPageHero";
 import { Badge } from "@/components/ui/Badge";
@@ -52,6 +53,14 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const catalogUrl = product.catalogPdfUrl ?? "/catalog/Katalog.pdf";
   const quoteUrl = `/contact?subject=${encodeURIComponent(`${product.code} - ${product.title}`)}`;
   const specCards = buildSpecCards(product);
+  const sectionLinks: ProductSectionLink[] = [
+    { href: "#urun-ozeti", label: "Ürün özeti" },
+    { href: "#teknik-detaylar", label: "Teknik bilgiler" },
+    { href: "#kullanim-alanlari", label: "Kullanım alanları" },
+    ...(product.applicationSteps?.length ? [{ href: "#uygulama-adimlari" as const, label: "Uygulama" }] : []),
+    ...(product.catalogPageImage ? [{ href: "#katalog-sayfasi" as const, label: "Katalog" }] : []),
+    ...(relatedProducts.length ? [{ href: "#ilgili-urunler" as const, label: "İlgili ürünler" }] : [])
+  ];
 
   return (
     <>
@@ -68,7 +77,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <Badge>{category.title}</Badge>
       </PublicPageHero>
 
-      <section className="bg-brand-cream py-16 sm:py-20">
+      <ProductSectionNav links={sectionLinks} />
+
+      <section id="urun-ozeti" className="scroll-mt-32 bg-brand-cream py-16 sm:py-20 lg:scroll-mt-40">
         <div className="container-page">
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-7">
@@ -149,7 +160,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
       <section className="section-padding bg-white">
         <div className="container-page grid gap-8 lg:grid-cols-2">
-          <article className="border border-brand-line bg-white p-8 shadow-card sm:p-10">
+          <article id="teknik-detaylar" className="scroll-mt-32 border border-brand-line bg-white p-8 shadow-card sm:p-10 lg:scroll-mt-40">
             <span className="grid h-12 w-12 place-items-center bg-brand-navy text-white">
               <Layers3 size={22} aria-hidden="true" />
             </span>
@@ -164,7 +175,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             </ul>
           </article>
 
-          <article className="border border-brand-navy bg-brand-navy p-8 text-white shadow-card sm:p-10">
+          <article id="kullanim-alanlari" className="scroll-mt-32 border border-brand-navy bg-brand-navy p-8 text-white shadow-card sm:p-10 lg:scroll-mt-40">
             <span className="grid h-12 w-12 place-items-center bg-brand-red text-white">
               <MapPin size={22} aria-hidden="true" />
             </span>
@@ -182,7 +193,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       </section>
 
       {product.applicationSteps?.length ? (
-        <section className="section-padding technical-grid bg-brand-soft">
+        <section id="uygulama-adimlari" className="section-padding scroll-mt-32 technical-grid bg-brand-soft lg:scroll-mt-40">
           <div className="container-page">
             <div className="max-w-3xl">
               <p className="label-caps text-brand-red">Uygulama Süreci</p>
@@ -195,7 +206,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               {product.applicationSteps.map((step, index) => (
                 <li key={step} className="border border-brand-line bg-white p-6 shadow-card">
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl font-black text-slate-200">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="text-3xl font-black text-brand-muted">{String(index + 1).padStart(2, "0")}</span>
                     <ClipboardCheck size={21} className="text-brand-red" aria-hidden="true" />
                   </div>
                   <p className="mt-5 text-sm font-semibold leading-6 text-brand-navy">{step}</p>
@@ -207,7 +218,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       ) : null}
 
       {product.catalogPageImage ? (
-        <section className="bg-white pb-20 sm:pb-24">
+        <section id="katalog-sayfasi" className="scroll-mt-32 bg-white pb-20 sm:pb-24 lg:scroll-mt-40">
           <div className="container-page grid items-center gap-8 bg-brand-navy p-6 text-white sm:p-9 lg:grid-cols-[0.45fr_0.55fr]">
             <ImageFallback
               src={product.catalogPageImage}
@@ -235,7 +246,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       ) : null}
 
       {relatedProducts.length ? (
-        <section className="section-padding bg-brand-soft">
+        <section id="ilgili-urunler" className="section-padding scroll-mt-32 bg-brand-soft lg:scroll-mt-40">
           <div className="container-page">
             <div className="max-w-3xl">
               <p className="label-caps text-brand-red">Benzer Çözümler</p>

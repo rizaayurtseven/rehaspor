@@ -39,12 +39,12 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-brand-soft lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(480px,0.95fr)]">
+    <main className="admin-login min-h-screen bg-brand-soft lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(480px,0.95fr)]">
       <section className="relative hidden overflow-hidden bg-brand-navy p-12 text-white lg:flex lg:flex-col lg:justify-between xl:p-16">
         <div className="absolute -right-28 -top-28 h-96 w-96 rounded-full border-[80px] border-white/[0.03]" />
         <div className="absolute -bottom-48 -left-32 h-[520px] w-[520px] rounded-full bg-brand-red/10 blur-3xl" />
         <Link href="/" className="relative flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-red text-lg font-black shadow-xl shadow-red-950/30">R</span>
+          <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-sm font-black shadow-xl shadow-red-950/30">RS</span>
           <span>
             <span className="block text-sm font-black tracking-wide">REHA SPOR</span>
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">Yönetim merkezi</span>
@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
         </Link>
 
         <div className="relative max-w-xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-slate-300">
+          <span className="inline-flex items-center gap-2 rounded border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-slate-300">
             <ShieldCheck size={15} className="text-red-400" />
             Güvenli yönetim paneli
           </span>
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
           </p>
           <div className="mt-10 grid grid-cols-3 gap-3">
             {["Ürün yönetimi", "Mesaj takibi", "Katalog kontrolü"].map((item, index) => (
-              <div key={item} className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+              <div key={item} className="rounded border border-white/10 bg-white/[0.04] p-4">
                 <span className="text-xs font-black text-red-400">0{index + 1}</span>
                 <p className="mt-2 text-sm font-bold leading-5 text-slate-200">{item}</p>
               </div>
@@ -72,17 +72,17 @@ export default function AdminLoginPage() {
           </div>
         </div>
 
-        <p className="relative text-xs text-slate-500">© 2026 Reha Spor · Demo yönetim arayüzü</p>
+        <p className="relative text-xs text-slate-500">© 2026 Reha Spor · Yönetim arayüzü</p>
       </section>
 
       <section className="flex min-h-screen items-center justify-center p-5 sm:p-10">
         <div className="w-full max-w-md">
           <Link href="/" className="mb-10 flex items-center justify-center gap-3 lg:hidden">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-red font-black text-white">R</span>
+            <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-sm font-black text-white">RS</span>
             <span className="font-black tracking-wide text-brand-navy">REHA SPOR</span>
           </Link>
 
-          <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-card sm:p-9">
+          <div className="rounded border border-brand-line bg-white p-6 shadow-card sm:p-9">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.18em] text-brand-red">Yönetim paneli</p>
               <h2 className="mt-2 text-3xl font-black tracking-tight text-brand-navy">Tekrar hoş geldiniz</h2>
@@ -100,7 +100,7 @@ export default function AdminLoginPage() {
                     type="email"
                     required
                     autoComplete="email"
-                    className="w-full rounded-xl border border-brand-line bg-white py-3 pl-11 pr-4 text-sm outline-none transition focus:border-brand-red focus:ring-4 focus:ring-red-50"
+                    className="w-full rounded border border-brand-line bg-white py-3 pl-11 pr-4 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/15"
                   />
                 </span>
               </label>
@@ -115,12 +115,12 @@ export default function AdminLoginPage() {
                     type={showPassword ? "text" : "password"}
                     required
                     autoComplete="current-password"
-                    className="w-full rounded-xl border border-brand-line bg-white py-3 pl-11 pr-12 text-sm outline-none transition focus:border-brand-red focus:ring-4 focus:ring-red-50"
+                    className="w-full rounded border border-brand-line bg-white py-3 pl-11 pr-12 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/15"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
-                    className="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-lg text-slate-400 hover:bg-slate-50 hover:text-brand-navy"
+                    className="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded text-slate-400 hover:bg-slate-50 hover:text-brand-navy"
                     aria-label={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
                   >
                     {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
@@ -133,19 +133,19 @@ export default function AdminLoginPage() {
                   <input name="rememberMe" type="checkbox" className="h-4 w-4 accent-brand-red" />
                   Beni hatırla
                 </label>
-                <span className="font-semibold text-slate-400">Demo erişimi</span>
+                <span className="font-semibold text-slate-400">Güvenli oturum</span>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red px-5 py-3.5 text-sm font-black text-white shadow-lg shadow-red-200 transition hover:bg-red-700 disabled:cursor-wait disabled:opacity-70"
+                className="inline-flex items-center justify-center gap-2 rounded bg-brand-red px-5 py-3.5 text-sm font-black text-white shadow-lg shadow-red-200 transition hover:bg-red-700 disabled:cursor-wait disabled:opacity-70"
               >
                 {isSubmitting ? "Yönlendiriliyor..." : "Giriş yap"}
                 <ArrowRight size={17} />
               </button>
               {formError ? (
-                <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700" role="alert">
+                <p className="rounded border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700" role="alert">
                   {formError}
                 </p>
               ) : null}

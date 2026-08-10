@@ -35,9 +35,7 @@ export default function AdminMessagesPage() {
       const data = await res.json();
       if (res.ok && data.data?.messages) {
         setMessages(data.data.messages);
-        if (data.data.messages.length > 0 && !selectedId) {
-          setSelectedId(data.data.messages[0].id);
-        }
+        setSelectedId((current) => current || data.data.messages[0]?.id || "");
       }
     } catch {
       setToast("Mesajlar yüklenirken hata oluştu.");
@@ -47,7 +45,8 @@ export default function AdminMessagesPage() {
   }
 
   useEffect(() => {
-    loadMessages();
+    const timer = window.setTimeout(() => void loadMessages(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const filteredMessages = useMemo(() => {
@@ -185,7 +184,7 @@ export default function AdminMessagesPage() {
                     </td>
                     <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{new Date(message.createdAt).toLocaleDateString("tr-TR")}</td>
                     <td className="px-5 py-4">
-                      <span className={!isUnread ? "rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-black text-slate-600" : "rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-black text-brand-red"}>
+                      <span className={!isUnread ? "rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-black text-brand-muted" : "rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-black text-brand-red"}>
                         {!isUnread ? "Okundu" : "Yeni"}
                       </span>
                     </td>

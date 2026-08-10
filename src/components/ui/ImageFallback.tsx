@@ -15,6 +15,8 @@ type ImageFallbackProps = {
   sizes?: string;
   priority?: boolean;
   fit?: "cover" | "contain";
+  fallbackSrc?: string;
+  fallbackAlt?: string;
 };
 
 export function ImageFallback({
@@ -26,10 +28,14 @@ export function ImageFallback({
   imageClassName,
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false,
-  fit = "cover"
+  fit = "cover",
+  fallbackSrc,
+  fallbackAlt
 }: ImageFallbackProps) {
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const hasError = failedSource === src;
+  const [failedFallback, setFailedFallback] = useState(false);
+  const showFallbackImage = Boolean(fallbackSrc && (!src || hasError) && !failedFallback);
 
   return (
     <div className={cn("relative isolate overflow-hidden bg-brand-navy", className)}>
@@ -43,6 +49,20 @@ export function ImageFallback({
           className={cn(fit === "cover" ? "object-cover" : "object-contain", "transition duration-700", imageClassName)}
           onError={() => setFailedSource(src)}
         />
+      ) : showFallbackImage ? (
+        <>
+          <Image
+            src={fallbackSrc!}
+            alt={fallbackAlt ?? alt}
+            fill
+            sizes={sizes}
+            className={cn(fit === "cover" ? "object-cover" : "object-contain", "transition duration-700", imageClassName)}
+            onError={() => setFailedFallback(true)}
+          />
+          <span className="label-caps absolute bottom-3 left-3 z-10 border border-white/20 bg-brand-navy/85 px-2 py-1 text-[9px] text-white backdrop-blur-sm">
+            Temsili uygulama görseli
+          </span>
+        </>
       ) : (
         <div
           className="absolute inset-0 flex flex-col justify-end bg-gradient-to-br from-[#152c46] via-brand-navy to-[#03070d] p-6 text-white"

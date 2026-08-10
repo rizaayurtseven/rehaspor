@@ -102,7 +102,7 @@ export default async function AdminDashboardPage() {
             )}
           </AdminTable>
 
-          <section className="rounded-2xl border border-brand-line bg-white p-5 shadow-sm">
+          <section className="rounded border border-brand-line bg-white p-5 shadow-sm">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.16em] text-brand-red">Kısayollar</p>
               <h2 className="mt-1 text-lg font-black text-brand-navy">Hızlı işlemler</h2>
@@ -111,8 +111,8 @@ export default async function AdminDashboardPage() {
               {quickActions.map((action) => {
                 const Icon = action.icon;
                 return (
-                  <Link key={action.href} href={action.href} className="group flex items-center gap-3 rounded-xl border border-brand-line p-3.5 transition hover:border-red-200 hover:bg-red-50/30">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand-navy transition group-hover:bg-brand-red group-hover:text-white">
+                  <Link key={action.href} href={action.href} className="group flex items-center gap-3 rounded border border-brand-line p-3.5 transition hover:border-brand-red/40 hover:bg-brand-soft">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded bg-brand-soft text-brand-navy transition group-hover:bg-brand-red group-hover:text-white">
                       <Icon size={18} />
                     </span>
                     <span className="min-w-0 flex-1">
@@ -127,13 +127,13 @@ export default async function AdminDashboardPage() {
           </section>
         </div>
 
-        <section className="mt-6 overflow-hidden rounded-2xl bg-brand-navy p-6 text-white shadow-card sm:flex sm:items-center sm:justify-between sm:gap-6">
+        <section className="mt-6 overflow-hidden rounded bg-brand-navy p-6 text-white shadow-card sm:flex sm:items-center sm:justify-between sm:gap-6">
           <div className="max-w-2xl">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-red-400">Katalog durumu</p>
             <h2 className="mt-2 text-xl font-black">Ürün kataloğunuz yayına hazır görünüyor.</h2>
             <p className="mt-2 text-sm leading-6 text-slate-400">PDF kataloğu güncelleyebilir veya yeni ürünleri yayınlamadan önce içeriklerini kontrol edebilirsiniz.</p>
           </div>
-          <Link href="/admin/catalog" className="mt-5 inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-brand-navy transition hover:bg-red-50 sm:mt-0">
+          <Link href="/admin/catalog" className="mt-5 inline-flex shrink-0 items-center gap-2 rounded bg-white px-4 py-3 text-sm font-black text-brand-navy transition hover:bg-red-50 sm:mt-0">
             Kataloğu yönet <ArrowRight size={16} />
           </Link>
         </section>

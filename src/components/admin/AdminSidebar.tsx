@@ -55,18 +55,18 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
     <aside
       className={
         mobile
-          ? "flex h-full w-[min(88vw,320px)] flex-col bg-brand-ink text-white shadow-2xl"
-          : "sticky top-0 hidden h-screen w-72 shrink-0 flex-col bg-brand-ink text-white lg:flex"
+          ? "flex h-full w-[min(88vw,296px)] flex-col bg-brand-ink text-white shadow-2xl"
+          : "sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-brand-ink text-white lg:flex"
       }
     >
-      <div className="flex h-20 items-center justify-between border-b border-white/10 px-8">
-        <Link href="/admin/dashboard" className="flex items-center gap-3" onClick={onClose}>
-          <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-sm font-black text-white">
+      <div className="flex h-20 items-center justify-between border-b border-white/10 px-6">
+        <Link href="/admin/dashboard" className="flex items-center gap-2.5" onClick={onClose}>
+          <span className="grid h-9 w-9 place-items-center rounded bg-brand-red text-xs font-black text-white">
             RS
           </span>
           <span>
-            <span className="block text-lg font-black">REHA SPOR</span>
-            <span className="label-caps block text-[10px] text-slate-500">Management</span>
+            <span className="block text-sm font-black tracking-[-0.01em]">REHA SPOR</span>
+            <span className="label-caps mt-1 block text-[9px] text-slate-400">Yönetim merkezi</span>
           </span>
         </Link>
         {mobile ? (
@@ -82,7 +82,7 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
       </div>
 
       <div className="flex-1 overflow-y-auto py-6">
-        <p className="label-caps px-8 pb-4 text-slate-500">Yönetim</p>
+        <p className="label-caps px-6 pb-3 text-slate-500">İçerik yönetimi</p>
         <nav className="grid gap-1" aria-label="Admin navigasyonu">
           {navigationItems.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -95,8 +95,8 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
                 onClick={onClose}
                 className={
                   isActive
-                    ? "relative flex items-center gap-3 bg-brand-red/10 px-8 py-3 text-white before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-brand-red"
-                    : "flex items-center gap-3 px-8 py-3 text-slate-400 transition hover:bg-white/5 hover:text-white"
+                    ? "relative flex items-center gap-3 bg-white/[0.07] px-6 py-3 text-white before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:bg-brand-red"
+                    : "flex items-center gap-3 px-6 py-3 text-slate-400 transition hover:bg-white/5 hover:text-white"
                 }
               >
                 <Icon size={19} className={isActive ? "text-brand-red" : "text-slate-500"} />
@@ -108,19 +108,19 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
         </nav>
       </div>
 
-      <div className="border-t border-white/10 p-6">
+      <div className="border-t border-white/10 p-5">
         <div className="mb-4 flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-xs font-black text-white">A</span>
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-sm font-bold">Demo Yönetici</span>
-            <span className="block truncate text-xs text-slate-500">admin@rehaspor.com</span>
+            <span className="block truncate text-sm font-bold">Reha Spor Yönetici</span>
+            <span className="block truncate text-xs text-slate-500">Yetkili oturum</span>
           </span>
         </div>
         <button
           type="button"
           onClick={handleLogout}
           disabled={isLoggingOut}
-          className="label-caps flex items-center justify-center gap-2 border border-white/10 px-4 py-3 text-slate-300 transition hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-200"
+          className="label-caps flex w-full items-center justify-center gap-2 rounded border border-white/10 px-4 py-3 text-white/75 transition hover:border-red-400/40 hover:bg-red-500/10 hover:text-white"
         >
           <LogOut size={15} />
           {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış"}

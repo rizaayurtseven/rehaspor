@@ -22,16 +22,16 @@ export function ImageUploaderPlaceholder({
   }
 
   return (
-    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-5 text-center transition hover:border-brand-red/60 hover:bg-red-50/20">
+    <div className="rounded border border-dashed border-brand-steel/50 bg-brand-soft p-5 text-center transition hover:border-brand-red/60">
       <input id={inputId} type="file" accept={accept} className="sr-only" onChange={handleFileChange} />
-      <span className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-white text-brand-red shadow-sm">
+      <span className="mx-auto grid h-11 w-11 place-items-center rounded bg-white text-brand-red shadow-sm">
         {fileName ? <CheckCircle2 size={21} /> : <UploadCloud size={21} />}
       </span>
       <p className="mt-3 text-sm font-black text-brand-navy">{fileName || label}</p>
-      <p className="mt-1 text-xs text-slate-500">{fileName ? "Dosya demo formuna eklendi." : helper}</p>
+      <p className="mt-1 text-xs text-brand-muted">{fileName ? "Dosya demo formuna eklendi." : helper}</p>
       <label
         htmlFor={inputId}
-        className="mt-4 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-brand-line bg-white px-3.5 py-2 text-xs font-bold text-brand-navy transition hover:border-brand-red hover:text-brand-red"
+        className="mt-4 inline-flex cursor-pointer items-center gap-2 rounded border border-brand-line bg-white px-3.5 py-2 text-xs font-bold text-brand-navy transition hover:border-brand-red hover:text-brand-red"
       >
         <FileUp size={15} />
         {fileName ? "Dosyayı değiştir" : "Dosya seç"}

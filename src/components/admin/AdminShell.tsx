@@ -36,7 +36,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="admin-shell flex min-h-screen bg-brand-soft">
+    <div className="admin-shell flex min-h-screen bg-brand-soft text-brand-ink">
       <AdminSidebar />
 
       <div className="min-w-0 flex-1">
@@ -44,7 +44,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <button
             type="button"
             onClick={() => setIsMenuOpen(true)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-line text-brand-navy transition hover:border-brand-red hover:text-brand-red"
+            className="grid h-10 w-10 place-items-center rounded border border-brand-line bg-white text-brand-navy transition hover:border-brand-red hover:text-brand-red"
             aria-label="Admin menüsünü aç"
             aria-expanded={isMenuOpen}
           >
@@ -56,7 +56,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <Link
             href="/"
             target="_blank"
-            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-line text-brand-navy transition hover:border-brand-red hover:text-brand-red"
+            className="grid h-10 w-10 place-items-center rounded border border-brand-line bg-white text-brand-navy transition hover:border-brand-red hover:text-brand-red"
             aria-label="Siteyi yeni sekmede aç"
           >
             <ExternalLink size={18} />

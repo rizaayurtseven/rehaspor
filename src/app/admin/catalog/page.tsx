@@ -39,7 +39,8 @@ export default function AdminCatalogPage() {
   }
 
   useEffect(() => {
-    loadCatalogs();
+    const timer = window.setTimeout(() => void loadCatalogs(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   async function handleToggleStatus(catalog: CatalogAdminRow) {
