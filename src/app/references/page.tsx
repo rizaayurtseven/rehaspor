@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ReferenceCard } from "@/components/cards/ReferenceCard";
 import { ContactCTASection } from "@/components/sections/ContactCTASection";
 import { PublicPageHero } from "@/components/sections/PublicPageHero";
+import { TrustedBy } from "@/components/sections/TrustedBy";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { getReferences } from "@/lib/api";
 
@@ -22,6 +23,8 @@ export default async function ReferencesPage() {
         description="Farklı şehir, ölçek ve kullanım senaryolarında hayata geçirdiğimiz zemin, ekipman ve kort uygulamalarından seçili çalışmalar."
         breadcrumbs={[{ label: "Referanslar" }]}
       />
+
+      <TrustedBy />
 
       <section className="section-padding bg-brand-soft">
         <div className="container-page">
