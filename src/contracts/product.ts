@@ -15,6 +15,8 @@ export const createProductSchema = z.object({
   technicalDetails: z.array(z.string()).default([]),
   usageAreas: z.array(z.string()).default([]),
   applicationSteps: z.array(z.string()).default([]),
+  mainImageAssetId: z.string().nullable().optional(),
+  mainImageUrl: z.string().nullable().optional(),
   catalogPageAssetId: z.string().nullable().optional(),
   catalogPdfAssetId: z.string().nullable().optional(),
   seoTitle: z.string().max(160).nullable().optional(),

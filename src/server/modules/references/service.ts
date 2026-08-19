@@ -3,6 +3,50 @@ import type { CreateReferenceInput, UpdateReferenceInput } from "@/contracts/ref
 import { getPrisma } from "@/server/db/prisma";
 import { AppError } from "@/server/http/errors";
 
+function formatAssetUrl(storageKey?: string | null): string | undefined {
+  if (!storageKey) return undefined;
+  if (storageKey.startsWith("http://") || storageKey.startsWith("https://")) return storageKey;
+  let cleaned = storageKey;
+  if (cleaned.startsWith("public/")) cleaned = cleaned.slice(7);
+  if (!cleaned.startsWith("/")) cleaned = "/" + cleaned;
+  return cleaned;
+}
+
+async function resolveAssetId(
+  tx: any,
+  assetId?: string | null,
+  imageUrl?: string | null,
+  actorUserId?: string | null
+): Promise<string | null> {
+  if (assetId) {
+    const existing = await tx.asset.findUnique({ where: { id: assetId } });
+    if (existing) return existing.id;
+  }
+
+  if (imageUrl) {
+    let storageKey = imageUrl.startsWith("/") ? imageUrl.slice(1) : imageUrl;
+    if (storageKey.startsWith("public/")) {
+      storageKey = storageKey.slice(7);
+    }
+    const existing = await tx.asset.findUnique({ where: { storageKey } });
+    if (existing) return existing.id;
+
+    const created = await tx.asset.create({
+      data: {
+        storageKey,
+        originalName: storageKey.split("/").pop() || "image.jpg",
+        mimeType: "image/jpeg",
+        size: 1024,
+        status: "READY",
+        uploadedByUserId: actorUserId || null,
+      },
+    });
+    return created.id;
+  }
+
+  return null;
+}
+
 export async function getAdminReferences() {
   const prisma = getPrisma();
   const refs = await prisma.projectReference.findMany({
@@ -20,7 +64,7 @@ export async function getAdminReferences() {
     category: r.category,
     description: r.description,
     imageAssetId: r.imageAssetId,
-    imageUrl: r.image?.storageKey ? (r.image.storageKey.startsWith("/") ? r.image.storageKey : "/" + r.image.storageKey) : null,
+    coverImage: formatAssetUrl(r.image?.storageKey),
     sortOrder: r.sortOrder,
     status: r.status,
     seoTitle: r.seoTitle,
@@ -39,6 +83,8 @@ export async function createAdminReference(input: CreateReferenceInput, actorUse
   }
 
   const created = await prisma.$transaction(async (tx) => {
+    const assetId = await resolveAssetId(tx, input.imageAssetId, input.imageUrl, actorUserId);
+
     const res = await tx.projectReference.create({
       data: {
         title: input.title,
@@ -47,7 +93,7 @@ export async function createAdminReference(input: CreateReferenceInput, actorUse
         year: input.year,
         category: input.category,
         description: input.description,
-        imageAssetId: input.imageAssetId || null,
+        imageAssetId: assetId,
         sortOrder: input.sortOrder,
         status: input.status,
         seoTitle: input.seoTitle || null,
@@ -88,6 +134,11 @@ export async function updateAdminReference(id: string, input: UpdateReferenceInp
   }
 
   const updated = await prisma.$transaction(async (tx) => {
+    let resolvedImageId: string | null | undefined = undefined;
+    if (input.imageAssetId !== undefined || input.imageUrl !== undefined) {
+      resolvedImageId = await resolveAssetId(tx, input.imageAssetId, input.imageUrl, actorUserId);
+    }
+
     const res = await tx.projectReference.update({
       where: { id },
       data: {
@@ -97,7 +148,7 @@ export async function updateAdminReference(id: string, input: UpdateReferenceInp
         ...(input.year !== undefined && { year: input.year }),
         ...(input.category !== undefined && { category: input.category }),
         ...(input.description !== undefined && { description: input.description }),
-        ...(input.imageAssetId !== undefined && { imageAssetId: input.imageAssetId }),
+        ...(resolvedImageId !== undefined && { imageAssetId: resolvedImageId }),
         ...(input.sortOrder !== undefined && { sortOrder: input.sortOrder }),
         ...(input.status !== undefined && { status: input.status }),
         ...(input.seoTitle !== undefined && { seoTitle: input.seoTitle }),

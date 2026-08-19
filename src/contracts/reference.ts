@@ -9,6 +9,7 @@ export const createReferenceSchema = z.object({
   category: z.string().min(2, "Kategori girilmelidir."),
   description: z.string().min(5, "Açıklama girilmelidir."),
   imageAssetId: z.string().nullable().optional(),
+  imageUrl: z.string().nullable().optional(),
   sortOrder: z.number().int().default(0),
   status: contentStatusSchema.default("DRAFT"),
   seoTitle: z.string().max(160).nullable().optional(),

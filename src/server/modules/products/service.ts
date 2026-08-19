@@ -3,6 +3,50 @@ import type { CreateProductInput, UpdateProductInput } from "@/contracts/product
 import { getPrisma } from "@/server/db/prisma";
 import { AppError } from "@/server/http/errors";
 
+function formatAssetUrl(storageKey?: string | null): string | undefined {
+  if (!storageKey) return undefined;
+  if (storageKey.startsWith("http://") || storageKey.startsWith("https://")) return storageKey;
+  let cleaned = storageKey;
+  if (cleaned.startsWith("public/")) cleaned = cleaned.slice(7);
+  if (!cleaned.startsWith("/")) cleaned = "/" + cleaned;
+  return cleaned;
+}
+
+async function resolveAssetId(
+  tx: any,
+  assetId?: string | null,
+  imageUrl?: string | null,
+  actorUserId?: string | null
+): Promise<string | null> {
+  if (assetId) {
+    const existing = await tx.asset.findUnique({ where: { id: assetId } });
+    if (existing) return existing.id;
+  }
+
+  if (imageUrl) {
+    let storageKey = imageUrl.startsWith("/") ? imageUrl.slice(1) : imageUrl;
+    if (storageKey.startsWith("public/")) {
+      storageKey = storageKey.slice(7);
+    }
+    const existing = await tx.asset.findUnique({ where: { storageKey } });
+    if (existing) return existing.id;
+
+    const created = await tx.asset.create({
+      data: {
+        storageKey,
+        originalName: storageKey.split("/").pop() || "image.jpg",
+        mimeType: "image/jpeg",
+        size: 1024,
+        status: "READY",
+        uploadedByUserId: actorUserId || null,
+      },
+    });
+    return created.id;
+  }
+
+  return null;
+}
+
 export async function getAdminProducts(params?: { categoryId?: string; status?: string; query?: string }) {
   const prisma = getPrisma();
   const where: any = { deletedAt: null };
@@ -28,31 +72,36 @@ export async function getAdminProducts(params?: { categoryId?: string; status?: 
       technicalDetails: { orderBy: { sortOrder: "asc" } },
       usageAreas: { orderBy: { sortOrder: "asc" } },
       applicationSteps: { orderBy: { sortOrder: "asc" } },
+      media: { include: { asset: true }, orderBy: { sortOrder: "asc" } },
     },
   });
 
-  return products.map((p) => ({
-    id: p.id,
-    code: p.code,
-    title: p.title,
-    slug: p.slug,
-    categoryId: p.categoryId,
-    categoryTitle: p.category.title,
-    categorySlug: p.category.slug,
-    shortDescription: p.shortDescription,
-    description: p.description,
-    isFeatured: p.isFeatured,
-    status: p.status,
-    sortOrder: p.sortOrder,
-    technicalDetails: p.technicalDetails.map((td) => td.text),
-    usageAreas: p.usageAreas.map((ua) => ua.text),
-    applicationSteps: p.applicationSteps.map((as) => as.text),
-    seoTitle: p.seoTitle,
-    seoDescription: p.seoDescription,
-    publishedAt: p.publishedAt ? p.publishedAt.toISOString() : null,
-    createdAt: p.createdAt.toISOString(),
-    updatedAt: p.updatedAt.toISOString(),
-  }));
+  return products.map((p) => {
+    const mainMedia = p.media.find((m) => m.kind === "MAIN") || p.media[0];
+    return {
+      id: p.id,
+      code: p.code,
+      title: p.title,
+      slug: p.slug,
+      categoryId: p.categoryId,
+      categoryTitle: p.category.title,
+      categorySlug: p.category.slug,
+      shortDescription: p.shortDescription,
+      description: p.description,
+      isFeatured: p.isFeatured,
+      status: p.status,
+      sortOrder: p.sortOrder,
+      mainImage: formatAssetUrl(mainMedia?.asset?.storageKey),
+      technicalDetails: p.technicalDetails.map((td) => td.text),
+      usageAreas: p.usageAreas.map((ua) => ua.text),
+      applicationSteps: p.applicationSteps.map((as) => as.text),
+      seoTitle: p.seoTitle,
+      seoDescription: p.seoDescription,
+      publishedAt: p.publishedAt ? p.publishedAt.toISOString() : null,
+      createdAt: p.createdAt.toISOString(),
+      updatedAt: p.updatedAt.toISOString(),
+    };
+  });
 }
 
 export async function getAdminProductById(id: string) {
@@ -64,12 +113,15 @@ export async function getAdminProductById(id: string) {
       technicalDetails: { orderBy: { sortOrder: "asc" } },
       usageAreas: { orderBy: { sortOrder: "asc" } },
       applicationSteps: { orderBy: { sortOrder: "asc" } },
+      media: { include: { asset: true }, orderBy: { sortOrder: "asc" } },
     },
   });
 
   if (!p) {
     throw new AppError("Ürün bulunamadı.", { code: "NOT_FOUND", status: 404 });
   }
+
+  const mainMedia = p.media.find((m) => m.kind === "MAIN") || p.media[0];
 
   return {
     id: p.id,
@@ -84,6 +136,7 @@ export async function getAdminProductById(id: string) {
     isFeatured: p.isFeatured,
     status: p.status,
     sortOrder: p.sortOrder,
+    mainImage: formatAssetUrl(mainMedia?.asset?.storageKey),
     technicalDetails: p.technicalDetails.map((td) => td.text),
     usageAreas: p.usageAreas.map((ua) => ua.text),
     applicationSteps: p.applicationSteps.map((as) => as.text),
@@ -146,6 +199,18 @@ export async function createAdminProduct(input: CreateProductInput, actorUserId:
       },
     });
 
+    const mainAssetId = await resolveAssetId(tx, input.mainImageAssetId, input.mainImageUrl, actorUserId);
+    if (mainAssetId) {
+      await tx.productMedia.create({
+        data: {
+          productId: created.id,
+          assetId: mainAssetId,
+          kind: "MAIN",
+          sortOrder: 0,
+        },
+      });
+    }
+
     await tx.auditLog.create({
       data: {
         actorUserId,
@@ -194,7 +259,6 @@ export async function updateAdminProduct(id: string, input: UpdateProductInput, 
   }
 
   const updated = await prisma.$transaction(async (tx) => {
-    // Delete old child records if updated array is passed
     if (input.technicalDetails) {
       await tx.productTechnicalDetail.deleteMany({ where: { productId: id } });
     }
@@ -241,6 +305,21 @@ export async function updateAdminProduct(id: string, input: UpdateProductInput, 
         }),
       },
     });
+
+    if (input.mainImageAssetId !== undefined || input.mainImageUrl !== undefined) {
+      const mainAssetId = await resolveAssetId(tx, input.mainImageAssetId, input.mainImageUrl, actorUserId);
+      await tx.productMedia.deleteMany({ where: { productId: id, kind: "MAIN" } });
+      if (mainAssetId) {
+        await tx.productMedia.create({
+          data: {
+            productId: id,
+            assetId: mainAssetId,
+            kind: "MAIN",
+            sortOrder: 0,
+          },
+        });
+      }
+    }
 
     await tx.auditLog.create({
       data: {

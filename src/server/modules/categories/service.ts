@@ -3,6 +3,50 @@ import type { CreateCategoryInput, UpdateCategoryInput } from "@/contracts/categ
 import { getPrisma } from "@/server/db/prisma";
 import { AppError } from "@/server/http/errors";
 
+function formatAssetUrl(storageKey?: string | null): string | undefined {
+  if (!storageKey) return undefined;
+  if (storageKey.startsWith("http://") || storageKey.startsWith("https://")) return storageKey;
+  let cleaned = storageKey;
+  if (cleaned.startsWith("public/")) cleaned = cleaned.slice(7);
+  if (!cleaned.startsWith("/")) cleaned = "/" + cleaned;
+  return cleaned;
+}
+
+async function resolveAssetId(
+  tx: any,
+  assetId?: string | null,
+  imageUrl?: string | null,
+  actorUserId?: string | null
+): Promise<string | null> {
+  if (assetId) {
+    const existing = await tx.asset.findUnique({ where: { id: assetId } });
+    if (existing) return existing.id;
+  }
+
+  if (imageUrl) {
+    let storageKey = imageUrl.startsWith("/") ? imageUrl.slice(1) : imageUrl;
+    if (storageKey.startsWith("public/")) {
+      storageKey = storageKey.slice(7);
+    }
+    const existing = await tx.asset.findUnique({ where: { storageKey } });
+    if (existing) return existing.id;
+
+    const created = await tx.asset.create({
+      data: {
+        storageKey,
+        originalName: storageKey.split("/").pop() || "image.jpg",
+        mimeType: "image/jpeg",
+        size: 1024,
+        status: "READY",
+        uploadedByUserId: actorUserId || null,
+      },
+    });
+    return created.id;
+  }
+
+  return null;
+}
+
 export async function getAdminCategories() {
   const prisma = getPrisma();
   const categories = await prisma.category.findMany({
@@ -22,7 +66,7 @@ export async function getAdminCategories() {
     slug: cat.slug,
     description: cat.description,
     imageAssetId: cat.imageAssetId,
-    imageUrl: cat.image?.storageKey ? (cat.image.storageKey.startsWith("/") ? cat.image.storageKey : "/" + cat.image.storageKey) : null,
+    coverImage: formatAssetUrl(cat.image?.storageKey),
     sortOrder: cat.sortOrder,
     status: cat.status,
     seoTitle: cat.seoTitle,
@@ -50,6 +94,7 @@ export async function getAdminCategoryById(id: string) {
     slug: cat.slug,
     description: cat.description,
     imageAssetId: cat.imageAssetId,
+    coverImage: formatAssetUrl(cat.image?.storageKey),
     sortOrder: cat.sortOrder,
     status: cat.status,
     seoTitle: cat.seoTitle,
@@ -72,12 +117,14 @@ export async function createAdminCategory(input: CreateCategoryInput, actorUserI
   }
 
   const category = await prisma.$transaction(async (tx) => {
+    const assetId = await resolveAssetId(tx, input.imageAssetId, input.imageUrl, actorUserId);
+
     const created = await tx.category.create({
       data: {
         title: input.title,
         slug: input.slug,
         description: input.description,
-        imageAssetId: input.imageAssetId || null,
+        imageAssetId: assetId,
         sortOrder: input.sortOrder,
         status: input.status,
         seoTitle: input.seoTitle || null,
@@ -122,13 +169,18 @@ export async function updateAdminCategory(id: string, input: UpdateCategoryInput
   }
 
   const updated = await prisma.$transaction(async (tx) => {
+    let resolvedImageId: string | null | undefined = undefined;
+    if (input.imageAssetId !== undefined || input.imageUrl !== undefined) {
+      resolvedImageId = await resolveAssetId(tx, input.imageAssetId, input.imageUrl, actorUserId);
+    }
+
     const res = await tx.category.update({
       where: { id },
       data: {
         ...(input.title !== undefined && { title: input.title }),
         ...(input.slug !== undefined && { slug: input.slug }),
         ...(input.description !== undefined && { description: input.description }),
-        ...(input.imageAssetId !== undefined && { imageAssetId: input.imageAssetId }),
+        ...(resolvedImageId !== undefined && { imageAssetId: resolvedImageId }),
         ...(input.sortOrder !== undefined && { sortOrder: input.sortOrder }),
         ...(input.status !== undefined && { status: input.status }),
         ...(input.seoTitle !== undefined && { seoTitle: input.seoTitle }),
