@@ -1,13 +1,15 @@
 "use client";
 
-import { Filter, Pencil, Plus, Save, Search, Star, Trash2, X, Loader2 } from "lucide-react";
+import { Filter, Pencil, Plus, RotateCcw, Save, Search, Star, Trash2, X, Loader2, CheckCircle2 } from "lucide-react";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { AdminConfirmModal } from "@/components/admin/AdminConfirmModal";
 import { AdminEmptyRow } from "@/components/admin/AdminEmptyRow";
 import { AdminFormField } from "@/components/admin/AdminFormField";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { AdminPagination } from "@/components/admin/AdminPagination";
 import { AdminTable } from "@/components/admin/AdminTable";
 import { AdminToast } from "@/components/admin/AdminToast";
-import { ImageUploaderPlaceholder } from "@/components/admin/ImageUploaderPlaceholder";
+import { MediaUploader } from "@/components/admin/MediaUploader";
 
 type CategoryOption = {
   id: string;
@@ -31,6 +33,7 @@ type ProductAdminRow = {
   isFeatured: boolean;
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   sortOrder: number;
+  mainImage?: string;
 };
 
 type ProductFormValues = {
@@ -47,6 +50,7 @@ type ProductFormValues = {
   isFeatured: boolean;
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   sortOrder: number;
+  mainImage: string;
 };
 
 const emptyForm: ProductFormValues = {
@@ -63,6 +67,7 @@ const emptyForm: ProductFormValues = {
   isFeatured: false,
   status: "PUBLISHED",
   sortOrder: 0,
+  mainImage: "",
 };
 
 function createSlug(value: string) {
@@ -80,6 +85,8 @@ function createSlug(value: string) {
     .replace(/^-|-$/g, "");
 }
 
+const ITEMS_PER_PAGE = 8;
+
 export default function AdminProductsPage() {
   const [rows, setRows] = useState<ProductAdminRow[]>([]);
   const [categories, setCategories] = useState<CategoryOption[]>([]);
@@ -88,8 +95,14 @@ export default function AdminProductsPage() {
   const [saving, setSaving] = useState(false);
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [currentPage, setCurrentPage] = useState(1);
   const [toast, setToast] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
+
+  // Delete modal state
+  const [deleteTarget, setDeleteTarget] = useState<ProductAdminRow | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   async function loadData() {
     setLoading(true);
@@ -126,10 +139,19 @@ export default function AdminProductsPage() {
     const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
     return rows.filter((product) => {
       const matchesCategory = !categoryFilter || product.categoryId === categoryFilter;
-      const matchesQuery = !normalizedQuery || `${product.code} ${product.title} ${product.shortDescription}`.toLocaleLowerCase("tr-TR").includes(normalizedQuery);
-      return matchesCategory && matchesQuery;
+      const matchesStatus = statusFilter === "ALL" || product.status === statusFilter;
+      const matchesQuery =
+        !normalizedQuery ||
+        `${product.code} ${product.title} ${product.shortDescription}`.toLocaleLowerCase("tr-TR").includes(normalizedQuery);
+      return matchesCategory && matchesStatus && matchesQuery;
     });
-  }, [categoryFilter, query, rows]);
+  }, [categoryFilter, query, rows, statusFilter]);
+
+  const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE) || 1;
+  const paginatedRows = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredRows.slice(start, start + ITEMS_PER_PAGE);
+  }, [currentPage, filteredRows]);
 
   function openNewForm() {
     setFieldErrors({});
@@ -156,27 +178,65 @@ export default function AdminProductsPage() {
       isFeatured: product.isFeatured,
       status: product.status,
       sortOrder: product.sortOrder,
+      mainImage: product.mainImage || "",
     });
     document.getElementById("product-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  async function handleDelete(product: ProductAdminRow) {
-    if (!window.confirm(`“${product.title}” ürününü silmek/arşivlemek istiyor musunuz?`)) return;
+  async function handleToggleStatus(product: ProductAdminRow) {
+    const newStatus = product.status === "PUBLISHED" ? "DRAFT" : "PUBLISHED";
+    try {
+      const res = await fetch(`/api/v1/admin/products/${product.id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) {
+        setToast(`“${product.title}” durumu ${newStatus === "PUBLISHED" ? "Yayında" : "Taslak"} olarak güncellendi.`);
+        loadData();
+      }
+    } catch {
+      setToast("Durum güncellenirken hata oluştu.");
+    }
+  }
+
+  async function handleToggleFeatured(product: ProductAdminRow) {
+    try {
+      const res = await fetch(`/api/v1/admin/products/${product.id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ isFeatured: !product.isFeatured }),
+      });
+      if (res.ok) {
+        setToast(`“${product.title}” vitrin durumu güncellendi.`);
+        loadData();
+      }
+    } catch {
+      setToast("Vitrin durumu güncellenirken hata oluştu.");
+    }
+  }
+
+  async function confirmDelete() {
+    if (!deleteTarget) return;
+    setIsDeleting(true);
 
     try {
-      const res = await fetch(`/api/v1/admin/products/${product.id}`, { method: "DELETE" });
+      const res = await fetch(`/api/v1/admin/products/${deleteTarget.id}`, { method: "DELETE" });
       const payload = await res.json();
 
       if (!res.ok) {
-        alert(payload.error?.message || "Ürün silinemedi.");
+        setToast(payload.error?.message || "Ürün silinemedi.");
         return;
       }
 
-      setToast("Ürün başarıyla kaldırıldı.");
-      if (form.id === product.id) setForm(emptyForm);
+      setToast("Ürün başarıyla silindi/arşivlendi.");
+      if (form.id === deleteTarget.id) openNewForm();
+      setDeleteTarget(null);
       loadData();
     } catch {
-      alert("Sunucuya bağlanılamadı.");
+      setToast("Sunucuya bağlanılamadı.");
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -189,40 +249,44 @@ export default function AdminProductsPage() {
     const url = isEdit ? `/api/v1/admin/products/${form.id}` : "/api/v1/admin/products";
     const method = isEdit ? "PATCH" : "POST";
 
-    const payloadBody = {
-      code: form.code.trim().toUpperCase(),
-      title: form.title.trim(),
-      slug: form.slug.trim() || createSlug(form.title),
-      categoryId: form.categoryId,
-      shortDescription: form.shortDescription.trim(),
-      description: form.description.trim() || form.shortDescription.trim(),
-      isFeatured: form.isFeatured,
-      status: form.status,
-      sortOrder: Number(form.sortOrder) || 0,
-      technicalDetails: form.technicalDetails.split("\n").map((s) => s.trim()).filter(Boolean),
-      usageAreas: form.usageAreas.split("\n").map((s) => s.trim()).filter(Boolean),
-      applicationSteps: form.applicationSteps.split("\n").map((s) => s.trim()).filter(Boolean),
-    };
+    const parseLines = (text: string) =>
+      text
+        .split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean);
 
     try {
       const res = await fetch(url, {
         method,
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(payloadBody),
+        body: JSON.stringify({
+          code: form.code.trim(),
+          title: form.title.trim(),
+          slug: form.slug.trim() || createSlug(form.title),
+          categoryId: form.categoryId,
+          shortDescription: form.shortDescription.trim(),
+          description: form.description.trim(),
+          technicalDetails: parseLines(form.technicalDetails),
+          usageAreas: parseLines(form.usageAreas),
+          applicationSteps: parseLines(form.applicationSteps),
+          isFeatured: form.isFeatured,
+          status: form.status,
+          sortOrder: Number(form.sortOrder) || 0,
+          mainImageUrl: form.mainImage.trim() || undefined,
+        }),
       });
 
       const payload = await res.json();
 
       if (!res.ok) {
-        if (payload.error?.fields) {
-          setFieldErrors(payload.error.fields);
-        } else {
-          setToast(payload.error?.message || "Kaydetme başarısız.");
+        if (payload.error?.details?.fields) {
+          setFieldErrors(payload.error.details.fields);
         }
+        setToast(payload.error?.message || "İşlem başarısız.");
         return;
       }
 
-      setToast(isEdit ? "Ürün güncellendi." : "Yeni ürün eklendi.");
+      setToast(isEdit ? "Ürün başarıyla güncellendi." : "Yeni ürün başarıyla eklendi.");
       openNewForm();
       loadData();
     } catch {
@@ -235,247 +299,405 @@ export default function AdminProductsPage() {
   return (
     <>
       <AdminHeader
-        title="Ürünler"
-        description="Ürün kataloğunu filtreleyin; teknik içerikleri ve öne çıkan ürün seçimini yönetin."
+        title="Ürün Yönetimi"
+        description="Ürün kayıtlarını, teknik detayları, uygulama adımlarını ve vitrin durumlarını yönetin."
         action={
-          <button type="button" onClick={openNewForm} className="inline-flex items-center gap-2 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-black text-white transition hover:bg-red-700">
-            <Plus size={17} /> Yeni ürün
+          <button
+            type="button"
+            onClick={openNewForm}
+            className="inline-flex items-center gap-2 rounded-xl bg-brand-red px-4 py-2.5 text-xs font-black text-white hover:bg-red-700"
+          >
+            <Plus size={15} /> Yeni Ürün Ekle
           </button>
         }
       />
 
-      <main className="grid grid-cols-1 items-start gap-6 p-4 sm:p-6 xl:grid-cols-[minmax(0,1fr)_420px] xl:p-8">
-        <div className="min-w-0">
-          <div className="mb-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_260px]">
-            <div className="relative">
-              <Search size={17} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Ürün kodu veya adına göre ara..."
-                className="w-full rounded-xl border border-brand-line bg-white py-3 pl-10 pr-4 text-sm outline-none transition focus:border-brand-red focus:ring-4 focus:ring-red-50"
-              />
-            </div>
-            <div className="relative">
-              <Filter size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <select
-                value={categoryFilter}
-                onChange={(event) => setCategoryFilter(event.target.value)}
-                className="w-full appearance-none rounded-xl border border-brand-line bg-white py-3 pl-10 pr-4 text-sm font-semibold text-slate-700 outline-none focus:border-brand-red"
-              >
-                <option value="">Tüm kategoriler</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+      <main className="p-4 sm:p-6 xl:p-8">
+        <div className="grid grid-cols-1 items-start gap-6 2xl:grid-cols-[minmax(0,1.35fr)_minmax(420px,0.65fr)]">
+          {/* Table section */}
+          <div>
+            <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-center">
+                <div className="relative w-full max-w-xs">
+                  <Search size={17} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="search"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    placeholder="Kod, ürün adı ara..."
+                    className="w-full rounded-xl border border-brand-line bg-white py-2.5 pl-10 pr-4 text-sm outline-none focus:border-brand-red focus:ring-4 focus:ring-red-50"
+                  />
+                </div>
 
-          <AdminTable
-            title="Ürün listesi"
-            description={`${filteredRows.length} ürün gösteriliyor`}
-            headers={["Kod / Ürün", "Kategori", "Durum", "Vitrin", "İşlem"]}
-            minWidth="900px"
-          >
-            {loading ? (
-              <tr>
-                <td colSpan={5} className="p-8 text-center text-slate-500">
-                  <Loader2 className="mx-auto h-6 w-6 animate-spin text-brand-red" />
-                  <p className="mt-2 text-xs">Ürünler yükleniyor...</p>
-                </td>
-              </tr>
-            ) : filteredRows.length ? (
-              filteredRows.map((product) => (
-                <tr key={product.id} className="transition hover:bg-slate-50/70">
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-slate-800 to-brand-navy text-[10px] font-black text-white">
-                        {product.code.split("-").at(-1)}
-                      </span>
-                      <span>
-                        <span className="block text-[10px] font-black uppercase tracking-[0.1em] text-brand-red">{product.code}</span>
-                        <span className="mt-0.5 block max-w-xs font-black text-brand-navy">{product.title}</span>
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4">
-                    <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">
-                      {product.categoryTitle}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4">
-                    <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${product.status === "PUBLISHED" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
-                      {product.status === "PUBLISHED" ? "Yayında" : "Taslak"}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4">
-                    {product.isFeatured ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-black text-amber-700">
-                        <Star size={12} fill="currentColor" /> Öne çıkan
-                      </span>
-                    ) : (
-                      <span className="text-xs text-slate-400">Standart</span>
-                    )}
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => handleEdit(product)}
-                        className="grid h-9 w-9 place-items-center rounded-lg border border-brand-line text-slate-500 hover:border-brand-navy hover:text-brand-navy"
-                        aria-label={`${product.title} ürününü düzenle`}
-                      >
-                        <Pencil size={15} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(product)}
-                        className="grid h-9 w-9 place-items-center rounded-lg border border-red-100 text-brand-red hover:bg-red-50"
-                        aria-label={`${product.title} ürününü sil`}
-                      >
-                        <Trash2 size={15} />
-                      </button>
-                    </div>
+                <div className="relative">
+                  <select
+                    value={categoryFilter}
+                    onChange={(e) => {
+                      setCategoryFilter(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    className="w-full rounded-xl border border-brand-line bg-white py-2.5 px-3 text-xs font-bold text-slate-700 outline-none focus:border-brand-red"
+                  >
+                    <option value="">Tüm Kategoriler</option>
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="inline-flex self-start rounded-xl border border-brand-line bg-white p-1">
+                {[
+                  { value: "ALL", label: `Tümü (${rows.length})` },
+                  { value: "PUBLISHED", label: "Yayında" },
+                  { value: "DRAFT", label: "Taslak" },
+                ].map((tab) => (
+                  <button
+                    key={tab.value}
+                    type="button"
+                    onClick={() => {
+                      setStatusFilter(tab.value);
+                      setCurrentPage(1);
+                    }}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold transition ${
+                      statusFilter === tab.value
+                        ? "bg-brand-navy text-white"
+                        : "text-slate-500 hover:text-brand-navy"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <AdminTable
+              title="Ürünler"
+              description={`${filteredRows.length} ürün listeleniyor`}
+              headers={["Kod", "Ürün Adı", "Kategori", "Vitrin", "Durum", "İşlemler"]}
+              minWidth="800px"
+            >
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="p-8 text-center text-slate-500">
+                    <Loader2 className="mx-auto h-6 w-6 animate-spin text-brand-red" />
+                    <p className="mt-2 text-xs">Ürünler yükleniyor...</p>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <AdminEmptyRow colSpan={5} />
-            )}
-          </AdminTable>
-        </div>
+              ) : paginatedRows.length ? (
+                paginatedRows.map((prod) => (
+                  <tr key={prod.id} className="transition hover:bg-slate-50/70">
+                    <td className="whitespace-nowrap px-5 py-4 font-mono text-xs font-bold text-brand-red">{prod.code}</td>
+                    <td className="px-5 py-4">
+                      <p className="font-bold text-brand-navy">{prod.title}</p>
+                      <p className="mt-0.5 line-clamp-1 max-w-xs text-xs text-slate-500">{prod.shortDescription}</p>
+                    </td>
+                    <td className="whitespace-nowrap px-5 py-4 text-xs font-semibold text-slate-600">{prod.categoryTitle}</td>
+                    <td className="px-5 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleFeatured(prod)}
+                        title="Vitrini aç/kapat"
+                        className={`grid h-8 w-8 place-items-center rounded-lg transition ${
+                          prod.isFeatured ? "bg-amber-50 text-amber-500 hover:bg-amber-100" : "text-slate-300 hover:text-slate-500"
+                        }`}
+                      >
+                        <Star size={16} fill={prod.isFeatured ? "currentColor" : "none"} />
+                      </button>
+                    </td>
+                    <td className="px-5 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleStatus(prod)}
+                        title="Durumu değiştirmek için tıklayın"
+                        className={`cursor-pointer rounded-full px-2.5 py-1 text-[11px] font-black transition ${
+                          prod.status === "PUBLISHED"
+                            ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                            : "bg-amber-50 text-amber-700 hover:bg-amber-100"
+                        }`}
+                      >
+                        {prod.status === "PUBLISHED" ? "Yayında" : "Taslak"}
+                      </button>
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="inline-flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => handleEdit(prod)}
+                          className="grid h-8 w-8 place-items-center rounded-lg border border-brand-line text-slate-600 transition hover:border-brand-navy hover:text-brand-navy"
+                          title="Düzenle"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeleteTarget(prod)}
+                          className="grid h-8 w-8 place-items-center rounded-lg border border-brand-line text-slate-400 transition hover:border-brand-red hover:text-brand-red"
+                          title="Sil"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <AdminEmptyRow colSpan={6} message="Arama kriterine uygun ürün bulunamadı." />
+              )}
+            </AdminTable>
 
-        <aside id="product-form" className="scroll-mt-24 rounded-2xl border border-brand-line bg-white shadow-sm xl:sticky xl:top-6">
-          <div className="flex items-center justify-between border-b border-brand-line px-5 py-4">
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-brand-red">{form.id ? "Düzenleme modu" : "Yeni kayıt"}</p>
-              <h2 className="mt-1 font-black text-brand-navy">{form.id ? "Ürünü düzenle" : "Ürün ekle"}</h2>
-            </div>
-            {form.id ? (
-              <button type="button" onClick={openNewForm} className="grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-slate-50" aria-label="Düzenlemeyi iptal et">
-                <X size={18} />
-              </button>
-            ) : null}
+            <AdminPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalItems={filteredRows.length}
+              itemsPerPage={ITEMS_PER_PAGE}
+              onPageChange={setCurrentPage}
+            />
           </div>
-          <form className="grid gap-4 p-5" onSubmit={handleSubmit}>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <AdminFormField label="Ürün kodu" required error={fieldErrors.code?.[0]}>
-                <input
-                  value={form.code}
-                  onChange={(event) => setForm((current) => ({ ...current, code: event.target.value }))}
-                  required
-                  placeholder="RH-Z-009"
-                  className="w-full rounded-xl border border-brand-line px-3.5 py-3 text-sm font-bold outline-none focus:border-brand-red"
-                />
-              </AdminFormField>
-              <AdminFormField label="Kategori" required error={fieldErrors.categoryId?.[0]}>
-                <select
-                  value={form.categoryId}
-                  onChange={(event) => setForm((current) => ({ ...current, categoryId: event.target.value }))}
-                  required
-                  className="w-full rounded-xl border border-brand-line bg-white px-3.5 py-3 text-sm outline-none focus:border-brand-red"
-                >
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.title}
-                    </option>
-                  ))}
-                </select>
-              </AdminFormField>
-            </div>
-            <AdminFormField label="Ürün başlığı" required error={fieldErrors.title?.[0]}>
-              <input
-                value={form.title}
-                onChange={(event) => setForm((current) => ({ ...current, title: event.target.value, slug: current.id ? current.slug : createSlug(event.target.value) }))}
-                required
-                placeholder="Ürün adı"
-                className="w-full rounded-xl border border-brand-line px-3.5 py-3 text-sm outline-none focus:border-brand-red"
-              />
-            </AdminFormField>
-            <AdminFormField label="Slug (URL)" required error={fieldErrors.slug?.[0]}>
-              <input
-                value={form.slug}
-                onChange={(event) => setForm((current) => ({ ...current, slug: createSlug(event.target.value) }))}
-                required
-                placeholder="urun-adi-slug"
-                className="w-full rounded-xl border border-brand-line px-3.5 py-3 font-mono text-sm outline-none focus:border-brand-red"
-              />
-            </AdminFormField>
-            <AdminFormField label="Yayın Durumu" htmlFor="product-status">
-              <select
-                id="product-status"
-                value={form.status}
-                onChange={(e) => setForm((curr) => ({ ...curr, status: e.target.value as any }))}
-                className="w-full rounded-xl border border-brand-line px-3.5 py-3 text-sm outline-none focus:border-brand-red bg-white"
-              >
-                <option value="PUBLISHED">Yayında (Public sitede görünür)</option>
-                <option value="DRAFT">Taslak (Gizli)</option>
-              </select>
-            </AdminFormField>
-            <AdminFormField label="Kısa açıklama" required error={fieldErrors.shortDescription?.[0]}>
-              <textarea
-                value={form.shortDescription}
-                onChange={(event) => setForm((current) => ({ ...current, shortDescription: event.target.value }))}
-                required
-                rows={2}
-                placeholder="Kartlarda gösterilecek özet"
-                className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-3 text-sm leading-6 outline-none focus:border-brand-red"
-              />
-            </AdminFormField>
-            <AdminFormField label="Detaylı açıklama" required error={fieldErrors.description?.[0]}>
-              <textarea
-                value={form.description}
-                onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
-                required
-                rows={3}
-                placeholder="Ürün detay sayfasında görünecek açıklama"
-                className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-3 text-sm leading-6 outline-none focus:border-brand-red"
-              />
-            </AdminFormField>
-            <AdminFormField label="Teknik özellikler" hint="Her özelliği yeni bir satıra yazın." required>
-              <textarea
-                value={form.technicalDetails}
-                onChange={(event) => setForm((current) => ({ ...current, technicalDetails: event.target.value }))}
-                required
-                rows={4}
-                placeholder={"UV dayanımlı yüzey\nKaymaz doku\nKolay bakım"}
-                className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-3 text-sm leading-6 outline-none focus:border-brand-red"
-              />
-            </AdminFormField>
-            <label className="flex cursor-pointer items-center justify-between rounded-xl border border-brand-line p-3.5">
-              <span>
-                <span className="block text-sm font-bold text-brand-navy">Öne çıkan ürün</span>
-                <span className="mt-0.5 block text-xs text-slate-500">Ana sayfa vitrininde göster.</span>
-              </span>
-              <input
-                type="checkbox"
-                checked={form.isFeatured}
-                onChange={(event) => setForm((current) => ({ ...current, isFeatured: event.target.checked }))}
-                className="h-5 w-5 accent-brand-red"
-              />
-            </label>
-            <ImageUploaderPlaceholder label="Ana ürün görseli" />
-            <div className="flex gap-2 pt-1">
-              <button
-                type="submit"
-                disabled={saving}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-red px-4 py-3 text-sm font-black text-white transition hover:bg-red-700 disabled:opacity-50"
-              >
-                {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-                {form.id ? "Değişiklikleri kaydet" : "Ürünü ekle"}
-              </button>
+
+          {/* Form section */}
+          <section
+            id="product-form"
+            className="overflow-hidden rounded-2xl border border-brand-line bg-white shadow-sm 2xl:sticky 2xl:top-6"
+          >
+            <div className="flex items-center justify-between border-b border-brand-line bg-slate-50 px-5 py-4">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-brand-red">
+                  {form.id ? "Düzenleme Modu" : "Yeni Ürün Kaydı"}
+                </p>
+                <h2 className="mt-0.5 text-base font-black text-brand-navy">
+                  {form.id ? "Ürünü Güncelle" : "Yeni Ürün Ekle"}
+                </h2>
+              </div>
               {form.id ? (
-                <button type="button" onClick={openNewForm} className="rounded-xl border border-brand-line px-4 text-sm font-bold text-slate-600 hover:border-brand-navy">
-                  İptal
+                <button
+                  type="button"
+                  onClick={openNewForm}
+                  className="inline-flex items-center gap-1 rounded-lg border border-brand-line bg-white px-2.5 py-1 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                >
+                  <X size={13} /> İptal
                 </button>
               ) : null}
             </div>
-          </form>
-        </aside>
+
+            <form onSubmit={handleSubmit} className="grid gap-4 p-5 max-h-[calc(100vh-140px)] overflow-y-auto">
+              <div className="grid grid-cols-2 gap-3">
+                <AdminFormField label="Ürün Kodu" htmlFor="p-code" required error={fieldErrors.code?.[0]}>
+                  <input
+                    id="p-code"
+                    value={form.code}
+                    onChange={(e) => setForm((c) => ({ ...c, code: e.target.value.toUpperCase() }))}
+                    placeholder="RH-Z-001"
+                    required
+                    className="w-full rounded-xl border border-brand-line px-3.5 py-2.5 font-mono text-xs uppercase outline-none focus:border-brand-red"
+                  />
+                </AdminFormField>
+
+                <AdminFormField label="Kategori" htmlFor="p-cat" required error={fieldErrors.categoryId?.[0]}>
+                  <select
+                    id="p-cat"
+                    value={form.categoryId}
+                    onChange={(e) => setForm((c) => ({ ...c, categoryId: e.target.value }))}
+                    required
+                    className="w-full rounded-xl border border-brand-line px-3 py-2.5 text-xs font-bold outline-none focus:border-brand-red"
+                  >
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    ))}
+                  </select>
+                </AdminFormField>
+              </div>
+
+              <AdminFormField label="Ürün Adı" htmlFor="p-title" required error={fieldErrors.title?.[0]}>
+                <input
+                  id="p-title"
+                  value={form.title}
+                  onChange={(e) =>
+                    setForm((c) => ({
+                      ...c,
+                      title: e.target.value,
+                      slug: c.id ? c.slug : createSlug(e.target.value),
+                    }))
+                  }
+                  placeholder="Standart Sistem Akrilik Zemin Kaplaması"
+                  required
+                  className="w-full rounded-xl border border-brand-line px-3.5 py-2.5 text-sm outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <AdminFormField label="Slug (URL)" htmlFor="p-slug" required error={fieldErrors.slug?.[0]}>
+                <input
+                  id="p-slug"
+                  value={form.slug}
+                  onChange={(e) => setForm((c) => ({ ...c, slug: e.target.value }))}
+                  placeholder="standart-sistem-akrilik-zemin"
+                  required
+                  className="w-full rounded-xl border border-brand-line px-3.5 py-2.5 font-mono text-xs outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <AdminFormField label="Kısa Açıklama (Özet)" htmlFor="p-short" required error={fieldErrors.shortDescription?.[0]}>
+                <textarea
+                  id="p-short"
+                  value={form.shortDescription}
+                  onChange={(e) => setForm((c) => ({ ...c, shortDescription: e.target.value }))}
+                  rows={2}
+                  placeholder="Katalog kartlarında görünecek 1-2 cümlelik özet..."
+                  required
+                  className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-2.5 text-sm outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <AdminFormField label="Detaylı Ürün Açıklaması" htmlFor="p-desc" required error={fieldErrors.description?.[0]}>
+                <textarea
+                  id="p-desc"
+                  value={form.description}
+                  onChange={(e) => setForm((c) => ({ ...c, description: e.target.value }))}
+                  rows={4}
+                  placeholder="Ürünün detaylı teknik ve operasyonel tanıtımı..."
+                  required
+                  className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-2.5 text-sm outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <AdminFormField
+                label="Teknik Özellikler"
+                htmlFor="p-tech"
+                hint="Her satıra bir özellik yazın."
+              >
+                <textarea
+                  id="p-tech"
+                  value={form.technicalDetails}
+                  onChange={(e) => setForm((c) => ({ ...c, technicalDetails: e.target.value }))}
+                  rows={3}
+                  placeholder="2-3 mm katman kalınlığı&#10;%100 saf akrilik reçine&#10;UV dayanımı"
+                  className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-2.5 text-xs outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <AdminFormField
+                label="Kullanım Alanları"
+                htmlFor="p-areas"
+                hint="Her satıra bir alan yazın."
+              >
+                <textarea
+                  id="p-areas"
+                  value={form.usageAreas}
+                  onChange={(e) => setForm((c) => ({ ...c, usageAreas: e.target.value }))}
+                  rows={3}
+                  placeholder="Açık ve kapalı tenis kortları&#10;Basketbol sahaları&#10;Okul bahçeleri"
+                  className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-2.5 text-xs outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <AdminFormField
+                label="Uygulama Adımları"
+                htmlFor="p-steps"
+                hint="Her satıra bir adım yazın."
+              >
+                <textarea
+                  id="p-steps"
+                  value={form.applicationSteps}
+                  onChange={(e) => setForm((c) => ({ ...c, applicationSteps: e.target.value }))}
+                  rows={3}
+                  placeholder="Zemin temizliği ve nem kontrolü&#10;Astar kat uygulaması&#10;Akrilik son kat ve çizgileme"
+                  className="w-full resize-none rounded-xl border border-brand-line px-3.5 py-2.5 text-xs outline-none focus:border-brand-red"
+                />
+              </AdminFormField>
+
+              <div>
+                <span className="mb-2 block text-xs font-bold text-brand-navy">Ürün Ana Görseli</span>
+                <MediaUploader
+                  value={form.mainImage}
+                  onChange={(url) => setForm((c) => ({ ...c, mainImage: url }))}
+                  label="Ürün Görseli Seçin"
+                  helper="PNG, JPG veya WebP · maks. 10 MB"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <AdminFormField label="Yayın Durumu" htmlFor="p-status">
+                  <select
+                    id="p-status"
+                    value={form.status}
+                    onChange={(e) => setForm((c) => ({ ...c, status: e.target.value as any }))}
+                    className="w-full rounded-xl border border-brand-line px-3 py-2.5 text-xs font-bold outline-none focus:border-brand-red"
+                  >
+                    <option value="PUBLISHED">Yayında</option>
+                    <option value="DRAFT">Taslak</option>
+                    <option value="ARCHIVED">Arşivlendi</option>
+                  </select>
+                </AdminFormField>
+
+                <AdminFormField label="Sıralama" htmlFor="p-order">
+                  <input
+                    id="p-order"
+                    type="number"
+                    value={form.sortOrder}
+                    onChange={(e) => setForm((c) => ({ ...c, sortOrder: Number(e.target.value) || 0 }))}
+                    className="w-full rounded-xl border border-brand-line px-3 py-2.5 text-xs outline-none focus:border-brand-red"
+                  />
+                </AdminFormField>
+              </div>
+
+              <div className="rounded-xl border border-brand-line bg-slate-50 p-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={form.isFeatured}
+                    onChange={(e) => setForm((c) => ({ ...c, isFeatured: e.target.checked }))}
+                    className="h-4 w-4 rounded text-brand-red accent-brand-red"
+                  />
+                  <span className="text-xs font-bold text-brand-navy">Bu ürünü Ana Sayfa Vitrininde Göster</span>
+                </label>
+              </div>
+
+              <div className="mt-2 flex items-center justify-end gap-2 border-t border-brand-line pt-4">
+                <button
+                  type="button"
+                  onClick={openNewForm}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-brand-line px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                >
+                  <RotateCcw size={14} /> Temizle
+                </button>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="inline-flex items-center gap-2 rounded-xl bg-brand-red px-5 py-2.5 text-xs font-black text-white hover:bg-red-700 disabled:opacity-50"
+                >
+                  {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+                  {form.id ? "Ürünü Güncelle" : "Ürünü Kaydet"}
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
       </main>
+
+      {/* Delete confirmation modal */}
+      <AdminConfirmModal
+        isOpen={Boolean(deleteTarget)}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={confirmDelete}
+        title="Ürünü Sil"
+        description={
+          deleteTarget ? (
+            <p>
+              <strong className="font-bold text-brand-navy">[{deleteTarget.code}] {deleteTarget.title}</strong> ürününü
+              silmek/arşivlemek istediğinize emin misiniz?
+            </p>
+          ) : null
+        }
+        isLoading={isDeleting}
+      />
+
       {toast ? <AdminToast message={toast} onClose={() => setToast("")} /> : null}
     </>
   );

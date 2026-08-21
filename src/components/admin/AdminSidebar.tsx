@@ -11,11 +11,12 @@ import {
   Mail,
   Settings,
   Tags,
-  X
+  X,
+  UserCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type NavigationItem = {
   href: string;
@@ -30,7 +31,7 @@ const navigationItems: NavigationItem[] = [
   { href: "/admin/references", label: "Referanslar", icon: FolderKanban },
   { href: "/admin/catalog", label: "E-Katalog", icon: BookOpen },
   { href: "/admin/messages", label: "Mesajlar", icon: Mail },
-  { href: "/admin/settings", label: "Site Ayarları", icon: Settings }
+  { href: "/admin/settings", label: "Site Ayarları", icon: Settings },
 ];
 
 type AdminSidebarProps = {
@@ -38,10 +39,28 @@ type AdminSidebarProps = {
   onClose?: () => void;
 };
 
+type SessionUser = {
+  displayName: string;
+  email: string;
+  role: string;
+};
+
 export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [user, setUser] = useState<SessionUser | null>(null);
+
+  useEffect(() => {
+    fetch("/api/v1/auth/session")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.data?.user) {
+          setUser(data.data.user);
+        }
+      })
+      .catch(() => undefined);
+  }, []);
 
   async function handleLogout() {
     setIsLoggingOut(true);
@@ -50,6 +69,12 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
     router.replace("/admin/login");
     router.refresh();
   }
+
+  const initial = user?.displayName
+    ? user.displayName.charAt(0).toUpperCase()
+    : user?.email
+    ? user.email.charAt(0).toUpperCase()
+    : "A";
 
   return (
     <aside
@@ -110,20 +135,26 @@ export function AdminSidebar({ mobile = false, onClose }: AdminSidebarProps) {
 
       <div className="border-t border-white/10 p-6">
         <div className="mb-4 flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-xs font-black text-white">A</span>
+          <span className="grid h-10 w-10 place-items-center rounded bg-brand-red text-xs font-black text-white">
+            {initial}
+          </span>
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-sm font-bold">Demo Yönetici</span>
-            <span className="block truncate text-xs text-slate-500">admin@rehaspor.com</span>
+            <span className="block truncate text-sm font-bold">
+              {user?.displayName || "Yönetici"}
+            </span>
+            <span className="block truncate text-xs text-slate-500">
+              {user?.email || "admin@rehaspor.com"}
+            </span>
           </span>
         </div>
         <button
           type="button"
           onClick={handleLogout}
           disabled={isLoggingOut}
-          className="label-caps flex items-center justify-center gap-2 border border-white/10 px-4 py-3 text-slate-300 transition hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-200"
+          className="label-caps flex w-full items-center justify-center gap-2 border border-white/10 px-4 py-3 text-slate-300 transition hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-200 disabled:opacity-50"
         >
           <LogOut size={15} />
-          {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış"}
+          {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış Yap"}
         </button>
       </div>
     </aside>

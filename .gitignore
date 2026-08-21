@@ -15,3 +15,7 @@ pnpm-debug.log*
 
 # Prisma Client is generated during install/build
 /src/generated/prisma/
+
+# Uploaded media in local dev
+/public/uploads/*
+!/public/uploads/.gitkeep
